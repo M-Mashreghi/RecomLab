@@ -14,7 +14,8 @@ Update this ledger only after verification.
   - Evidence: pytest tests/unit/test_smoke.py (4 passed: import, in-process CLI, `python -m recomlab smoke`, logging idempotence); ruff and mypy clean; editable install verified in a fresh Python 3.14 venv.
 - [x] **Task 1.2** — Canonical User, Item & Interaction Schemas
   - Evidence: tests/unit/test_schemas.py (25 tests): tiny fixture validates; explicit and implicit examples; 14 invalid cases fail with stable codes; UTC normalization; duplicate policy. Full suite 29 passed; ruff/mypy clean.
-- [ ] **Task 1.3** — Impression, Exposure & Feedback Event Contract
+- [x] **Task 1.3** — Impression, Exposure & Feedback Event Contract
+  - Evidence: tests/unit/test_exposure.py (9 tests): explicit linkage verified incl. 3 invalid reasons; inference off by default; missing propensity counted not imputed; free text/PII rejected; schema version 1.0. Suite 38 passed; ruff/mypy clean.
 - [ ] **Task 1.4** — Configuration, Environment & Dependency Policy
 - [ ] **Task 1.5** — Dataset Registry, Data Cards & Licensing Metadata
 - [ ] **Task 1.6** — Experiment Registry, Seed Control & Reproducibility Manifest

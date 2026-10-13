@@ -61,7 +61,7 @@ tests/unit/test_schemas.py (25 tests): tiny fixture validates; explicit and impl
 
 ### Task 1.3: Impression, Exposure & Feedback Event Contract
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Capture what users were shown—not only what they clicked—so later evaluation can reason about exposure bias and online-style feedback.
@@ -73,10 +73,13 @@ Capture what users were shown—not only what they clicked—so later evaluation
 - Prevent raw free-text or unnecessary PII from entering analytics tables by default.
 
 **Definition of Done (DoD)**
-- [ ] Exposure-to-feedback linkage tests pass.
-- [ ] Missing propensity is handled explicitly rather than guessed.
-- [ ] Schema is documented and versioned.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Exposure-to-feedback linkage tests pass.
+- [x] Missing propensity is handled explicitly rather than guessed.
+- [x] Schema is documented and versioned.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_exposure.py (9 tests): explicit linkage verified incl. 3 invalid reasons; inference off by default; missing propensity counted not imputed; free text/PII rejected; schema version 1.0. Suite 38 passed; ruff/mypy clean.
 
 ### Task 1.4: Configuration, Environment & Dependency Policy
 
@@ -1043,7 +1046,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 
 | Phase | Tasks | Completed |
 |---|---:|---:|
-| 1 — Foundation, Data Contracts & Reproducibility | 6 | 2 |
+| 1 — Foundation, Data Contracts & Reproducibility | 6 | 3 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 0 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
@@ -1051,4 +1054,4 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **2** |
+| **Total** | **52** | **3** |

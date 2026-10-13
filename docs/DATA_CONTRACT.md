@@ -69,26 +69,51 @@ Every violation raises `SchemaValidationError` with a stable `code` and `field_n
   duplicates**; they are contract violations and are reported, never silently merged.
 - `schemas.find_duplicate_events` returns `(exact, conflicting)` lists.
 
-### impressions
+## Exposure Contract
 
-- `impression_id`
-- `request_id`
-- `user_id`
-- `item_id`
-- `position`
-- `model_id`
-- `shown_at`
-- `propensity` (optional; never fabricated)
+Exposure schema version: **1.0** (`recomlab.domain.exposure.EXPOSURE_SCHEMA_VERSION`).
 
-### feedback_events
+### impressions (`Impression`)
 
-- `feedback_id`
-- optional `impression_id`
-- `user_id`
-- `item_id`
-- `feedback_type`
-- `value`
-- `event_time`
+| Field | Required | Notes |
+|---|---|---|
+| `impression_id` | yes | idempotency key |
+| `request_id` | yes | one recommendation request / slate |
+| `user_id`, `item_id` | yes | |
+| `position` | yes | 1-based rank shown |
+| `model_id` | yes | model/bundle that produced the slate |
+| `shown_at` | yes | timezone-aware, UTC |
+| `propensity` | no | logging-policy probability in `(0, 1]`; **never fabricated** |
+| `session_id` | no | |
+
+### feedback_events (`FeedbackEvent`)
+
+| Field | Required | Notes |
+|---|---|---|
+| `feedback_id` | yes | |
+| `user_id`, `item_id` | yes | |
+| `feedback_type` | yes | `click`, `like`, `dislike`, `watch`, `purchase`, `dismiss`, `rating` |
+| `event_time` | yes | timezone-aware, UTC |
+| `value` | no | numeric only |
+| `impression_id` | no | link to the exposure when known |
+
+Free-text and identifier fields (`comment`, `text`, `free_text`, `message`, `review`,
+`email`, `name`, `ip_address`) are rejected with `free_text_not_allowed`.
+
+### Linkage (`exposure.link_feedback`)
+
+- `linked`: `impression_id` given and consistent (same user/item, feedback not before exposure).
+- `invalid`: `impression_id` given but unknown (`unknown_impression`), for another user/item
+  (`user_item_mismatch`), or earlier than the exposure (`feedback_before_exposure`).
+- `inferred`: no `impression_id`; matched to the latest prior impression of the same user/item
+  only when the caller passes an explicit `infer_window` (off by default).
+- `unlinked`: no matching exposure.
+
+### Datasets without exposure logs
+
+`exposure.assess_exposure_log` classifies a log as `unavailable` (no impressions),
+`impressions_only` (some propensities missing), or `propensity_available`. Only the last
+allows exposure-aware / off-policy evaluation. Missing propensities are counted, never imputed.
 
 ## Data Semantics
 
