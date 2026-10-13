@@ -333,7 +333,7 @@ tests/unit/test_candidate_contract.py (6 tests): budget enforced for several bud
 
 ### Task 3.2: Item-Item Similarity Candidate Generator
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Provide an interpretable content/co-occurrence retrieval path useful for warm and sparse users.
@@ -345,10 +345,13 @@ Provide an interpretable content/co-occurrence retrieval path useful for warm an
 - Handle empty history gracefully.
 
 **Definition of Done (DoD)**
-- [ ] No future interactions are used.
-- [ ] Known fixture neighbors are retrieved.
-- [ ] Cold-user fallback is explicit.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] No future interactions are used.
+- [x] Known fixture neighbors are retrieved.
+- [x] Cold-user fallback is explicit.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_item_item.py (6 tests): hand-checked cosine neighbors; recency-weighted aggregation and seed-item evidence; explicit cold-user fallback flag; train-only fit differs from full-data fit and never contains held-out pairs; metadata blend; tiny fixture cluster neighbors. Suite 125 passed; ruff/mypy clean.
 
 ### Task 3.3: Collaborative Retrieval Candidate Generator
 
@@ -1081,10 +1084,10 @@ Finish the project with a reproducible demo path and documented failure recovery
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
-| 3 — Candidate Generation & Retrieval | 6 | 1 |
+| 3 — Candidate Generation & Retrieval | 6 | 2 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **14** |
+| **Total** | **52** | **15** |

@@ -155,3 +155,13 @@ from the training partition only; validation/test events never contribute.
 - `generate_all` runs several generators for later fusion; generator names must be unique.
 - `PopularityCandidates` (training-history counts) is the reference generator and the
   explicit cold-user fallback source.
+
+### 17.1 Item-Item Generator (`candidates.item_item.ItemItemCandidates`)
+
+- Similarity = `(1 - metadata_weight) * co-occurrence cosine + metadata_weight * category Jaccard`,
+  built from training interactions and item metadata only; top `neighbors_per_item` kept.
+- Candidates sum neighbor similarities of the user's last `history_window` unique items with
+  recency weights `decay ** age_rank`; consumed items are skipped.
+- Evidence per candidate: up to 3 seed items with their similarity.
+- Users without history return an empty set with `metadata.fallback_required = True` and
+  `reason = "cold_user_no_history"`; the caller must apply an explicit fallback source.
