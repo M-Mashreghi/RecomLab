@@ -943,7 +943,7 @@ tests/unit/test_explanation_conditions.py (5 tests): four versioned condition id
 
 ### Task 7.3: Structured LLM Explanation Generator
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Generate user-facing explanations with machine-readable provenance and safe failure behavior.
@@ -955,10 +955,13 @@ Generate user-facing explanations with machine-readable provenance and safe fail
 - Fall back to template or no explanation on provider failure.
 
 **Definition of Done (DoD)**
-- [ ] Mocked valid/malformed/unsupported outputs are tested.
-- [ ] Provider failure never blocks recommendation delivery.
-- [ ] Prompt/model version is logged.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Mocked valid/malformed/unsupported outputs are tested.
+- [x] Provider failure never blocks recommendation delivery.
+- [x] Prompt/model version is logged.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_llm_explainer.py (10 tests): valid mocked output accepted with prompt/model version logged; malformed output retried; 4 invalid/unsupported outputs fall back to the template after bounded retries; abstain respected; transient vs permanent provider errors; a failing provider leaves served recommendations unchanged. Suite 258 passed; ruff/mypy clean; no live API calls.
 
 ### Task 7.4: Explanation Fidelity & Unsupported-Claim Validator
 
@@ -1166,6 +1169,6 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
-| 7 — LLM Explanations & Human-AI Research Extension | 7 | 2 |
+| 7 — LLM Explanations & Human-AI Research Extension | 7 | 3 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **41** |
+| **Total** | **52** | **42** |

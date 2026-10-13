@@ -71,3 +71,19 @@ condition_id)` dispatches to the strategy; LLM conditions without a configured g
 back to the template (recorded in `fallback_from`). The template cites the evidence ids it
 uses and abstains (`text = None`) when no usable evidence exists. Conditions never touch
 ranking.
+
+## Structured LLM Generator (`recomlab.explanations.llm`, prompt `expl-prompt-v1`)
+
+- Providers implement `generate(system, prompt, schema) -> str`. `MockProvider` is used in all
+  tests; `AnthropicProvider` (optional extra `.[llm]`, e.g. model `claude-opus-5-5`) uses the
+  Messages API with structured outputs (`output_config.format` JSON schema) and low effort.
+  No live API is called in CI.
+- Output schema: `explanation`, `cited_evidence_ids`, `abstain`, `uncertainty`
+  (`low|medium|high`). `parse_output` rejects malformed JSON, wrong types, citations not in the
+  condition-scoped payload, and non-abstaining answers without text or citations.
+- Retries are bounded (`max_attempts`) and only for transient provider errors and schema
+  failures; non-transient errors stop immediately. The final fallback is the template
+  (default) or no explanation — never an LLM ranking.
+- Every explanation records `prompt_version` and `model`; generation and fallbacks are logged
+  with the prompt/model version. The explanation path runs after ranking and never alters it
+  (integration-tested with a failing provider).

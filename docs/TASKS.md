@@ -110,7 +110,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_evidence.py (5 tests): payload schema with ranking vs presentation roles; every entry traces to stored interactions/catalog and seed items stay as ranking evidence; unknown facts listed as unavailable rather than synthesized; fabricated, other-user and wrong-fact evidence rejected; history window bounds the payload. Suite 244 passed; ruff/mypy clean.
 - [x] **Task 7.2** — Explanation Conditions: None, Template, Generic LLM & Contextualized LLM
   - Evidence: tests/unit/test_explanation_conditions.py (5 tests): four versioned condition ids and unknown ids rejected; router dispatches none/template/generic/contextual to the requested strategy with template fallback when no LLM is configured; template deterministic, cites payload evidence and imports no LLM module; generic sees only item facts and non-personal features while contextual sees history and provenance; template abstains without evidence. Suite 249 passed; ruff/mypy clean.
-- [ ] **Task 7.3** — Structured LLM Explanation Generator
+- [x] **Task 7.3** — Structured LLM Explanation Generator
+  - Evidence: tests/unit/test_llm_explainer.py (10 tests): valid mocked output accepted with prompt/model version logged; malformed output retried; 4 invalid/unsupported outputs fall back to the template after bounded retries; abstain respected; transient vs permanent provider errors; a failing provider leaves served recommendations unchanged. Suite 258 passed; ruff/mypy clean; no live API calls.
 - [ ] **Task 7.4** — Explanation Fidelity & Unsupported-Claim Validator
 - [ ] **Task 7.5** — Human-AI Study Protocol, Randomization & Ethics Boundary
 - [ ] **Task 7.6** — Trust, Acceptance, Usefulness & Satisfaction Analysis
