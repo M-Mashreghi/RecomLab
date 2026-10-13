@@ -8,7 +8,9 @@ include secrets, raw interaction histories, or per-candidate evidence.
 from __future__ import annotations
 
 import hmac
-from dataclasses import dataclass
+import logging
+import time
+from dataclasses import dataclass, field
 from typing import Any
 
 from fastapi import FastAPI, Header, Query, Request
@@ -19,6 +21,7 @@ from pydantic import BaseModel, Field
 from recomlab import __version__
 from recomlab.config.settings import SecretStr
 from recomlab.experiments.registry import ExperimentRegistry, RunNotFound
+from recomlab.monitoring.observability import ServingMonitor
 from recomlab.registry.model_registry import BundleNotFound, IncompatibleBundleError
 from recomlab.services.recommendation import (
     NoActiveModelError,
@@ -45,6 +48,10 @@ class AppState:
     service: RecommendationService
     experiments: ExperimentRegistry
     admin_token: SecretStr
+    monitor: ServingMonitor = field(default_factory=ServingMonitor)
+
+
+logger = logging.getLogger("recomlab.api")
 
 
 class APIError(Exception):
@@ -95,17 +102,38 @@ def create_app(state: AppState) -> FastAPI:
 
     @app.post("/recommendations")
     def recommend(body: RecommendationBody) -> dict[str, Any]:
+        start = time.perf_counter()
         try:
             resp = state.service.recommend(
                 RecommendationRequest(body.user_id, body.k, body.trace_id)
             )
         except NoActiveModelError as err:
             raise APIError(503, "no_active_model", str(err)) from err
+        latency = (time.perf_counter() - start) * 1000.0
+        state.monitor.record(
+            int(resp.metadata.get("n_candidates") or 0),
+            [i.fallback for i in resp.items],
+            list(resp.item_ids),
+            latency,
+        )
+        logger.info(
+            "recommendation served",
+            extra={
+                "trace_id": resp.trace_id,
+                "bundle_id": resp.bundle_id,
+                "n_items": len(resp.items),
+                "latency_ms": round(latency, 3),
+            },
+        )
         data = resp.to_dict()
         for item in data["items"]:
             # Evidence may reference the user's own history; keep it server-side.
             item["sources"] = {s: {"rank": v.get("rank")} for s, v in item["sources"].items()}
         return data
+
+    @app.get("/monitoring")
+    def monitoring() -> dict[str, Any]:
+        return state.monitor.snapshot()
 
     @app.get("/experiments/runs")
     def list_runs(experiment_id: str | None = Query(default=None, pattern=ID_REGEX)) -> Any:

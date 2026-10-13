@@ -1079,7 +1079,7 @@ tests/e2e/test_pipeline_e2e.py (5 tests, marked e2e): full fixture pipeline run 
 
 ### Task 8.2: Observability, Drift & Train-Serving Skew Checks
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Detect operational and data changes that can invalidate recommendation quality after deployment.
@@ -1091,10 +1091,13 @@ Detect operational and data changes that can invalidate recommendation quality a
 - Add configurable warnings for major drift/skew.
 
 **Definition of Done (DoD)**
-- [ ] Health/readiness tests pass.
-- [ ] Synthetic drift fixture triggers warning.
-- [ ] Sensitive fields are scrubbed from logs.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Health/readiness tests pass.
+- [x] Synthetic drift fixture triggers warning.
+- [x] Sensitive fields are scrubbed from logs.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_monitoring.py (3 tests): /health, /ready and the new /monitoring endpoint report serving metrics; JSON logs carry request/run/model ids and scrub API keys, history and emails; synthetic drift fixture triggers catalog, volume, event-mix, PSI, schema and feature-mean warnings, and serving metrics trigger empty-candidate and latency warnings, while identical profiles trigger none. Suite 288 passed; ruff/mypy clean.
 
 ### Task 8.3: Dockerization & Reproducible Demo Stack
 
@@ -1185,5 +1188,5 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 7 |
-| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 1 |
-| **Total** | **52** | **47** |
+| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 2 |
+| **Total** | **52** | **48** |

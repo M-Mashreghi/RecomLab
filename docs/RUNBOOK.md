@@ -57,3 +57,19 @@ bundle registration and serving (warm user, cold user, empty-candidate cold-star
 collaborative-ranker unknown-user fallback) → grounded explanation with a mocked LLM provider
 and fidelity validation. It asserts identical metrics across runs, no held-out events in
 serving history, bounded artifacts (< 60 files, < 5 MB), and needs no live external API.
+
+## 11. Observability, Drift & Skew (`recomlab.monitoring.observability`)
+
+- **Structured logs**: `JsonFormatter` emits one JSON object per line with `request_id`,
+  `trace_id`, `run_id`, `model_id`, `bundle_id`, `workflow_id` lifted to top level. Sensitive
+  keys (`api_key`, `token`, `password`, `secret`, `email`, `text`, `history`, `free_text`,
+  auth headers) are replaced by `[REDACTED]` and email-like strings by `[EMAIL]`. The API logs
+  every served recommendation with trace and bundle ids.
+- **Serving metrics**: `ServingMonitor` (exposed at `GET /monitoring`) tracks requests,
+  empty-candidate rate, fallback counts, latency p50/p95/max, and distinct items served.
+- **Drift / train-serving skew**: `profile()` summarizes event volume, catalog size,
+  event-type mix, user-activity and item-popularity bucket distributions, and the feature
+  schema/means. `check_drift(train, serving, DriftThresholds, serving_metrics)` warns on
+  catalog-size or volume change, event-mix total variation distance, activity/popularity
+  PSI, feature-schema mismatch, feature-mean shifts, empty-candidate rate, and p95 latency.
+  All thresholds are configurable; any warning should trigger the checks in §5.
