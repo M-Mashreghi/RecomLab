@@ -108,7 +108,8 @@ Update this ledger only after verification.
 
 - [x] **Task 7.1** — Recommendation Grounding Evidence Builder
   - Evidence: tests/unit/test_evidence.py (5 tests): payload schema with ranking vs presentation roles; every entry traces to stored interactions/catalog and seed items stay as ranking evidence; unknown facts listed as unavailable rather than synthesized; fabricated, other-user and wrong-fact evidence rejected; history window bounds the payload. Suite 244 passed; ruff/mypy clean.
-- [ ] **Task 7.2** — Explanation Conditions: None, Template, Generic LLM & Contextualized LLM
+- [x] **Task 7.2** — Explanation Conditions: None, Template, Generic LLM & Contextualized LLM
+  - Evidence: tests/unit/test_explanation_conditions.py (5 tests): four versioned condition ids and unknown ids rejected; router dispatches none/template/generic/contextual to the requested strategy with template fallback when no LLM is configured; template deterministic, cites payload evidence and imports no LLM module; generic sees only item facts and non-personal features while contextual sees history and provenance; template abstains without evidence. Suite 249 passed; ruff/mypy clean.
 - [ ] **Task 7.3** — Structured LLM Explanation Generator
 - [ ] **Task 7.4** — Explanation Fidelity & Unsupported-Claim Validator
 - [ ] **Task 7.5** — Human-AI Study Protocol, Randomization & Ethics Boundary

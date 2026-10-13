@@ -56,3 +56,18 @@ produces an `EvidencePayload` for one recommended item:
   are listed in `unavailable`; nothing is synthesized.
 - `validate_payload` checks that every history entry is a stored interaction of that user for
   the stated item and that item facts equal the catalog.
+
+## Explanation Conditions (`recomlab.explanations.conditions`)
+
+| Condition id | Strategy | Evidence scope |
+|---|---|---|
+| `none-v1` | no explanation | none |
+| `template-v1` | deterministic template, no LLM dependency | all payload evidence |
+| `generic_llm-v1` | LLM | item facts + non-personal ranker features (`popularity`, `recency`) |
+| `contextual_llm-v1` | LLM | item-level evidence + bounded user history, retrieval provenance, all ranker features |
+
+`restrict_evidence` enforces each scope before generation. `ExplanationRouter.explain(payload,
+condition_id)` dispatches to the strategy; LLM conditions without a configured generator fall
+back to the template (recorded in `fallback_from`). The template cites the evidence ids it
+uses and abstains (`text = None`) when no usable evidence exists. Conditions never touch
+ranking.

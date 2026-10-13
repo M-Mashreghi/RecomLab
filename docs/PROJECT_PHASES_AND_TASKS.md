@@ -921,7 +921,7 @@ tests/unit/test_evidence.py (5 tests): payload schema with ranking vs presentati
 
 ### Task 7.2: Explanation Conditions: None, Template, Generic LLM & Contextualized LLM
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Support controlled comparison of explanation strategies rather than evaluating one LLM prompt in isolation.
@@ -933,10 +933,13 @@ Support controlled comparison of explanation strategies rather than evaluating o
 - Define contextualized LLM condition using bounded user-history evidence.
 
 **Definition of Done (DoD)**
-- [ ] Condition assignment produces the requested strategy.
-- [ ] Template has no LLM dependency.
-- [ ] Generic/contextual evidence boundaries are tested.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Condition assignment produces the requested strategy.
+- [x] Template has no LLM dependency.
+- [x] Generic/contextual evidence boundaries are tested.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_explanation_conditions.py (5 tests): four versioned condition ids and unknown ids rejected; router dispatches none/template/generic/contextual to the requested strategy with template fallback when no LLM is configured; template deterministic, cites payload evidence and imports no LLM module; generic sees only item facts and non-personal features while contextual sees history and provenance; template abstains without evidence. Suite 249 passed; ruff/mypy clean.
 
 ### Task 7.3: Structured LLM Explanation Generator
 
@@ -1163,6 +1166,6 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
-| 7 — LLM Explanations & Human-AI Research Extension | 7 | 1 |
+| 7 — LLM Explanations & Human-AI Research Extension | 7 | 2 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **40** |
+| **Total** | **52** | **41** |
