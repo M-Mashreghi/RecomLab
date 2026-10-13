@@ -149,3 +149,18 @@ per-source recall and contribution (from fusion provenance). `failure_breakdown`
 every relevant held-out item as `hit`, `ranking_failure` (retrieved but outside top-K), or
 `retrieval_failure` (never retrieved). Diagnostics serialize to JSON (`write_json`) and are
 stored in `RunManifest.metrics["retrieval"]`.
+
+## 16. Learning-to-Rank Data (`recomlab.rankers.ltr_data`)
+
+- One query group per user; rows are that user's fused candidates (default: popularity +
+  item-item, RRF, fitted on the group's history).
+- Features (schema `ltr-features-1`): the four normalized heuristic features, user history
+  length, number of contributing sources, and per-source reciprocal rank.
+- Time order: features/candidates use `history` strictly before `as_of`; labels use `target`
+  events at/after `as_of` (label policy relevance, 0 for non-positive candidates). Violations
+  raise `LeakageError`, as does any target event listed in `forbidden_event_ids`.
+- Training groups use an inner cutoff inside the training partition
+  (`inner_training_cutoff`); validation groups use train history + validation targets; test
+  groups are built only for final reporting.
+- `LTRDataset` validates that group sizes reconcile with rows and records schema version,
+  feature names, `as_of`, label version, group boundaries, and skipped users.

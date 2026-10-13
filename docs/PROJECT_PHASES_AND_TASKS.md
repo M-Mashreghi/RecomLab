@@ -513,7 +513,7 @@ tests/unit/test_collaborative_ranker.py (6 tests): ranking equals ALS score orde
 
 ### Task 4.4: Learning-to-Rank Dataset Builder
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Construct query-grouped ranking examples without leaking evaluation labels or incorrectly sampling negatives.
@@ -525,10 +525,13 @@ Construct query-grouped ranking examples without leaking evaluation labels or in
 - Store group boundaries and feature schema version.
 
 **Definition of Done (DoD)**
-- [ ] Group sizes reconcile with candidates.
-- [ ] Feature/label timestamp ordering is tested.
-- [ ] No validation/test target leaks into training rows.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Group sizes reconcile with candidates.
+- [x] Feature/label timestamp ordering is tested.
+- [x] No validation/test target leaks into training rows.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_ltr_data.py (5 tests): group sizes reconcile with candidate rows and unique items per group; history-after-as_of and target-before-as_of raise LeakageError; training rows contain no validation/test target pairs and forbidden ids are refused; schema/feature manifest recorded. Suite 166 passed; ruff/mypy clean.
 
 ### Task 4.5: Learning-to-Rank Baseline
 
@@ -1106,9 +1109,9 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
-| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 3 |
+| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 4 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **22** |
+| **Total** | **52** | **23** |
