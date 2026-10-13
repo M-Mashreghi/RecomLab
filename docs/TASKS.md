@@ -82,7 +82,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_slices.py (3 tests, marked metrics): user and item bucket memberships deterministic under reordering; slice counts reconcile with the evaluation population and item-bucket relevant counts with held-out truth; slice report id stored in the run manifest artifacts. Suite 189 passed; ruff/mypy clean.
 - [x] **Task 5.5** — Bootstrap Confidence Intervals & Paired Significance Testing
   - Evidence: tests/unit/test_statistics.py (5 tests, marked metrics): CI brackets the mean and the same seed reproduces it; synthetic clearly-better/worse/noise comparisons classified better/worse/uncertain; paired intervals reproducible with stored seed and resamples; Wilcoxon statistic and p-value hand-checked incl. ties; mismatched populations rejected. Suite 194 passed; ruff/mypy clean.
-- [ ] **Task 5.6** — Exposure-Aware / Off-Policy Evaluation (Optional When Logged Propensities Exist)
+- [x] **Task 5.6** — Exposure-Aware / Off-Policy Evaluation (Optional When Logged Propensities Exist)
+  - Evidence: tests/unit/test_off_policy.py (3 tests, marked metrics): IPS, SNIPS and ESS match a hand-computed fixture using only linked rewards; extreme weights and clipping are flagged; logs with a missing propensity or no impressions are refused. Suite 197 passed; ruff/mypy clean.
 - [ ] **Task 5.7** — Multi-Metric Model Selection & Champion Leaderboard
 - [ ] **Task 5.8** — Evaluation Report & Reproducibility Manifest
 

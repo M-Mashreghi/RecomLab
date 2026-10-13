@@ -693,7 +693,7 @@ tests/unit/test_statistics.py (5 tests, marked metrics): CI brackets the mean an
 
 ### Task 5.6: Exposure-Aware / Off-Policy Evaluation (Optional When Logged Propensities Exist)
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Use impression and propensity logs when available to reduce exposure bias without fabricating counterfactual estimates when they are not available.
@@ -705,10 +705,13 @@ Use impression and propensity logs when available to reduce exposure bias withou
 - Never infer propensities from clicks alone in the mandatory path.
 
 **Definition of Done (DoD)**
-- [ ] Module refuses incompatible datasets.
-- [ ] Estimator passes small hand-computed fixture.
-- [ ] Diagnostics flag extreme weights.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Module refuses incompatible datasets.
+- [x] Estimator passes small hand-computed fixture.
+- [x] Diagnostics flag extreme weights.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_off_policy.py (3 tests, marked metrics): IPS, SNIPS and ESS match a hand-computed fixture using only linked rewards; extreme weights and clipping are flagged; logs with a missing propensity or no impressions are refused. Suite 197 passed; ruff/mypy clean.
 
 ### Task 5.7: Multi-Metric Model Selection & Champion Leaderboard
 
@@ -1131,8 +1134,8 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
-| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 5 |
+| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 6 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **30** |
+| **Total** | **52** | **31** |

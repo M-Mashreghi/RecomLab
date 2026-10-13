@@ -270,3 +270,17 @@ leaderboard can link to it.
   (normal approximation, zero differences dropped, tie-corrected variance).
 - Conclusion is `better` / `worse` only when the bootstrap interval excludes zero, otherwise
   `uncertain`; reports must print the interval, not just point estimates.
+
+## 24. Off-Policy Evaluation (optional, `recomlab.evaluation.off_policy`)
+
+- Gate: `off_policy_estimate` raises `ExposureDataUnavailable` unless every impression has a
+  logged propensity (`assess_exposure_log(...) == propensity_available`). Propensities are
+  never inferred from clicks.
+- Rewards come only from explicitly linked feedback (`LinkStatus.LINKED`); inferred links are
+  excluded.
+- Estimators: item-level IPS `Σ w r / N` and SNIPS `Σ w r / Σ w` with weights
+  `min(π(item | request) / μ, clip)`; `deterministic_topk_policy` gives `π = 1` for items in the
+  target model's top-K.
+- Diagnostics: mean/max weight, number clipped, effective sample size `(Σw)² / Σw²` and its ratio
+  to N. Warnings are raised for weights above `max_weight_warning`, ESS ratio below
+  `min_ess_ratio`, and any clipping (biased estimate).
