@@ -175,7 +175,7 @@ tests/unit/test_cleaning.py (6 tests): 11 known-bad rows yield 9 expected reason
 
 ### Task 2.2: Explicit-to-Implicit Label Policy & Relevance Semantics
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Make “relevant item” semantics explicit because ranking metrics are meaningless if ratings/clicks are converted inconsistently.
@@ -187,10 +187,13 @@ Make “relevant item” semantics explicit because ranking metrics are meaningl
 - Ensure evaluation reads the label policy from the experiment manifest.
 
 **Definition of Done (DoD)**
-- [ ] Label fixtures cover boundary values.
-- [ ] Policy version is stored with datasets/runs.
-- [ ] Changing policy changes the derived dataset version or label-version field.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Label fixtures cover boundary values.
+- [x] Policy version is stored with datasets/runs.
+- [x] Changing policy changes the derived dataset version or label-version field.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_labels.py (7 tests): rating 4/3.99 and watch 0.8/0.79 boundaries; graded relevance; raw events untouched; any policy change changes label_version; policy round-trips through RunManifest and is required for evaluation. Suite 78 passed; ruff/mypy clean.
 
 ### Task 2.3: Negative Sampling Engine for Training
 
@@ -1059,11 +1062,11 @@ Finish the project with a reproducible demo path and documented failure recovery
 | Phase | Tasks | Completed |
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
-| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 1 |
+| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 2 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **7** |
+| **Total** | **52** | **8** |

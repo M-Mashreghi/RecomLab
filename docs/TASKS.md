@@ -27,7 +27,8 @@ Update this ledger only after verification.
 
 - [x] **Task 2.1** — Interaction Validation & Cleaning Pipeline
   - Evidence: tests/unit/test_cleaning.py (6 tests): 11 known-bad rows yield 9 expected reason codes; report reconciles; no removal without reason; repeated and reversed-order runs give identical checksum. Suite 71 passed; ruff/mypy clean.
-- [ ] **Task 2.2** — Explicit-to-Implicit Label Policy & Relevance Semantics
+- [x] **Task 2.2** — Explicit-to-Implicit Label Policy & Relevance Semantics
+  - Evidence: tests/unit/test_labels.py (7 tests): rating 4/3.99 and watch 0.8/0.79 boundaries; graded relevance; raw events untouched; any policy change changes label_version; policy round-trips through RunManifest and is required for evaluation. Suite 78 passed; ruff/mypy clean.
 - [ ] **Task 2.3** — Negative Sampling Engine for Training
 - [ ] **Task 2.4** — Leakage-Safe Train / Validation / Test Split Engine
 - [ ] **Task 2.5** — Point-in-Time User, Item & Interaction Feature Builder

@@ -52,3 +52,22 @@ Logged interactions reflect what users were exposed to. When valid impression pr
 ## 9. Test-Set Governance
 
 Test data is evaluated only after model/hyperparameter selection using training/validation data. Test results must not drive iterative tuning.
+
+## 10. Relevance Semantics (Label Policy)
+
+Relevance is derived from raw feedback by a versioned `LabelPolicy`
+(`recomlab.datasets.labels`); raw events are never modified.
+
+| Event | Default rule |
+|---|---|
+| `rating` | positive iff `value >= 4.0` (boundary inclusive); lower ratings are explicit negatives |
+| `watch` | positive iff fraction watched `>= 0.8`; missing value is not positive |
+| `purchase`, `like` | positive |
+| `click`, `view`, `add_to_cart` | not positive by default (configurable) |
+
+- `binary` mode: relevance 1/0. `graded` mode: rating grade `value - threshold + 1`;
+  implicit events use configured weights (purchase 3, like/watch 2, click/add_to_cart 1).
+  Per user-item relevance is the maximum over that pair's positive events.
+- `label_version` is a content hash of the policy; any change produces a new version.
+- The policy is stored in `RunManifest.label_policy`; evaluation rebuilds it with
+  `label_policy_from_manifest` and refuses to run when it is missing or tampered.
