@@ -671,7 +671,7 @@ tests/unit/test_slices.py (3 tests, marked metrics): user and item bucket member
 
 ### Task 5.5: Bootstrap Confidence Intervals & Paired Significance Testing
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Quantify uncertainty in model differences so tiny metric changes are not overclaimed.
@@ -683,10 +683,13 @@ Quantify uncertainty in model differences so tiny metric changes are not overcla
 - Report effect size / metric delta with uncertainty.
 
 **Definition of Done (DoD)**
-- [ ] Known synthetic comparison behaves as expected.
-- [ ] Same seed reproduces intervals.
-- [ ] Reports distinguish statistically uncertain differences.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Known synthetic comparison behaves as expected.
+- [x] Same seed reproduces intervals.
+- [x] Reports distinguish statistically uncertain differences.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_statistics.py (5 tests, marked metrics): CI brackets the mean and the same seed reproduces it; synthetic clearly-better/worse/noise comparisons classified better/worse/uncertain; paired intervals reproducible with stored seed and resamples; Wilcoxon statistic and p-value hand-checked incl. ties; mismatched populations rejected. Suite 194 passed; ruff/mypy clean.
 
 ### Task 5.6: Exposure-Aware / Off-Policy Evaluation (Optional When Logged Propensities Exist)
 
@@ -1128,8 +1131,8 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
-| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 4 |
+| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 5 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **29** |
+| **Total** | **52** | **30** |

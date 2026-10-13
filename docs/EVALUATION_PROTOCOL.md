@@ -259,3 +259,14 @@ item bucket over held-out relevant items. `SliceReport.reconciles()` checks that
 dimension's bucket counts sum to the evaluation population. Reports are written to JSON
 with a content `report_id`, which is stored in `RunManifest.artifacts["slice_report"]` so the
 leaderboard can link to it.
+
+## 23. Uncertainty & Paired Comparison (`recomlab.evaluation.statistics`)
+
+- `bootstrap_ci(per_user, n_resamples=2000, confidence=0.95, seed)`: users are resampled
+  with replacement; percentile interval of the mean. Seed and resample count are stored.
+- `paired_comparison(a, b, ...)`: both models must cover the same user population. Reports
+  means, delta (B − A), relative delta, paired Cohen's d, a paired bootstrap interval and
+  two-sided bootstrap p-value for the mean difference, and a Wilcoxon signed-rank test
+  (normal approximation, zero differences dropped, tie-corrected variance).
+- Conclusion is `better` / `worse` only when the bootstrap interval excludes zero, otherwise
+  `uncertain`; reports must print the interval, not just point estimates.

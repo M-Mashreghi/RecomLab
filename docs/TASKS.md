@@ -80,7 +80,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_eval_protocol.py (4 tests, marked metrics): full-catalog evaluation deterministic; sampled mode labeled with warning, seed, sampler, n_negatives and universe size, reproducible; full vs sampled and different sampling policies raise MixedEvaluationModeError; training negatives refused as universe. Suite 186 passed; ruff/mypy clean.
 - [x] **Task 5.4** — Slice Analysis for Cold, Sparse, Popularity & Activity Segments
   - Evidence: tests/unit/test_slices.py (3 tests, marked metrics): user and item bucket memberships deterministic under reordering; slice counts reconcile with the evaluation population and item-bucket relevant counts with held-out truth; slice report id stored in the run manifest artifacts. Suite 189 passed; ruff/mypy clean.
-- [ ] **Task 5.5** — Bootstrap Confidence Intervals & Paired Significance Testing
+- [x] **Task 5.5** — Bootstrap Confidence Intervals & Paired Significance Testing
+  - Evidence: tests/unit/test_statistics.py (5 tests, marked metrics): CI brackets the mean and the same seed reproduces it; synthetic clearly-better/worse/noise comparisons classified better/worse/uncertain; paired intervals reproducible with stored seed and resamples; Wilcoxon statistic and p-value hand-checked incl. ties; mismatched populations rejected. Suite 194 passed; ruff/mypy clean.
 - [ ] **Task 5.6** — Exposure-Aware / Off-Policy Evaluation (Optional When Logged Propensities Exist)
 - [ ] **Task 5.7** — Multi-Metric Model Selection & Champion Leaderboard
 - [ ] **Task 5.8** — Evaluation Report & Reproducibility Manifest
