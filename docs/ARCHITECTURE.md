@@ -176,3 +176,16 @@ from the training partition only; validation/test events never contribute.
   matches per-user `generate` exactly in items and scores.
 - Candidate recall is measured independently of ranking with
   `evaluation.retrieval.candidate_recall` / `candidate_hit`.
+
+### 17.3 Embedding Retrieval (`candidates.embedding`)
+
+- `EmbeddingProvider` exposes a versioned `EmbeddingTable` of item vectors and a user vector:
+  `ALSEmbeddingProvider` (latent factors, version tied to the ALS artifact) and
+  `CategoryEmbeddingProvider` (L2-normalized multi-hot categories; user = mean of history).
+- `NearestNeighborIndex` implementations record `IndexMetadata` (type, embedding version,
+  metric, size, dim). `ExactIndex` (brute force, cosine or dot, id tie-break) is the
+  mandatory baseline. `HnswlibIndex` is an optional adapter that raises
+  `OptionalDependencyError` when `hnswlib` is absent; no core test needs vector infrastructure.
+- `EmbeddingCandidates` refuses an index whose embedding version differs from the provider
+  (`IndexVersionMismatch`), excludes consumed items, and flags users without an embedding
+  (`fallback_required`). Availability/eligibility is applied later during fusion.

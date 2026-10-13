@@ -377,7 +377,7 @@ tests/unit/test_collaborative_candidates.py (5 tests): consumed-item filtering o
 
 ### Task 3.4: Embedding Retrieval & ANN Adapter
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Support modern vector retrieval without making a vector database mandatory for the project.
@@ -389,10 +389,13 @@ Support modern vector retrieval without making a vector database mandatory for t
 - Version item embeddings and index build metadata.
 
 **Definition of Done (DoD)**
-- [ ] Exact retrieval fixture matches expected neighbors.
-- [ ] Index/model version mismatch is detected.
-- [ ] Core tests do not require external vector infrastructure.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Exact retrieval fixture matches expected neighbors.
+- [x] Index/model version mismatch is detected.
+- [x] Core tests do not require external vector infrastructure.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_embedding_retrieval.py (6 tests): exact cosine/dot neighbors match hand-computed values with id tie-breaks; category and ALS embedding providers retrieve on the tiny fixture; stale index vs new ALS artifact raises IndexVersionMismatch; no ANN/vector-DB module imported. Suite 136 passed; ruff/mypy clean.
 
 ### Task 3.5: Candidate Fusion, Deduplication & Eligibility Filtering
 
@@ -1087,10 +1090,10 @@ Finish the project with a reproducible demo path and documented failure recovery
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
-| 3 — Candidate Generation & Retrieval | 6 | 3 |
+| 3 — Candidate Generation & Retrieval | 6 | 4 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **16** |
+| **Total** | **52** | **17** |

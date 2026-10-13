@@ -48,7 +48,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_item_item.py (6 tests): hand-checked cosine neighbors; recency-weighted aggregation and seed-item evidence; explicit cold-user fallback flag; train-only fit differs from full-data fit and never contains held-out pairs; metadata blend; tiny fixture cluster neighbors. Suite 125 passed; ruff/mypy clean.
 - [x] **Task 3.3** — Collaborative Retrieval Candidate Generator
   - Evidence: tests/unit/test_collaborative_candidates.py (5 tests): consumed-item filtering on/off; score order and model version exposed; batch and single retrieval agree (items and scores) incl. unknown-user fallback; artifact injection matches fit; candidate recall evaluated independently of ranking. Suite 130 passed; ruff/mypy clean.
-- [ ] **Task 3.4** — Embedding Retrieval & ANN Adapter
+- [x] **Task 3.4** — Embedding Retrieval & ANN Adapter
+  - Evidence: tests/unit/test_embedding_retrieval.py (6 tests): exact cosine/dot neighbors match hand-computed values with id tie-breaks; category and ALS embedding providers retrieve on the tiny fixture; stale index vs new ALS artifact raises IndexVersionMismatch; no ANN/vector-DB module imported. Suite 136 passed; ruff/mypy clean.
 - [ ] **Task 3.5** — Candidate Fusion, Deduplication & Eligibility Filtering
 - [ ] **Task 3.6** — Candidate Recall, Coverage & Failure Diagnostics
 
