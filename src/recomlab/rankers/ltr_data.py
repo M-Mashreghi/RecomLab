@@ -51,6 +51,7 @@ class LTRDataset:
     label_version: str
     schema_version: str = LTR_FEATURE_SCHEMA
     skipped_users: dict[str, str] = field(default_factory=dict)
+    partition: str = "unspecified"  # train | validation | test
 
     def __post_init__(self) -> None:
         n = self.features.shape[0]
@@ -75,6 +76,7 @@ class LTRDataset:
             "n_rows": int(self.features.shape[0]),
             "group_sizes": list(self.group_sizes),
             "skipped_users": dict(sorted(self.skipped_users.items())),
+            "partition": self.partition,
         }
 
 
@@ -106,6 +108,28 @@ def feature_names(sources: Sequence[str]) -> tuple[str, ...]:
     )
 
 
+def candidate_feature_rows(
+    heuristic: HeuristicRanker, request: RankRequest, sources: Sequence[str]
+) -> dict[str, list[float]]:
+    """Feature rows for a request's candidates (shared by training and serving)."""
+    xs = heuristic.feature_vector(request)
+    hist_len = heuristic.features.user_features(request.user_id)["history_length"] or 0.0
+    out: dict[str, list[float]] = {}
+    for c in request.candidates:
+        src_rr = [1.0 / float(c.sources[s]["rank"]) if s in c.sources else 0.0 for s in sources]
+        out[c.item_id] = [
+            *(xs[c.item_id][f] for f in HEURISTIC_FEATURES),
+            hist_len,
+            float(len(c.sources)),
+            *src_rr,
+        ]
+    return out
+
+
+def unit_heuristic(feats: PointInTimeFeatures) -> HeuristicRanker:
+    return HeuristicRanker(feats, HeuristicWeights({f: 1.0 for f in HEURISTIC_FEATURES}))
+
+
 def build_ltr_dataset(
     history: Sequence[Interaction],
     target: Sequence[Interaction],
@@ -117,6 +141,7 @@ def build_ltr_dataset(
     sources: Sequence[str] = ("item_item", "popularity"),
     forbidden_event_ids: Iterable[str] = (),
     require_positive: bool = True,
+    partition: str = "unspecified",
 ) -> LTRDataset:
     late = [e.event_id for e in history if e.event_time >= as_of]
     early = [e.event_id for e in target if e.event_time < as_of]
@@ -127,7 +152,7 @@ def build_ltr_dataset(
     if leaked:
         raise LeakageError(f"target window contains forbidden (held-out) events: {leaked[:3]}")
     feats = PointInTimeFeatures(history, items, as_of)
-    heuristic = HeuristicRanker(feats, HeuristicWeights({f: 1.0 for f in HEURISTIC_FEATURES}))
+    heuristic = unit_heuristic(feats)
     candidates_for = (candidate_factory or default_candidate_factory())(history, items)
     truth = relevance_by_user(derive_labels(target, label_policy))
     names = feature_names(sources)
@@ -147,15 +172,10 @@ def build_ltr_dataset(
             skipped[user] = "no_candidates"
             continue
         req = RankRequest.from_fused(fused, k=len(fused.candidates))
-        xs = heuristic.feature_vector(req)
-        hist_len = feats.user_features(user)["history_length"] or 0.0
-        for c in fused.candidates:
-            src_rr = [1.0 / float(c.sources[s]["rank"]) if s in c.sources else 0.0 for s in sources]
-            rows.append(
-                [*(xs[c.item_id][f] for f in HEURISTIC_FEATURES), hist_len, len(c.sources), *src_rr]
-            )
-            labels.append(rel.get(c.item_id, 0.0))
-            item_ids.append(c.item_id)
+        for item, row in candidate_feature_rows(heuristic, req, sources).items():
+            rows.append(row)
+            labels.append(rel.get(item, 0.0))
+            item_ids.append(item)
         sizes.append(len(fused.candidates))
         qids.append(user)
     return LTRDataset(
@@ -168,6 +188,7 @@ def build_ltr_dataset(
         as_of=as_of.isoformat(),
         label_version=label_policy.label_version,
         skipped_users=skipped,
+        partition=partition,
     )
 
 

@@ -65,7 +65,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_collaborative_ranker.py (6 tests): ranking equals ALS score order; unknown user falls back to deterministic popularity regardless of input order; unknown items ranked below known ones; a spy confirms only candidate ids reach the model; batch equals single scoring with latency recorded. Suite 161 passed; ruff/mypy clean.
 - [x] **Task 4.4** — Learning-to-Rank Dataset Builder
   - Evidence: tests/unit/test_ltr_data.py (5 tests): group sizes reconcile with candidate rows and unique items per group; history-after-as_of and target-before-as_of raise LeakageError; training rows contain no validation/test target pairs and forbidden ids are refused; schema/feature manifest recorded. Suite 166 passed; ruff/mypy clean.
-- [ ] **Task 4.5** — Learning-to-Rank Baseline
+- [x] **Task 4.5** — Learning-to-Rank Baseline
+  - Evidence: tests/unit/test_ltr.py (3 tests): deterministic train/eval smoke on the tiny fixture; grid search selects by validation NDCG and test-tagged data is refused for tuning and training; LTR, heuristic and collaborative rankers compared on identical validation candidates, serving scores equal dataset scores. Suite 169 passed; ruff/mypy clean.
 - [ ] **Task 4.6** — Diversification, Calibration & Cold-Start Re-ranking Policy
 
 ## Phase 5 — Evaluation, Statistical Testing & Model Selection

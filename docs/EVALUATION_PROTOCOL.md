@@ -164,3 +164,18 @@ stored in `RunManifest.metrics["retrieval"]`.
   groups are built only for final reporting.
 - `LTRDataset` validates that group sizes reconcile with rows and records schema version,
   feature names, `as_of`, label version, group boundaries, and skipped users.
+
+## 17. Learning-to-Rank Baseline (`recomlab.rankers.ltr`)
+
+- Model: linear pairwise RankNet (`log(1 + exp(-(s_i - s_j)))` over pairs with
+  `label_i > label_j` in a group), standardized features, L2, full-batch gradient descent;
+  pure NumPy and deterministic. Dependency rationale: no LightGBM/XGBoost needed for v1
+  (dependency policy); a boosted ranker can be added later behind the same interface.
+- `tune_on_validation(train, validation, grid, k)` fits on the training dataset and selects
+  by validation NDCG@k; datasets tagged `partition="test"` raise `HeldOutTuningError`
+  (training as well). The chosen model stores params, all trials, validation score,
+  feature importance (normalized |w| on standardized features), schema and label versions.
+- `LTRRanker` serves the model through the ranker interface with exactly the training
+  feature construction (`candidate_feature_rows`); per-feature contributions sum to the
+  score. A CI test compares LTR, heuristic, and collaborative rankers on identical
+  validation candidates (CPU config: 50–100 epochs, tiny fixture).
