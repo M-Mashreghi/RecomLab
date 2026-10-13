@@ -285,7 +285,7 @@ tests/unit/test_baselines.py (6 tests): deterministic popularity top-K with id t
 
 ### Task 2.7: Collaborative Filtering Baseline
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Add a conventional personalized baseline strong enough that advanced models cannot claim gains over a strawman.
@@ -297,10 +297,13 @@ Add a conventional personalized baseline strong enough that advanced models cann
 - Provide CPU-friendly fixture settings for CI.
 
 **Definition of Done (DoD)**
-- [ ] Model trains on tiny fixture and ranks expected items.
-- [ ] Seed/config are recorded.
-- [ ] Baseline is evaluated under the same protocol as popularity.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Model trains on tiny fixture and ranks expected items.
+- [x] Seed/config are recorded.
+- [x] Baseline is evaluated under the same protocol as popularity.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_als.py (5 tests): ALS recovers the held-back cluster item where popularity fails; seeded/deterministic factors; artifact save/load with version check (serving separate from training); label-policy feedback and params recorded; evaluated under the same protocol as popularity in the registry. Suite 113 passed; ruff/mypy clean.
 
 ---
 
@@ -1074,11 +1077,11 @@ Finish the project with a reproducible demo path and documented failure recovery
 | Phase | Tasks | Completed |
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
-| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 6 |
+| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **12** |
+| **Total** | **52** | **13** |

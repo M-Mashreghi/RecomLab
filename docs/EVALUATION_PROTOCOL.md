@@ -120,3 +120,21 @@ Relevance is derived from raw feedback by a versioned `LabelPolicy`
 - `run_offline_experiment` fits on the visible history, evaluates, and logs a `RunManifest`
   with dataset, split, label policy, model params, evaluation universe, metrics, latency,
   and software state. Latency is excluded from determinism checks.
+
+## 14. Collaborative Filtering Baseline (`recomlab.models.als`)
+
+Weighted ALS for implicit feedback (Hu, Koren & Volinsky, 2008), pure NumPy:
+
+- Objective: `sum c_ui (p_ui - x_u·y_i)^2 + reg(|X|^2 + |Y|^2)`, `p_ui = 1` for observed pairs,
+  confidence `c_ui = 1 + alpha * r_ui`.
+- Feedback assumption: by default every training event is an implicit positive of strength 1
+  (aggregated per user-item pair, including low ratings). With a `LabelPolicy`, only
+  label-positive events contribute, with their relevance as strength; the label version is
+  stored in the artifact.
+- Defaults `factors=8, regularization=0.1, alpha=10, iterations=15, seed=0`; CI uses
+  `factors=4, iterations=10`. Initialization is seeded, so artifacts are reproducible.
+- `ImplicitALS.fit` produces an `ALSArtifact` (saved as `factors.npz` + `meta.json` with a
+  content version); `ALSRecommender` serves from the artifact only and returns `None` scores
+  for unknown users/items so callers apply an explicit fallback.
+- Evaluated with `run_offline_experiment` under exactly the same split, label policy, and
+  full-catalog universe as the popularity baseline.

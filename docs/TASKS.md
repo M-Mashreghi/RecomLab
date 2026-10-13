@@ -37,7 +37,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_features.py (7 tests): hand-computed point-in-time counts, profiles and recency decay; injected future events do not change features and strict mode raises; assert_point_in_time fails when a future event is used; split train-only aggregates match; feature manifest round-trips in RunManifest. Suite 102 passed; ruff/mypy clean.
 - [x] **Task 2.6** — Random & Popularity Recommendation Baselines
   - Evidence: tests/unit/test_baselines.py (6 tests): deterministic popularity top-K with id tie-breaks; popularity counts equal training-only counts; seeded random independent of call order; eligibility filters; both baselines logged to the SQLite registry with coverage, latency and metrics; rerun reproduces metrics. Suite 108 passed; ruff/mypy clean.
-- [ ] **Task 2.7** — Collaborative Filtering Baseline
+- [x] **Task 2.7** — Collaborative Filtering Baseline
+  - Evidence: tests/unit/test_als.py (5 tests): ALS recovers the held-back cluster item where popularity fails; seeded/deterministic factors; artifact save/load with version check (serving separate from training); label-policy feedback and params recorded; evaluated under the same protocol as popularity in the registry. Suite 113 passed; ruff/mypy clean.
 
 ## Phase 3 — Candidate Generation & Retrieval
 
