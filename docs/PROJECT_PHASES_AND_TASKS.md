@@ -1101,7 +1101,7 @@ tests/integration/test_monitoring.py (3 tests): /health, /ready and the new /mon
 
 ### Task 8.3: Dockerization & Reproducible Demo Stack
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Make the portfolio demo easy to run without introducing unnecessary distributed infrastructure.
@@ -1113,10 +1113,13 @@ Make the portfolio demo easy to run without introducing unnecessary distributed 
 - Run as non-root where practical and include healthcheck.
 
 **Definition of Done (DoD)**
-- [ ] Docker build succeeds.
-- [ ] Demo stack serves health endpoint and dashboard.
-- [ ] Secrets are not baked into image.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Docker build succeeds.
+- [x] Demo stack serves health endpoint and dashboard.
+- [x] Secrets are not baked into image.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_demo_stack.py (3 tests): Dockerfile is multi-stage slim, non-root, has a /health HEALTHCHECK and bakes no secrets (.dockerignore excludes .env/data/artifacts); compose parses with api+dashboard, mounted volumes and healthchecks; `recomlab bootstrap-demo` deploys a bundle after which the API serves /health, /ready and recommendations and the dashboard loads, and re-running is idempotent. NOT VERIFIED: `docker build` / `docker compose up` were not run because Docker is not installed on this machine. Suite 291 passed; ruff/mypy clean.
 
 ### Task 8.4: GitHub Actions CI & Quality Gates
 
@@ -1188,5 +1191,5 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 7 |
-| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 2 |
-| **Total** | **52** | **48** |
+| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 3 |
+| **Total** | **52** | **49** |

@@ -1,0 +1,37 @@
+services:
+  api:
+    build: .
+    image: recomlab:local
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./data/processed:/app/data/processed
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  dashboard:
+    image: recomlab:local
+    depends_on:
+      api:
+        condition: service_healthy
+    command: ["streamlit", "run", "/usr/local/lib/python3.12/site-packages/recomlab/dashboard/app.py", "--server.address=0.0.0.0", "--server.port=8501"]
+    ports:
+      - "8501:8501"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./data/processed:/app/data/processed
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

@@ -64,6 +64,40 @@ def _cmd_retrain(args: argparse.Namespace) -> int:
     return 0 if result.status != "failed" else 1
 
 
+def _cmd_bootstrap_demo(args: argparse.Namespace) -> int:
+    """One-command demo: train a bundle on the configured dataset and deploy it.
+
+    The very first deployment has no champion to compare against, so the
+    challenger is activated explicitly here (recorded as ``initial demo
+    deployment``). Later retraining runs never auto-promote.
+    """
+    from datetime import timedelta
+
+    from recomlab.config.settings import load_settings
+    from recomlab.registry.model_registry import ModelRegistry
+    from recomlab.services.bootstrap import load_dataset, registry_dir
+
+    settings = load_settings()
+    models = ModelRegistry(registry_dir(settings))
+    if models.active_bundle_id is not None and not args.force:
+        print(json.dumps({"active": models.active_bundle_id, "note": "already deployed"}))
+        return 0
+    code = _cmd_retrain(args)
+    if code != 0:
+        return code
+    data = load_dataset(settings)
+    newest = max(
+        (models.get_bundle(b) for b in models.list_bundles()),
+        key=lambda b: b.metadata.get("registered_at", ""),
+    )
+    as_of = max(e.event_time for e in data.interactions) + timedelta(seconds=1)
+    models.activate(
+        newest.bundle_id, data.items, data.interactions, as_of, reason="initial demo deployment"
+    )
+    print(json.dumps({"active": newest.bundle_id}))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="recomlab", description="RecomLab CLI")
     parser.add_argument("--version", action="version", version=f"recomlab {__version__}")
@@ -76,6 +110,11 @@ def build_parser() -> argparse.ArgumentParser:
     retrain.add_argument("--spec", required=True, help="JSON file with 'pipeline' and 'als'")
     retrain.add_argument("--events", help="optional event-log SQLite file to include")
     retrain.set_defaults(func=_cmd_retrain)
+    demo = sub.add_parser("bootstrap-demo", help="train and deploy the demo bundle")
+    demo.add_argument("--spec", default="configs/demo_bundle.json")
+    demo.add_argument("--events", help="optional event-log SQLite file to include")
+    demo.add_argument("--force", action="store_true", help="redeploy even if a bundle is active")
+    demo.set_defaults(func=_cmd_bootstrap_demo)
     return parser
 
 

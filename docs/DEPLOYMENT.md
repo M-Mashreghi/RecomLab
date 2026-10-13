@@ -41,6 +41,31 @@ Mandatory:
 - full-vs-sampled evaluation labeling tests
 - secret/dependency audit
 
+## Demo Bootstrap (no Docker)
+
+```bash
+pip install -e ".[api,dashboard]"
+recomlab bootstrap-demo                       # snapshot + train + evaluate + deploy demo bundle
+uvicorn recomlab.api.main:app --port 8000     # API: /health, /ready, /recommendations, ...
+streamlit run src/recomlab/dashboard/app.py   # dashboard on :8501
+```
+
+`bootstrap-demo` is idempotent: when a bundle is already active it does nothing unless
+`--force` is given. The first deployment activates the trained bundle explicitly (recorded as
+`initial demo deployment`); later `recomlab retrain` runs never auto-promote.
+
 ## Docker
 
-The demo image should run non-root where practical, expose health/readiness endpoints, and mount datasets/artifacts outside the image.
+```bash
+docker compose up --build          # api on :8000, dashboard on :8501
+```
+
+- `Dockerfile`: multi-stage build on `python:3.12-slim`; the runtime stage installs only the
+  built wheels, runs as the non-root `recomlab` user (uid 10001), exposes 8000/8501, and has a
+  `HEALTHCHECK` against `/health`. The container runs `recomlab bootstrap-demo` then uvicorn.
+- `docker-compose.yml`: `api` + `dashboard` only; both mount `./artifacts` and
+  `./data/processed` from the host, read optional settings from `.env`, and have
+  healthchecks; the dashboard waits for a healthy API.
+- `.dockerignore` excludes `.env`, raw/processed data, artifacts, tests and docs, so no
+  secrets or datasets are baked into the image. Provide secrets only at runtime via `.env`
+  or environment variables.
