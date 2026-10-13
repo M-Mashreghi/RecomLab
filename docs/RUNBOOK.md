@@ -47,3 +47,13 @@ One workflow id links every stage (`recomlab.experiments.retraining.run_retraini
 
 Schedule it with the host's scheduler (cron, Windows Task Scheduler, CI schedule); no queue
 infrastructure is required.
+
+## 10. End-to-End Regression Suite
+
+`pytest -m e2e` (`tests/e2e/test_pipeline_e2e.py`) runs the full deterministic fixture
+pipeline twice: ingestion + cleaning → leakage-checked split → offline evaluation of the
+popularity baseline and the two-stage pipeline (registry + per-user artifacts + report) →
+bundle registration and serving (warm user, cold user, empty-candidate cold-start fallback,
+collaborative-ranker unknown-user fallback) → grounded explanation with a mocked LLM provider
+and fidelity validation. It asserts identical metrics across runs, no held-out events in
+serving history, bounded artifacts (< 60 files, < 5 MB), and needs no live external API.

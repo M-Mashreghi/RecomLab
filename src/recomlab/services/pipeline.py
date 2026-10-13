@@ -169,13 +169,21 @@ class PipelineRecommender:
             if not train:
                 raise ValueError("cannot infer as_of from empty training history")
             as_of = max(e.event_time for e in train) + timedelta(seconds=1)
-        directory = artifacts_dir or Path(tempfile.mkdtemp(prefix="recomlab-pipeline-"))
-        if "als" in self.spec.get("artifacts", {}):
-            ImplicitALS(ALSParams(**self.als_params)).fit(train, items).save(
-                directory / self.spec["artifacts"]["als"]
-            )
-        self.artifacts_dir = directory
-        self.pipeline = RecommendationPipeline(self.spec, train, items, as_of, directory)
+
+        def build(directory: Path) -> None:
+            if "als" in self.spec.get("artifacts", {}):
+                ImplicitALS(ALSParams(**self.als_params)).fit(train, items).save(
+                    directory / self.spec["artifacts"]["als"]
+                )
+            # The pipeline loads artifacts into memory at construction time.
+            self.pipeline = RecommendationPipeline(self.spec, train, items, as_of, directory)
+
+        if artifacts_dir is not None:
+            build(artifacts_dir)
+            self.artifacts_dir = artifacts_dir
+        else:
+            with tempfile.TemporaryDirectory(prefix="recomlab-pipeline-") as tmp:
+                build(Path(tmp))
         return self
 
     def recommend(self, user_id: str, k: int, eligibility: EligibilityFilter) -> list[ScoredItem]:

@@ -1057,7 +1057,7 @@ tests/unit/test_persuasion.py (3 tests): wording variants require an explicitly 
 
 ### Task 8.1: End-to-End Regression Suite
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Prove the full data→retrieval→ranking→evaluation→serving path works and core methodological invariants remain intact.
@@ -1069,10 +1069,13 @@ Prove the full data→retrieval→ranking→evaluation→serving path works and 
 - Include optional explanation path with mocked provider.
 
 **Definition of Done (DoD)**
-- [ ] E2E suite passes in CI.
-- [ ] No live external API is required.
-- [ ] Regression artifacts are bounded and deterministic.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] E2E suite passes in CI.
+- [x] No live external API is required.
+- [x] Regression artifacts are bounded and deterministic.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/e2e/test_pipeline_e2e.py (5 tests, marked e2e): full fixture pipeline run twice with identical metrics, rankings and reports; no held-out leakage into serving history; warm, cold, empty-candidate and model fallback paths; mocked-provider explanation passes fidelity; artifacts bounded. No live API. Suite 285 passed; ruff/mypy clean.
 
 ### Task 8.2: Observability, Drift & Train-Serving Skew Checks
 
@@ -1182,5 +1185,5 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 7 |
-| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **46** |
+| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 1 |
+| **Total** | **52** | **47** |

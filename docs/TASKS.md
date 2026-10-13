@@ -123,7 +123,8 @@ Update this ledger only after verification.
 
 ## Phase 8 — Hardening, Monitoring, CI/CD & Release
 
-- [ ] **Task 8.1** — End-to-End Regression Suite
+- [x] **Task 8.1** — End-to-End Regression Suite
+  - Evidence: tests/e2e/test_pipeline_e2e.py (5 tests, marked e2e): full fixture pipeline run twice with identical metrics, rankings and reports; no held-out leakage into serving history; warm, cold, empty-candidate and model fallback paths; mocked-provider explanation passes fidelity; artifacts bounded. No live API. Suite 285 passed; ruff/mypy clean.
 - [ ] **Task 8.2** — Observability, Drift & Train-Serving Skew Checks
 - [ ] **Task 8.3** — Dockerization & Reproducible Demo Stack
 - [ ] **Task 8.4** — GitHub Actions CI & Quality Gates
