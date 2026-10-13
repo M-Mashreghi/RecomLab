@@ -13,7 +13,9 @@ Claim checks (rule-based, deterministic):
   recommended item or of a history-evidence item;
 * ``history``: "you watched/rated/liked/bought/clicked ..." statements need
   history evidence;
-* ``popularity``: popularity/trending statements need a popularity feature.
+* ``popularity``: popularity/trending/social-proof statements need popularity evidence;
+* ``ungroundable``: predicted feelings ("you will love") and appeals to authority are
+  never supported by recommender evidence.
 
 A perturbation check (:func:`feature_ablation`) verifies, for rankers that
 expose additive contributions, that each cited ranker feature actually moves
@@ -37,7 +39,13 @@ HISTORY_VERBS = re.compile(
     r"\byou(?:'ve| have)?\s+(?:watched|rated|liked|loved|bought|purchased|clicked|viewed)\b",
     re.IGNORECASE,
 )
-POPULARITY_WORDS = re.compile(r"\b(popular|trending|most[- ]watched|bestsell\w*)\b", re.IGNORECASE)
+POPULARITY_WORDS = re.compile(
+    r"\b(popular|trending|most[- ]watched|bestsell\w*|everyone|most people)\b", re.IGNORECASE
+)
+# Claims the recommender can never ground: predicted feelings and appeals to authority.
+UNGROUNDABLE = re.compile(
+    r"\b(you(?:'ll| will) (?:love|enjoy|adore)|experts?\b|guaranteed|you must)", re.IGNORECASE
+)
 
 
 @dataclass(frozen=True)
@@ -106,6 +114,8 @@ def extract_claims(
         ok = bool(history)
         reason = "" if ok else "history claim without history evidence"
         claims.append(Claim("history", history_claim.group(0), ok, reason))
+    for m in UNGROUNDABLE.finditer(text):
+        claims.append(Claim("ungroundable", m.group(0), False, "not derivable from evidence"))
     if POPULARITY_WORDS.search(text):
         ok = any(
             e.data.get("feature") == "popularity" for e in payload.by_kind("ranker_feature")

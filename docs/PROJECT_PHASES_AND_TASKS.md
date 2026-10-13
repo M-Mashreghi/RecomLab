@@ -1031,7 +1031,7 @@ tests/unit/test_study_analysis.py (4 tests): simulated known effect (+1.0) recov
 
 ### Task 7.7: Explanation Bias / Persuasiveness Stress Test & Research Report
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Evaluate whether wording can influence users independently of recommendation quality and summarize the full human-centered experiment transparently.
@@ -1043,10 +1043,13 @@ Evaluate whether wording can influence users independently of recommendation qua
 - Generate a report with hypotheses, methods, results, uncertainty, fidelity results, limitations, and simulated-vs-real status.
 
 **Definition of Done (DoD)**
-- [ ] Research mode cannot silently modify production/demo explanations.
-- [ ] Report distinguishes persuasion from correctness.
-- [ ] Free-text is sanitized/minimized before LLM-assisted coding if used.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Research mode cannot silently modify production/demo explanations.
+- [x] Report distinguishes persuasion from correctness.
+- [x] Free-text is sanitized/minimized before LLM-assisted coding if used.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_persuasion.py (3 tests): wording variants require an explicitly enabled research mode and never alter production/template explanations; simulated stress test shows persuasive variants raising acceptance while failing fidelity, and the report separates persuasion from correctness with a SIMULATED banner; free text sanitized before (spy) coding and in the CSV export. Suite 280 passed; ruff/mypy clean.
 
 ---
 
@@ -1178,6 +1181,6 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
-| 7 — LLM Explanations & Human-AI Research Extension | 7 | 6 |
+| 7 — LLM Explanations & Human-AI Research Extension | 7 | 7 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **45** |
+| **Total** | **52** | **46** |

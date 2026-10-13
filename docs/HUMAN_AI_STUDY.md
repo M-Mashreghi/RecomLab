@@ -135,3 +135,19 @@ ranking.
   understanding, decision time) are accepted; offline recommender metrics are refused and
   stay in the evaluation reports. Reports state `SIMULATED (software validation only)` when
   the data are simulated.
+
+## Wording / Persuasiveness Stress Test (`recomlab.research.persuasion`)
+
+- Wording variants (`neutral-v1`, `enthusiastic-v1`, `authority-v1`, `social_proof-v1`) only
+  reframe an existing explanation, keep its citations, and never touch ranking. They can be
+  applied only through an explicitly enabled `ResearchMode`; `apply_wording(..., mode=None)`
+  raises, and the production `ExplanationRouter` has no wording path.
+- `stress_test` reports **persuasion** (acceptance difference vs the neutral variant with
+  bootstrap CI, Welch p and Holm adjustment) and **correctness** (fidelity validation of each
+  worded text) separately. Fidelity now flags social-proof wording without popularity
+  evidence and ungroundable claims (predicted feelings, appeals to authority).
+- Free text: `sanitize_free_text` masks emails, URLs, phone numbers and long digit runs and
+  bounds length; `code_free_text` passes only sanitized text to the coder (default: a
+  deterministic keyword codebook, no LLM); `export_coding` writes a CSV for qualitative coding.
+- `research_report` renders hypotheses, methods, results with uncertainty, fidelity,
+  persuasion vs correctness, limitations, and a prominent SIMULATED banner for simulated data.

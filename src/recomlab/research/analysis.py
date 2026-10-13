@@ -122,7 +122,7 @@ def descriptive(
     return out
 
 
-def _compare(
+def compare_groups(
     a: list[float], b: list[float], n_resamples: int, seed: int, tag: str
 ) -> tuple[float, float, float, float, float, float, float | None]:
     if len(a) < 2 or len(b) < 2:
@@ -179,7 +179,9 @@ def analyze(
                 tr,
                 ct,
                 pre,
-                _compare(_values(records, tr, o), _values(records, ct, o), n_resamples, seed, hid),
+                compare_groups(
+                    _values(records, tr, o), _values(records, ct, o), n_resamples, seed, hid
+                ),
             )
         )
     p_holm = holm_adjust([r[5][5] for r in raw])
