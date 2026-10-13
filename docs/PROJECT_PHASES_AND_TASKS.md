@@ -737,7 +737,7 @@ tests/unit/test_leaderboard.py (5 tests): test runs refused for selection; decis
 
 ### Task 5.8: Evaluation Report & Reproducibility Manifest
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Turn experiments into a reviewable research artifact with protocol, metrics, uncertainty, caveats, and exact configuration.
@@ -749,10 +749,13 @@ Turn experiments into a reviewable research artifact with protocol, metrics, unc
 - Include warnings for sampled evaluation or unavailable exposure correction.
 
 **Definition of Done (DoD)**
-- [ ] Report can be regenerated from stored artifacts.
-- [ ] No manual notebook copy/paste is required.
-- [ ] Report clearly states limitations.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Report can be regenerated from stored artifacts.
+- [x] No manual notebook copy/paste is required.
+- [x] Report clearly states limitations.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_evaluation_report.py (3 tests): report rebuilt from a reopened registry and stored per-user artifacts is byte-identical (Markdown and JSON); contains protocol, ranking-stage CIs, separate retrieval section, paired comparison, slice links, limitations and simulated/exposure caveats; sampled runs carry the sampled warning. Suite 205 passed; ruff/mypy clean.
 
 ---
 
@@ -1137,8 +1140,8 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
-| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 7 |
+| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **32** |
+| **Total** | **52** | **33** |

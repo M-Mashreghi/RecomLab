@@ -86,7 +86,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_off_policy.py (3 tests, marked metrics): IPS, SNIPS and ESS match a hand-computed fixture using only linked rewards; extreme weights and clipping are flagged; logs with a missing propensity or no impressions are refused. Suite 197 passed; ruff/mypy clean.
 - [x] **Task 5.7** — Multi-Metric Model Selection & Champion Leaderboard
   - Evidence: tests/unit/test_leaderboard.py (5 tests): test runs refused for selection; decision records policy id, rationale, metrics and guardrails, test report attached only afterwards; decision identical when rebuilt from registry manifests or reordered; failing/missing guardrails block a champion; Pareto front hand-checked and mixed full/sampled runs refused. Suite 202 passed; ruff/mypy clean.
-- [ ] **Task 5.8** — Evaluation Report & Reproducibility Manifest
+- [x] **Task 5.8** — Evaluation Report & Reproducibility Manifest
+  - Evidence: tests/integration/test_evaluation_report.py (3 tests): report rebuilt from a reopened registry and stored per-user artifacts is byte-identical (Markdown and JSON); contains protocol, ranking-stage CIs, separate retrieval section, paired comparison, slice links, limitations and simulated/exposure caveats; sampled runs carry the sampled warning. Suite 205 passed; ruff/mypy clean.
 
 ## Phase 6 — API, Dashboard & Automated Recommendation Workflow
 

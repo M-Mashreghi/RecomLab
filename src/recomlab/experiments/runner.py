@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 from collections.abc import Sequence
+from pathlib import Path
 from typing import Any
 
 from recomlab.datasets.dataset import CanonicalDataset
@@ -38,8 +40,16 @@ def run_offline_experiment(
     created_at: str | None = None,
     features: dict[str, Any] | None = None,
     protocol: EvaluationProtocol | None = None,
+    artifacts_dir: Path | None = None,
+    extra_metrics: dict[str, Any] | None = None,
 ) -> tuple[RunManifest, EvaluationResult]:
-    """Fit on history visible for ``partition``, evaluate, and log a manifest."""
+    """Fit on history visible for ``partition``, evaluate, and log a manifest.
+
+    With ``artifacts_dir``, per-user metrics are written to
+    ``<artifacts_dir>/<config_hash>-<partition>-per_user.json`` and referenced from
+    ``manifest.artifacts["per_user_metrics"]`` (relative to ``artifacts_dir``) so
+    reports can recompute uncertainty without rerunning the model.
+    """
     history = split.train_until(partition)
     as_of = None if split.is_diagnostic else prediction_time(split, partition)
     model.fit(history, dataset.items, as_of if split.config.protocol == "global_time" else None)
@@ -56,6 +66,7 @@ def run_offline_experiment(
     kwargs: dict[str, Any] = {}
     if created_at is not None:
         kwargs["created_at"] = created_at
+    artifacts: dict[str, str] = {}
     manifest = RunManifest(
         experiment_id=experiment_id,
         dataset=dataset_ref,
@@ -79,11 +90,19 @@ def run_offline_experiment(
             "eligibility": (eligibility_policy or EligibilityPolicy()).to_dict(),
             "diagnostic_split": split.is_diagnostic,
         },
-        metrics={**result.summary(), "latency_ms": result.latency_ms},
+        metrics={**result.summary(), "latency_ms": result.latency_ms, **(extra_metrics or {})},
+        artifacts=artifacts,
         software=collect_software_state(),
         git_commit=git_commit(),
         **kwargs,
     )
+    if artifacts_dir is not None:
+        name = f"{manifest.config_hash[:12]}-{partition}-{manifest.run_id[-8:]}-per_user.json"
+        Path(artifacts_dir).mkdir(parents=True, exist_ok=True)
+        with (Path(artifacts_dir) / name).open("w", encoding="utf-8", newline="\n") as fh:
+            json.dump(result.per_user, fh, indent=2, sort_keys=True)
+            fh.write("\n")
+        artifacts["per_user_metrics"] = name
     if registry is not None:
         registry.log_run(manifest)
     return manifest, result

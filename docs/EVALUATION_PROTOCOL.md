@@ -300,3 +300,18 @@ leaderboard can link to it.
   trade-offs where no single model dominates.
 - `attach_test_report` adds the champion configuration's single test-partition run as a
   one-time final report; test runs never influence selection.
+
+## 26. Evaluation Report (`recomlab.evaluation.report`)
+
+- `run_offline_experiment(..., artifacts_dir=...)` stores per-user metrics as an artifact
+  referenced from `RunManifest.artifacts["per_user_metrics"]`.
+- `build_report(registry, run_ids, artifacts_root, primary_metric, baseline_run_id)` is a pure
+  function of stored manifests and artifacts: protocol key (refuses mixed protocols),
+  metric definitions, label policy, per-run dataset/split/model versions and evaluation
+  universe, user-level bootstrap CI for the primary metric, paired comparisons against the
+  baseline, candidate-stage diagnostics (`metrics["retrieval"]`) shown separately from
+  ranking results, slice report links, caveats, and standard limitations.
+- Caveats are automatic: sampled evaluation warning, diagnostic split, simulated dataset,
+  unavailable exposure correction, missing per-user artifacts.
+- `write_report` writes Markdown + JSON; regenerating from the same registry and artifacts
+  produces byte-identical files (tested). No notebook copy/paste is involved.
