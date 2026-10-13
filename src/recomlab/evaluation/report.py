@@ -6,6 +6,7 @@ reruns, no notebook state): regenerating it yields identical Markdown/JSON.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from collections.abc import Mapping, Sequence
 from pathlib import Path
@@ -22,6 +23,14 @@ STANDARD_LIMITATIONS = (
     "Uncertainty intervals resample users and do not cover dataset or split variability.",
     "Results on the simulated fixture are for software validation only.",
 )
+
+
+def model_label(run: RunManifest) -> str:
+    """``name@version``; long versions are shortened to a stable 8-char hash."""
+    version = str(run.model["version"])
+    if len(version) > 24:
+        version = "h" + hashlib.sha256(version.encode("utf-8")).hexdigest()[:8]
+    return f"{run.model['name']}@{version}"
 
 
 def _load_per_user(run: RunManifest, artifacts_root: Path) -> dict[str, dict[str, float]] | None:
@@ -79,7 +88,7 @@ def build_report(
         rows.append(
             {
                 "run_id": r.run_id,
-                "model": f"{r.model['name']}@{r.model['version']}",
+                "model": model_label(r),
                 "partition": r.split.get("partition"),
                 "dataset": f"{r.dataset['dataset_id']}@{r.dataset['version']}",
                 "split_id": r.split["split_id"],
@@ -95,6 +104,7 @@ def build_report(
     comparisons = []
     if baseline_run_id is not None:
         base = per_user_cache.get(baseline_run_id)
+        baseline_label = next(model_label(r) for r in runs if r.run_id == baseline_run_id)
         if base is None:
             raise ValueError("baseline run has no stored per-user metrics")
         for r in runs:
@@ -113,6 +123,7 @@ def build_report(
                     n_resamples=n_resamples,
                     seed=seed,
                 ).to_dict()
+                | {"challenger_model": model_label(r), "baseline_model": baseline_label}
             )
     metric_defs = runs[0].metric_config
     return {
@@ -180,12 +191,16 @@ def render_markdown(report: Mapping[str, Any]) -> str:
         )
     lines += ["", "## Paired Comparisons", ""]
     if report["comparisons"]:
-        lines += ["| Challenger | Δ | 95% CI | Wilcoxon p | Conclusion |", "|---|---|---|---|---|"]
+        lines += [
+            "| Comparison | Δ | 95% CI | Wilcoxon p | Conclusion | Users |",
+            "|---|---|---|---|---|---|",
+        ]
         for c in report["comparisons"]:
             interval = f"[{c['ci_low']:+.4f}, {c['ci_high']:+.4f}]"
             lines.append(
-                f"| {c['challenger']} | {c['delta']:+.4f} | {interval} "
-                f"| {c['wilcoxon_p']:.3g} | {c['conclusion']} |"
+                f"| {c['challenger_model']} vs {c['baseline_model']} | {c['delta']:+.4f} "
+                f"| {interval} "
+                f"| {c['wilcoxon_p']:.3g} | {c['conclusion']} | {c['n_users']} |"
             )
     else:
         lines.append("- No baseline comparison requested.")

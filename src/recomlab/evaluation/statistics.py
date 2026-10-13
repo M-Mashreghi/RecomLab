@@ -8,7 +8,8 @@
   dropped). Effect sizes: mean delta, relative delta and paired Cohen's d.
 
 A difference is called ``"better"`` / ``"worse"`` only when the bootstrap
-interval excludes zero; otherwise the conclusion is ``"uncertain"``.
+interval excludes zero and at least ``min_users`` (default 10) users are
+compared; otherwise the conclusion is ``"uncertain"``.
 """
 
 from __future__ import annotations
@@ -145,6 +146,7 @@ def paired_comparison(
     n_resamples: int = 2000,
     confidence: float = 0.95,
     seed: int = 0,
+    min_users: int = 10,
 ) -> PairedComparison:
     """Paired comparison of challenger ``b`` against baseline ``a`` on common users."""
     users = sorted(set(a) & set(b))
@@ -163,6 +165,8 @@ def paired_comparison(
     sd = float(diffs.std(ddof=1))
     delta = float(diffs.mean())
     conclusion = "better" if low > 0 else "worse" if high < 0 else "uncertain"
+    if len(users) < min_users:
+        conclusion = "uncertain"  # too few users for a reliable interval
     return PairedComparison(
         metric=metric,
         baseline=baseline,

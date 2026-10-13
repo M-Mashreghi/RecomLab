@@ -1,13 +1,30 @@
 # RecomLab Operational Runbook
 
-## 1. Implausibly High Offline Metrics
-Check temporal split, point-in-time features, popularity statistics, negative sampling, duplicate users/items, and evaluation universe. Invalidate affected experiment ids if leakage is confirmed.
+Quick commands: `recomlab smoke` (install check) · `recomlab bootstrap-demo` (deploy demo) ·
+`recomlab retrain --spec configs/demo_bundle.json` (challenger) ·
+`python scripts/run_benchmark.py` (benchmark report) · `python scripts/scan_secrets.py` ·
+`sh scripts/check.sh` (lint, format, types, tests).
+
+## 0. Reproducing a Result
+Load the run with `ExperimentRegistry(db).get_run(run_id)`; its manifest pins dataset id,
+version and checksum, split id and config, label policy version, feature manifest, model
+params, metric config, seeds, software versions and git commit. Re-materialize the dataset
+with the same adapter, `verify_snapshot()` it, rebuild the split with the stored config
+(same `split_id` is guaranteed), rerun `run_offline_experiment` with the stored seeds, and
+regenerate the report with `build_report()` — it must match byte for byte.
+
+## 1. Implausibly High Offline Metrics (suspected leakage)
+Check temporal split, point-in-time features, popularity statistics, negative sampling, duplicate users/items, and evaluation universe. Run `pytest -m leakage`; call `assert_no_leakage(split)`,
+`assert_point_in_time(features)`, and compare the run's `evaluation.protocol` (sampled runs
+look better by construction). Invalidate affected experiment ids if leakage is confirmed and
+record the reason in the run notes.
 
 ## 2. Candidate Recall Collapse
 Inspect candidate budget, item eligibility filters, index/model version, cold-user rate, and per-source candidate contribution before changing the ranker.
 
-## 3. Ranker Regression
-Run the same candidate set through champion and challenger; compare user-level metric deltas, confidence intervals, slices, and latency.
+## 3. Ranker / Model Regression
+Run the same candidate set through champion and challenger; compare user-level metric deltas, confidence intervals, slices, and latency. Use `evaluate_promotion()` on the two validation
+runs (same split) and inspect `failure_breakdown()` to separate retrieval from ranking misses.
 
 ## 4. Sampled vs Full-Catalog Mismatch
 Do not merge the results. Verify negative-sampling policy and use full-catalog evaluation as the reference when feasible.
@@ -16,13 +33,18 @@ Do not merge the results. Verify negative-sampling policy and use full-catalog e
 Compare feature schema, catalog size, user/item activity, event-type mix, empty-candidate rate, and scoring latency against the training snapshot.
 
 ## 6. LLM Explanation Failure
-Disable/fallback the explanation layer without disabling recommendations. Inspect evidence payload, schema errors, unsupported claims, and provider status. The LLM must never become a ranking fallback.
+Disable/fallback the explanation layer without disabling recommendations. Inspect evidence payload, schema errors, unsupported claims, and provider status. The LLM must never become a ranking fallback. Set `RECOMLAB_LLM_PROVIDER=none` to force the template; check
+`fallback llm explanation` log lines (they carry condition and prompt version) and
+`FidelityLog` rejections.
 
 ## 7. Human-AI Study Safety
 Do not mix simulated and real participant records. Do not start real recruitment merely because the study software is ready. Follow applicable institutional ethics/privacy procedures.
 
 ## 8. Rollback
-Model registry must retain the previous champion. If a challenger causes operational or guardrail regression, reactivate the prior compatible bundle and record the rollback reason.
+Model registry must retain the previous champion. If a challenger causes operational or guardrail regression, reactivate the prior compatible bundle and record the rollback reason:
+`ModelRegistry(root).rollback(items, history, as_of, reason="...")` (or
+`RecommendationService.rollback`). Rollback validates the previous bundle first and appends
+a `rollback` event to `active.json` history.
 
 ## 9. Scheduled Retraining (`recomlab retrain`)
 

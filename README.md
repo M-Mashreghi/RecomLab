@@ -92,19 +92,54 @@ Heavy dependencies are optional adapters, not architectural requirements.
 
 ```bash
 python -m venv .venv
-.venv\Scriptsctivate        # POSIX: source .venv/bin/activate
-pip install -e ".[dev]"
-recomlab smoke                 # or: python -m recomlab smoke
-pytest
-ruff check src tests && mypy
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -e ".[dev,api,dashboard]"
+recomlab smoke                 # install check
+sh scripts/check.sh            # ruff + format + mypy + full test suite
+recomlab bootstrap-demo        # train, evaluate and deploy the demo bundle (simulated fixture)
+uvicorn recomlab.api.main:app --port 8000
+streamlit run src/recomlab/dashboard/app.py
 ```
 
-Mandatory dependencies are kept minimal (NumPy only). API, dashboard, and other
-heavy libraries are optional extras (`.[api]`, `.[dashboard]`).
+Or with Docker: `docker compose up --build` (API on :8000, dashboard on :8501).
+
+Mandatory dependencies are kept minimal (NumPy only). API, dashboard and LLM libraries are
+optional extras (`.[api]`, `.[dashboard]`, `.[llm]`).
+
+## Documentation
+
+- Architecture: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) · data contract:
+  [`docs/DATA_CONTRACT.md`](docs/DATA_CONTRACT.md)
+- Evaluation protocol: [`docs/EVALUATION_PROTOCOL.md`](docs/EVALUATION_PROTOCOL.md)
+- Benchmark / evaluation report: [`docs/reports/benchmark_tiny.md`](docs/reports/benchmark_tiny.md)
+  (regenerate with `python scripts/run_benchmark.py`; simulated fixture)
+- Human-AI study extension: [`docs/HUMAN_AI_STUDY.md`](docs/HUMAN_AI_STUDY.md)
+- Operations: [`docs/RUNBOOK.md`](docs/RUNBOOK.md) · [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) ·
+  [`docs/SECURITY_PRIVACY.md`](docs/SECURITY_PRIVACY.md) ·
+  [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md)
+
+## v1 Limitations
+
+- The in-repo dataset is a 7-user simulated fixture; its benchmark numbers validate the
+  software, not recommender quality. Run the MovieLens adapter for meaningful results.
+- Offline metrics reflect logged exposure; off-policy correction is available only when
+  impression logs carry real propensities.
+- Pure-NumPy models (ALS, linear pairwise LTR, exact retrieval) target portfolio-scale data;
+  ANN and boosted rankers are optional adapters, not included by default.
+- The explanation fidelity validator is rule-based (titles, categories, history, popularity,
+  ungroundable claims); it does not parse arbitrary free-form semantics.
+- The Human-AI study module supports design, randomization, simulation and analysis only; it
+  does not recruit participants.
+
+## Post-v1 Research Backlog
+
+Session/sequential recommendation, contextual bandits, slate optimization, graph neural
+recommenders, multimodal item encoders, large-scale ANN benchmarking, causal/counterfactual
+estimators beyond IPS/SNIPS, and federated recommendation (see `docs/REVIEW_NOTES_v2.md`).
 
 ## Project Plan
 
-The implementation is split into **8 phases and 52 atomic tasks**. See `docs/PROJECT_PHASES_AND_TASKS.md`.
+The implementation is split into **8 phases and 52 atomic tasks**. See `docs/PROJECT_PHASES_AND_TASKS.md` (status and verification evidence per task) and `docs/TASKS.md`.
 
 ## Start with Claude Code
 

@@ -71,3 +71,10 @@ def test_population_mismatch_rejected():
         paired_comparison({"a": 1.0, "b": 1.0}, {"a": 1.0, "c": 1.0})
     with pytest.raises(ValueError):
         paired_comparison({"a": 1.0}, {"a": 2.0})
+
+
+def test_too_few_users_is_always_uncertain():
+    a = _users([0.1, 0.2, 0.1, 0.2, 0.1])
+    b = _users([0.9, 0.9, 0.8, 0.9, 0.9])
+    assert paired_comparison(a, b, n_resamples=200).conclusion == "uncertain"
+    assert paired_comparison(a, b, n_resamples=200, min_users=2).conclusion == "better"

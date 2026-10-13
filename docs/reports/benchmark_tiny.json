@@ -1,0 +1,431 @@
+{
+  "report": {
+    "caveats": [
+      "Dataset is SIMULATED (synthetic fixture); results are not research evidence.",
+      "Exposure-aware (off-policy) correction unavailable: no valid logged propensities."
+    ],
+    "comparisons": [
+      {
+        "baseline": "benchmark-44147858-9d9cab4e",
+        "baseline_model": "popularity@1",
+        "bootstrap_p": 0.79,
+        "challenger": "benchmark-99023168-9438c18f",
+        "challenger_model": "random@1",
+        "ci_high": 0.5693234419266069,
+        "ci_low": -0.5,
+        "cohens_d": 0.1133544219738971,
+        "conclusion": "uncertain",
+        "confidence": 0.95,
+        "delta": 0.060823544897355086,
+        "mean_a": 0.4391764551026449,
+        "mean_b": 0.5,
+        "metric": "ndcg@5",
+        "n_resamples": 1000,
+        "n_users": 3,
+        "relative_delta": 0.1384945485821623,
+        "seed": 0,
+        "significant": false,
+        "wilcoxon_p": 0.5929800980174267,
+        "wilcoxon_w": 4.0
+      },
+      {
+        "baseline": "benchmark-44147858-9d9cab4e",
+        "baseline_model": "popularity@1",
+        "bootstrap_p": 0.826,
+        "challenger": "benchmark-889149fb-afbfd2a0",
+        "challenger_model": "als@als-3e33e9e7624d",
+        "ci_high": 0.6131471927654584,
+        "ci_low": -0.5,
+        "cohens_d": 0.18564565796953217,
+        "conclusion": "uncertain",
+        "confidence": 0.95,
+        "delta": 0.10446679608784094,
+        "mean_a": 0.4391764551026449,
+        "mean_b": 0.5436432511904858,
+        "metric": "ndcg@5",
+        "n_resamples": 1000,
+        "n_users": 3,
+        "relative_delta": 0.23786975570770255,
+        "seed": 0,
+        "significant": false,
+        "wilcoxon_p": 0.5929800980174267,
+        "wilcoxon_w": 4.0
+      },
+      {
+        "baseline": "benchmark-44147858-9d9cab4e",
+        "baseline_model": "popularity@1",
+        "bootstrap_p": 0.0,
+        "challenger": "benchmark-dfd00011-d77b9294",
+        "challenger_model": "pipeline@h0a34f359",
+        "ci_high": 0.5693234419266069,
+        "ci_low": 0.11314719276545837,
+        "cohens_d": 1.6034529668104403,
+        "conclusion": "uncertain",
+        "confidence": 0.95,
+        "delta": 0.3941568782306884,
+        "mean_a": 0.4391764551026449,
+        "mean_b": 0.8333333333333334,
+        "metric": "ndcg@5",
+        "n_resamples": 1000,
+        "n_users": 3,
+        "relative_delta": 0.8974909143036038,
+        "seed": 0,
+        "significant": false,
+        "wilcoxon_p": 0.10880943004054569,
+        "wilcoxon_w": 6.0
+      }
+    ],
+    "exposure": {
+      "availability": "unavailable"
+    },
+    "label_policy": {
+      "implicit_weights": {
+        "add_to_cart": 1.0,
+        "click": 1.0,
+        "like": 2.0,
+        "purchase": 3.0,
+        "watch": 2.0
+      },
+      "label_version": "labels-default-c30149fe93",
+      "name": "default",
+      "positive_event_types": [
+        "like",
+        "purchase",
+        "rating",
+        "watch"
+      ],
+      "rating_positive_threshold": 4.0,
+      "relevance_mode": "binary",
+      "schema": "1.0",
+      "watch_positive_threshold": 0.8
+    },
+    "limitations": [
+      "Offline metrics measure agreement with logged held-out interactions, which reflect what users were exposed to (exposure bias); they are not causal estimates of online impact.",
+      "Uncertainty intervals resample users and do not cover dataset or split variability.",
+      "Results on the simulated fixture are for software validation only."
+    ],
+    "metric_definitions": {
+      "aggregation": "mean over users with >=1 relevant item",
+      "gain": "linear",
+      "ks": [
+        5,
+        10
+      ],
+      "metrics": [
+        "precision",
+        "recall",
+        "ndcg",
+        "map",
+        "mrr",
+        "hit_rate"
+      ],
+      "relevance": "binary except graded NDCG"
+    },
+    "primary_metric": "ndcg@5",
+    "protocol": "full",
+    "runs": [
+      {
+        "dataset": "tiny@1",
+        "evaluation_universe": "full eligible catalog (11 items, consumed excluded)",
+        "git_commit": "3bbd1a7bc47c737eee179ce34e2a6803773ce19e",
+        "label_version": "labels-default-c30149fe93",
+        "metrics": {
+          "catalog_coverage@10": 0.9090909090909091,
+          "catalog_coverage@5": 0.8181818181818182,
+          "hit_rate@10": 1.0,
+          "hit_rate@5": 0.6666666666666666,
+          "map@10": 0.5,
+          "map@5": 0.4444444444444444,
+          "mean_universe_size": 6.333333333333333,
+          "mode": "full",
+          "mrr@10": 0.5,
+          "mrr@5": 0.4444444444444444,
+          "n_users_evaluated": 3,
+          "n_users_without_positives": 2,
+          "ndcg@10": 0.6187357290360074,
+          "ndcg@5": 0.5,
+          "partition": "test",
+          "precision@10": 0.10000000000000002,
+          "precision@5": 0.13333333333333333,
+          "recall@10": 1.0,
+          "recall@5": 0.6666666666666666,
+          "universe": "full eligible catalog (11 items, consumed excluded)"
+        },
+        "model": "random@1",
+        "partition": "test",
+        "primary_ci": {
+          "confidence": 0.95,
+          "high": 1.0,
+          "low": 0.0,
+          "mean": 0.5,
+          "method": "user-level percentile bootstrap",
+          "n_resamples": 1000,
+          "n_users": 3,
+          "seed": 0
+        },
+        "retrieval": null,
+        "run_id": "benchmark-99023168-9438c18f",
+        "slice_report": null,
+        "split_id": "split-leave_last_n-a23c80a2c699"
+      },
+      {
+        "dataset": "tiny@1",
+        "evaluation_universe": "full eligible catalog (11 items, consumed excluded)",
+        "git_commit": "3bbd1a7bc47c737eee179ce34e2a6803773ce19e",
+        "label_version": "labels-default-c30149fe93",
+        "metrics": {
+          "catalog_coverage@10": 0.9090909090909091,
+          "catalog_coverage@5": 0.8181818181818182,
+          "hit_rate@10": 1.0,
+          "hit_rate@5": 1.0,
+          "map@10": 0.2611111111111111,
+          "map@5": 0.2611111111111111,
+          "mean_universe_size": 6.333333333333333,
+          "mode": "full",
+          "mrr@10": 0.2611111111111111,
+          "mrr@5": 0.2611111111111111,
+          "n_users_evaluated": 3,
+          "n_users_without_positives": 2,
+          "ndcg@10": 0.4391764551026449,
+          "ndcg@5": 0.4391764551026449,
+          "partition": "test",
+          "precision@10": 0.10000000000000002,
+          "precision@5": 0.20000000000000004,
+          "recall@10": 1.0,
+          "recall@5": 1.0,
+          "universe": "full eligible catalog (11 items, consumed excluded)"
+        },
+        "model": "popularity@1",
+        "partition": "test",
+        "primary_ci": {
+          "confidence": 0.95,
+          "high": 0.5,
+          "low": 0.38685280723454163,
+          "mean": 0.4391764551026449,
+          "method": "user-level percentile bootstrap",
+          "n_resamples": 1000,
+          "n_users": 3,
+          "seed": 0
+        },
+        "retrieval": null,
+        "run_id": "benchmark-44147858-9d9cab4e",
+        "slice_report": null,
+        "split_id": "split-leave_last_n-a23c80a2c699"
+      },
+      {
+        "dataset": "tiny@1",
+        "evaluation_universe": "full eligible catalog (11 items, consumed excluded)",
+        "git_commit": "3bbd1a7bc47c737eee179ce34e2a6803773ce19e",
+        "label_version": "labels-default-c30149fe93",
+        "metrics": {
+          "catalog_coverage@10": 0.9090909090909091,
+          "catalog_coverage@5": 0.8181818181818182,
+          "hit_rate@10": 1.0,
+          "hit_rate@5": 0.6666666666666666,
+          "map@10": 0.5555555555555556,
+          "map@5": 0.5,
+          "mean_universe_size": 6.333333333333333,
+          "mode": "full",
+          "mrr@10": 0.5555555555555556,
+          "mrr@5": 0.5,
+          "n_users_evaluated": 3,
+          "n_users_without_positives": 2,
+          "ndcg@10": 0.6623789802264932,
+          "ndcg@5": 0.5436432511904858,
+          "partition": "test",
+          "precision@10": 0.10000000000000002,
+          "precision@5": 0.13333333333333333,
+          "recall@10": 1.0,
+          "recall@5": 0.6666666666666666,
+          "universe": "full eligible catalog (11 items, consumed excluded)"
+        },
+        "model": "als@als-3e33e9e7624d",
+        "partition": "test",
+        "primary_ci": {
+          "confidence": 0.95,
+          "high": 1.0,
+          "low": 0.0,
+          "mean": 0.5436432511904858,
+          "method": "user-level percentile bootstrap",
+          "n_resamples": 1000,
+          "n_users": 3,
+          "seed": 0
+        },
+        "retrieval": null,
+        "run_id": "benchmark-889149fb-afbfd2a0",
+        "slice_report": null,
+        "split_id": "split-leave_last_n-a23c80a2c699"
+      },
+      {
+        "dataset": "tiny@1",
+        "evaluation_universe": "full eligible catalog (11 items, consumed excluded)",
+        "git_commit": "3bbd1a7bc47c737eee179ce34e2a6803773ce19e",
+        "label_version": "labels-default-c30149fe93",
+        "metrics": {
+          "catalog_coverage@10": 0.9090909090909091,
+          "catalog_coverage@5": 0.8181818181818182,
+          "hit_rate@10": 1.0,
+          "hit_rate@5": 1.0,
+          "map@10": 0.7777777777777778,
+          "map@5": 0.7777777777777778,
+          "mean_universe_size": 6.333333333333333,
+          "mode": "full",
+          "mrr@10": 0.7777777777777778,
+          "mrr@5": 0.7777777777777778,
+          "n_users_evaluated": 3,
+          "n_users_without_positives": 2,
+          "ndcg@10": 0.8333333333333334,
+          "ndcg@5": 0.8333333333333334,
+          "partition": "test",
+          "precision@10": 0.10000000000000002,
+          "precision@5": 0.20000000000000004,
+          "recall@10": 1.0,
+          "recall@5": 1.0,
+          "universe": "full eligible catalog (11 items, consumed excluded)"
+        },
+        "model": "pipeline@h0a34f359",
+        "partition": "test",
+        "primary_ci": {
+          "confidence": 0.95,
+          "high": 1.0,
+          "low": 0.5,
+          "mean": 0.8333333333333334,
+          "method": "user-level percentile bootstrap",
+          "n_resamples": 1000,
+          "n_users": 3,
+          "seed": 0
+        },
+        "retrieval": null,
+        "run_id": "benchmark-dfd00011-d77b9294",
+        "slice_report": null,
+        "split_id": "split-leave_last_n-a23c80a2c699"
+      }
+    ],
+    "title": "RecomLab Benchmark (tiny)",
+    "uncertainty": {
+      "n_resamples": 1000,
+      "seed": 0
+    }
+  },
+  "selection": {
+    "champion_config": "{\"name\": \"als\", \"params\": {\"alpha\": 10.0, \"factors\": 4, \"feedback\": \"all_events_implicit\", \"iterations\": 10, \"regularization\": 0.1, \"seed\": 0}}",
+    "champion_run_id": "benchmark-68a2a7ac-3a28cceb",
+    "notes": [
+      "multiple Pareto-optimal runs: no single model dominates"
+    ],
+    "policy": {
+      "guardrails": [
+        {
+          "metric": "catalog_coverage@5",
+          "op": ">=",
+          "threshold": 0.05
+        }
+      ],
+      "higher_is_better": true,
+      "pareto_metrics": [
+        "ndcg@5",
+        "catalog_coverage@5"
+      ],
+      "policy_id": "policy-62fd6799344b",
+      "primary_metric": "ndcg@5"
+    },
+    "rationale": "als@als-14dc13247975 has the best validation ndcg@5=0.612115 among 4 guardrail-passing runs",
+    "rows": [
+      {
+        "guardrails": {
+          "catalog_coverage@5 >= 0.05": true
+        },
+        "metrics": {
+          "catalog_coverage@5": 0.9090909090909091,
+          "ndcg@5": 0.6121147797198481
+        },
+        "model": "als@als-14dc13247975",
+        "pareto_optimal": true,
+        "partition": "validation",
+        "passes_guardrails": true,
+        "primary": 0.6121147797198481,
+        "protocol": "full",
+        "run_id": "benchmark-68a2a7ac-3a28cceb",
+        "slice_report": null
+      },
+      {
+        "guardrails": {
+          "catalog_coverage@5 >= 0.05": true
+        },
+        "metrics": {
+          "catalog_coverage@5": 0.9090909090909091,
+          "ndcg@5": 0.5044456402014998
+        },
+        "model": "pipeline@pipeline[generator:collaborative=als-14dc13247975;generator:item_item=item_item-1-mw0.0-w10;generator:popularity=popularity-1;ranker=heuristic-1[retrieval=0.4,popularity=0.2,recency=0.1,content=0.3]@2024-01-13T14:00:01+00:00]",
+        "pareto_optimal": false,
+        "partition": "validation",
+        "passes_guardrails": true,
+        "primary": 0.5044456402014998,
+        "protocol": "full",
+        "run_id": "benchmark-6c613e26-3b58cb67",
+        "slice_report": null
+      },
+      {
+        "guardrails": {
+          "catalog_coverage@5 >= 0.05": true
+        },
+        "metrics": {
+          "catalog_coverage@5": 0.9090909090909091,
+          "ndcg@5": 0.3730707174295609
+        },
+        "model": "popularity@1",
+        "pareto_optimal": false,
+        "partition": "validation",
+        "passes_guardrails": true,
+        "primary": 0.3730707174295609,
+        "protocol": "full",
+        "run_id": "benchmark-61fa70b1-be401712",
+        "slice_report": null
+      },
+      {
+        "guardrails": {
+          "catalog_coverage@5 >= 0.05": true
+        },
+        "metrics": {
+          "catalog_coverage@5": 1.0,
+          "ndcg@5": 0.2827324383928644
+        },
+        "model": "random@1",
+        "pareto_optimal": true,
+        "partition": "validation",
+        "passes_guardrails": true,
+        "primary": 0.2827324383928644,
+        "protocol": "full",
+        "run_id": "benchmark-0d84c8f0-42ebdb6c",
+        "slice_report": null
+      }
+    ],
+    "test_report": {
+      "metrics": {
+        "catalog_coverage@10": 0.9090909090909091,
+        "catalog_coverage@5": 0.8181818181818182,
+        "hit_rate@10": 1.0,
+        "hit_rate@5": 0.6666666666666666,
+        "map@10": 0.5555555555555556,
+        "map@5": 0.5,
+        "mean_universe_size": 6.333333333333333,
+        "mode": "full",
+        "mrr@10": 0.5555555555555556,
+        "mrr@5": 0.5,
+        "n_users_evaluated": 3,
+        "n_users_without_positives": 2,
+        "ndcg@10": 0.6623789802264932,
+        "ndcg@5": 0.5436432511904858,
+        "partition": "test",
+        "precision@10": 0.10000000000000002,
+        "precision@5": 0.13333333333333333,
+        "recall@10": 1.0,
+        "recall@5": 0.6666666666666666,
+        "universe": "full eligible catalog (11 items, consumed excluded)"
+      },
+      "model": "als@als-3e33e9e7624d",
+      "note": "test metrics reported once after selection; not used for selection",
+      "run_id": "benchmark-889149fb-afbfd2a0"
+    }
+  }
+}
