@@ -469,7 +469,7 @@ tests/unit/test_ranker_contract.py (4 tests): ordering with id tie-breaks; scori
 
 ### Task 4.2: Heuristic / Weighted Feature Ranker
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Create an interpretable personalized ranking baseline before learning-to-rank.
@@ -481,10 +481,13 @@ Create an interpretable personalized ranking baseline before learning-to-rank.
 - Expose per-feature contribution for explanation grounding.
 
 **Definition of Done (DoD)**
-- [ ] Hand-computed fixture ranking matches implementation.
-- [ ] Changing weights changes ranking predictably.
-- [ ] Contributions sum/trace to ranking score where applicable.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Hand-computed fixture ranking matches implementation.
+- [x] Changing weights changes ranking predictably.
+- [x] Contributions sum/trace to ranking score where applicable.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_heuristic_ranker.py (5 tests): hand-computed fixture scores and order; single-feature weights reorder predictably; contributions sum to the raw score; future events do not change the ranking and a contaminated snapshot is refused; weights and feature manifest exposed for the run manifest. Suite 155 passed; ruff/mypy clean.
 
 ### Task 4.3: Collaborative Score Ranker
 
@@ -1100,9 +1103,9 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
-| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 1 |
+| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 2 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **20** |
+| **Total** | **52** | **21** |

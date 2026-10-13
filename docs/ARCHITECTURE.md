@@ -215,3 +215,13 @@ from the training partition only; validation/test events never contribute.
 - `RankedList` / `RankedItem` (raw score, final score, rank, per-feature contributions,
   model name/version) are JSON-serializable and contain no presentation or explanation text.
 - `RetrievalScoreRanker` ranks by fused retrieval score and serves as the identity baseline.
+
+### 18.1 Heuristic Ranker (`rankers.heuristic.HeuristicRanker`)
+
+`score = Σ w_f · x_f` over normalized features: `retrieval` (min-max of fused retrieval
+score within the request), `popularity` (`log1p(count)/log1p(max count)`), `recency`
+(decayed popularity / catalog max), `content` (point-in-time category affinity).
+Defaults: retrieval 0.4, popularity 0.2, recency 0.1, content 0.3. All statistics come from a
+`PointInTimeFeatures` snapshot that must pass `assert_point_in_time`. Contributions
+`w_f · x_f` sum exactly to the raw score and are returned per item for explanation
+grounding. `params()` (weights + feature manifest) goes into the run manifest.
