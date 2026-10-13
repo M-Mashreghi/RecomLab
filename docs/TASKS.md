@@ -18,7 +18,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_exposure.py (9 tests): explicit linkage verified incl. 3 invalid reasons; inference off by default; missing propensity counted not imputed; free text/PII rejected; schema version 1.0. Suite 38 passed; ruff/mypy clean.
 - [x] **Task 1.4** — Configuration, Environment & Dependency Policy
   - Evidence: tests/unit/test_config.py (15 tests): defaults, file→env→override precedence, 9 invalid configurations rejected, unknown keys rejected, secret masked, .env.example placeholders-only, only config/settings.py reads env vars. Suite 53 passed; ruff/mypy clean.
-- [ ] **Task 1.5** — Dataset Registry, Data Cards & Licensing Metadata
+- [x] **Task 1.5** — Dataset Registry, Data Cards & Licensing Metadata
+  - Evidence: tests/unit/test_dataset_registry.py (6 tests): fixture materializes with identical checksums across runs and resolves deterministically; raw dir untouched; modified file detected; same version/different checksum rejected; MovieLens adapter tested on a synthetic in-test sample (no download). Suite 59 passed; ruff/mypy clean.
 - [ ] **Task 1.6** — Experiment Registry, Seed Control & Reproducibility Manifest
 
 ## Phase 2 — Dataset Protocol, Labels, Features & Baselines

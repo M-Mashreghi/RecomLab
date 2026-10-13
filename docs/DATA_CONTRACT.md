@@ -134,3 +134,21 @@ Use pseudonymous identifiers. Do not store names, emails, device identifiers, or
 ## Dataset Manifest
 
 Every dataset snapshot records source, version, checksum, schema version, retrieval date, license/terms note, cleaning policy, and label policy.
+
+## Dataset Registry & Data Cards
+
+- Adapters (`recomlab.datasets.adapters`) turn an immutable raw snapshot directory into a
+  `CanonicalDataset`: `FixtureAdapter` (in-repo simulated `tiny` fixture) and
+  `MovieLensAdapter` (recommended public demo path; `ratings.csv` + `movies.csv`, IDs
+  prefixed `ml_u` / `ml_i`). MovieLens is fetched locally with
+  `python scripts/fetch_movielens.py` into `data/raw/` (git-ignored) and is never committed.
+- `materialize()` writes processed canonical CSVs to
+  `data/processed/<dataset_id>/<version>/` with `manifest.json` and `DATA_CARD.md`.
+  Raw directories are never modified.
+- `DatasetManifest` records id, version, source, schema version, license/terms note,
+  retrieval date, per-file sha256, combined checksum, synthetic flag, stats, and the
+  cleaning/label policy identifiers once applied.
+- `DatasetRegistry` (JSON index) registers manifests idempotently; re-registering the same
+  `id@version` with a different checksum fails (`DatasetChecksumMismatch`) so data changes
+  require a new version. `verify_snapshot()` detects modified files. `resolve(id)` without a
+  version returns the highest version in natural order; experiment runs pin versions.

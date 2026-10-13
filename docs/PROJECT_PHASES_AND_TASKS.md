@@ -105,7 +105,7 @@ tests/unit/test_config.py (15 tests): defaults, file→env→override precedence
 
 ### Task 1.5: Dataset Registry, Data Cards & Licensing Metadata
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Make every experiment traceable to a known dataset version and usage context instead of an unnamed CSV snapshot.
@@ -117,10 +117,13 @@ Make every experiment traceable to a known dataset version and usage context ins
 - Create a machine-readable dataset manifest and human-readable data card.
 
 **Definition of Done (DoD)**
-- [ ] Dataset checksum/version changes are detected.
-- [ ] Fixture dataset can be registered and resolved deterministically.
-- [ ] No raw downloaded dataset is required in git.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Dataset checksum/version changes are detected.
+- [x] Fixture dataset can be registered and resolved deterministically.
+- [x] No raw downloaded dataset is required in git.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_dataset_registry.py (6 tests): fixture materializes with identical checksums across runs and resolves deterministically; raw dir untouched; modified file detected; same version/different checksum rejected; MovieLens adapter tested on a synthetic in-test sample (no download). Suite 59 passed; ruff/mypy clean.
 
 ### Task 1.6: Experiment Registry, Seed Control & Reproducibility Manifest
 
@@ -1049,7 +1052,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 
 | Phase | Tasks | Completed |
 |---|---:|---:|
-| 1 — Foundation, Data Contracts & Reproducibility | 6 | 4 |
+| 1 — Foundation, Data Contracts & Reproducibility | 6 | 5 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 0 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
@@ -1057,4 +1060,4 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **4** |
+| **Total** | **52** | **5** |
