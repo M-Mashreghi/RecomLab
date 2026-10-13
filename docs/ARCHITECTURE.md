@@ -270,3 +270,13 @@ Errors use one structured shape: `{"error": {"code", "message", "details?"}}` (v
 errors list `field` and `issue`). Controllers only call services/registries. Responses
 never include secrets, raw interaction histories, or candidate evidence (which can contain
 the user's own history). `uvicorn recomlab.api.main:app` builds the app from `Settings`.
+
+## 21. Dashboard (`recomlab.dashboard`, optional extra `.[dashboard]`)
+
+`streamlit run src/recomlab/dashboard/app.py` renders four pages from view models in
+`dashboard.views`: experiment leaderboard, run details (identity, protocol and warnings,
+candidate-stage vs ranking-stage metrics), recommendation explorer over pseudonymous demo
+ids (scores, sources, fallback, top contributions), and cold-start / beyond-accuracy views.
+Views read only the experiment registry and the recommendation service built by
+`services.bootstrap`; they never train models or compute metrics, and they never display
+user attributes or raw histories.

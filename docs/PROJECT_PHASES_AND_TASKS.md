@@ -807,7 +807,7 @@ tests/integration/test_api.py (11 tests): health/readiness; recommendation contr
 
 ### Task 6.3: Streamlit Experiment Dashboard & Recommendation Explorer
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Provide a portfolio-friendly interface to inspect models, metrics, slices, candidates, rankings, and recommendation explanations.
@@ -819,10 +819,13 @@ Provide a portfolio-friendly interface to inspect models, metrics, slices, candi
 - Display cold-start and beyond-accuracy views.
 
 **Definition of Done (DoD)**
-- [ ] Critical pages load with fixture data.
-- [ ] Dashboard calls services/registry rather than training models inline.
-- [ ] No raw PII is displayed.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Critical pages load with fixture data.
+- [x] Dashboard calls services/registry rather than training models inline.
+- [x] No raw PII is displayed.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_dashboard.py (7 tests): all four Streamlit pages load without exceptions via streamlit AppTest on fixture data; view models built from the experiment registry and service only (source check forbids fit/training/metric calls); no user attributes in rendered data. Suite 227 passed; ruff/mypy clean.
 
 ### Task 6.4: Impression & Feedback Logging Workflow
 
@@ -1147,7 +1150,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
-| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 2 |
+| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 3 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **35** |
+| **Total** | **52** | **36** |
