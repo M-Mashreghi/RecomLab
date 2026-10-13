@@ -197,7 +197,7 @@ tests/unit/test_labels.py (7 tests): rating 4/3.99 and watch 0.8/0.79 boundaries
 
 ### Task 2.3: Negative Sampling Engine for Training
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Provide controlled negative sampling for models that need negatives without leaking future positives or confusing training sampling with evaluation sampling.
@@ -209,10 +209,13 @@ Provide controlled negative sampling for models that need negatives without leak
 - Mark sampled training negatives as synthetic and never mix them with full-catalog evaluation truth.
 
 **Definition of Done (DoD)**
-- [ ] No sampled negative is a known training-horizon positive.
-- [ ] Sampler is deterministic for a fixed seed.
-- [ ] Tests cover sparse users and small catalogs.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] No sampled negative is a known training-horizon positive.
+- [x] Sampler is deterministic for a fixed seed.
+- [x] Tests cover sparse users and small catalogs.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_negative_sampling.py (7 tests): no negative is a training-horizon positive (uniform and popularity); post-horizon events have no influence; fixed seed reproduces samples regardless of input order; sparse users, cold users and exhausted small catalogs covered. Suite 85 passed; ruff/mypy clean.
 
 ### Task 2.4: Leakage-Safe Train / Validation / Test Split Engine
 
@@ -1062,11 +1065,11 @@ Finish the project with a reproducible demo path and documented failure recovery
 | Phase | Tasks | Completed |
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
-| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 2 |
+| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 3 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **8** |
+| **Total** | **52** | **9** |

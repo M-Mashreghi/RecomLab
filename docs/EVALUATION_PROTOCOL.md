@@ -71,3 +71,17 @@ Relevance is derived from raw feedback by a versioned `LabelPolicy`
 - `label_version` is a content hash of the policy; any change produces a new version.
 - The policy is stored in `RunManifest.label_policy`; evaluation rebuilds it with
   `label_policy_from_manifest` and refuses to run when it is missing or tampered.
+
+## 11. Training Negative Sampling (not evaluation)
+
+`TrainingNegativeSampler` (`recomlab.datasets.negative_sampling`) supports `uniform` and
+`popularity` (weight `(count + 1) ** 0.75`) strategies.
+
+- Only events at or before the training `horizon` are used, both to exclude known
+  positives (every item the user interacted with) and to compute popularity.
+- Sampling is per-user seeded (`derive_seed(seed, "negatives", strategy, user)`), so output
+  is independent of input order. Sampling is without replacement; users with fewer eligible
+  items than requested are listed in `exhausted_users`.
+- Results are wrapped in `TrainingNegatives(purpose="training_only")` with every sample
+  marked `synthetic=True`. Evaluation code rejects this type: training negatives are never
+  full-catalog evaluation truth and never the sampled-evaluation universe.
