@@ -1009,7 +1009,7 @@ tests/unit/test_study.py (6 tests): block randomization deterministic under the 
 
 ### Task 7.6: Trust, Acceptance, Usefulness & Satisfaction Analysis
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Analyze user-facing outcomes with proper statistical separation from offline ranking quality.
@@ -1021,10 +1021,13 @@ Analyze user-facing outcomes with proper statistical separation from offline ran
 - Report multiple-comparison policy when many outcomes are tested.
 
 **Definition of Done (DoD)**
-- [ ] Analysis passes synthetic known-effect fixtures.
-- [ ] Condition labels and exclusions are auditable.
-- [ ] Offline recommender metrics are not merged into perception scales.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Analysis passes synthetic known-effect fixtures.
+- [x] Condition labels and exclusions are auditable.
+- [x] Offline recommender metrics are not merged into perception scales.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_study_analysis.py (4 tests): simulated known effect (+1.0) recovered with CI above zero and Holm p<0.001 while a null effect's CI spans zero; exclusions reconcile per condition and descriptive n equals analyzed n; offline metrics refused as outcomes; t-distribution p-values and Holm adjustment hand-checked. Suite 277 passed; ruff/mypy clean.
 
 ### Task 7.7: Explanation Bias / Persuasiveness Stress Test & Research Report
 
@@ -1175,6 +1178,6 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
-| 7 — LLM Explanations & Human-AI Research Extension | 7 | 5 |
+| 7 — LLM Explanations & Human-AI Research Extension | 7 | 6 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **44** |
+| **Total** | **52** | **45** |

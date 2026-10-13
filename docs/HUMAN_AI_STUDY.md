@@ -120,3 +120,18 @@ ranking.
 - `simulate_responses` produces **simulated** records only (`simulated=True`, `SIM-` ids);
   `StudyDataStore` refuses to mix simulated and real records or records from another config
   version, and reports exclusions with reasons.
+
+## Outcome Analysis (`recomlab.research.analysis`)
+
+- `analyze(config, store)` reports enrolled/analyzed counts, exclusions per participant and
+  per condition, descriptive statistics (n, mean, SD, median) per condition × outcome, and the
+  comparisons.
+- Comparisons: each pre-specified hypothesis (treatment vs control on its outcome), plus the
+  same contrast on every other protocol outcome flagged `pre_specified = false`. Each reports
+  the mean difference, a percentile bootstrap 95% CI, Welch's t with exact Student-t p-value,
+  and Cohen's d.
+- Multiple-comparison policy: Holm–Bonferroni across all reported tests (`p_holm`).
+- Only protocol perception/behavior outcomes (acceptance, trust, usefulness, satisfaction,
+  understanding, decision time) are accepted; offline recommender metrics are refused and
+  stay in the evaluation reports. Reports state `SIMULATED (software validation only)` when
+  the data are simulated.

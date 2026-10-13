@@ -116,7 +116,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_fidelity.py (10 tests): template and hand-written grounded explanations accepted; synthetic hallucinations (unknown item, category, popularity, fabricated citation, history claim for a cold user) rejected; threshold behavior; feature ablation on the heuristic ranker reports score/rank effects and flags no-effect features; fidelity log refuses perception records. Suite 267 passed; ruff/mypy clean.
 - [x] **Task 7.5** — Human-AI Study Protocol, Randomization & Ethics Boundary
   - Evidence: tests/unit/test_study.py (6 tests): block randomization deterministic under the test seed and balanced within one block; config versioned and validated; real mode blocked without approved ethics, consent and retention, and simulation refused in real mode; simulated records cannot enter a real store or masquerade as real ids; exclusions auditable; power helper (d=0.5 → 63/group). Suite 273 passed; ruff/mypy clean.
-- [ ] **Task 7.6** — Trust, Acceptance, Usefulness & Satisfaction Analysis
+- [x] **Task 7.6** — Trust, Acceptance, Usefulness & Satisfaction Analysis
+  - Evidence: tests/unit/test_study_analysis.py (4 tests): simulated known effect (+1.0) recovered with CI above zero and Holm p<0.001 while a null effect's CI spans zero; exclusions reconcile per condition and descriptive n equals analyzed n; offline metrics refused as outcomes; t-distribution p-values and Holm adjustment hand-checked. Suite 277 passed; ruff/mypy clean.
 - [ ] **Task 7.7** — Explanation Bias / Persuasiveness Stress Test & Research Report
 
 ## Phase 8 — Hardening, Monitoring, CI/CD & Release
