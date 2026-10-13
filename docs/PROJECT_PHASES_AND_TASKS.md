@@ -127,7 +127,7 @@ tests/unit/test_dataset_registry.py (6 tests): fixture materializes with identic
 
 ### Task 1.6: Experiment Registry, Seed Control & Reproducibility Manifest
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Ensure each reported result can be traced back to the exact dataset, split, features, model, metric configuration, and code state.
@@ -139,10 +139,13 @@ Ensure each reported result can be traced back to the exact dataset, split, feat
 - Record software versions relevant to a run.
 
 **Definition of Done (DoD)**
-- [ ] Same config and fixture reproduce the same deterministic baseline result.
-- [ ] Experiment manifests validate against a schema.
-- [ ] Registry supports comparing runs without reading notebook state.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Same config and fixture reproduce the same deterministic baseline result.
+- [x] Experiment manifests validate against a schema.
+- [x] Registry supports comparing runs without reading notebook state.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_experiments.py (6 tests): same config + fixture reproduces identical toy baseline result and config hash; 7 invalid manifests rejected by schema validation; SQLite registry reopened and compares runs; software state recorded. Suite 65 passed; ruff/mypy clean.
 
 ---
 
@@ -1052,7 +1055,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 
 | Phase | Tasks | Completed |
 |---|---:|---:|
-| 1 — Foundation, Data Contracts & Reproducibility | 6 | 5 |
+| 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 0 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
@@ -1060,4 +1063,4 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **5** |
+| **Total** | **52** | **6** |

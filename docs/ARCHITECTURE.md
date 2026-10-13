@@ -108,3 +108,19 @@ reads environment variables (enforced by a test); all other code receives `Setti
   brute-force retrieval) that the tests use.
 - New dependencies are added to an optional extra in `pyproject.toml`, not to core.
 
+
+## 15. Experiment Registry & Reproducibility
+
+- `RunManifest` (`recomlab.experiments.manifest`, schema 1.0) stores dataset id/version/
+  checksum, split id, feature version, label policy, model name/version/params, metric
+  configuration, evaluation universe/mode, seeds, metrics, artifact paths, software state
+  (Python, platform, package versions) and the optional git commit.
+- `config_hash` covers only the configuration (not metrics or timestamps); `run_id` combines
+  experiment id, config hash and creation time so repeated executions are distinct but
+  traceable to the same configuration.
+- `validate_manifest` rejects missing/unknown fields, wrong types, non-integer seeds,
+  unsupported schema versions and tampered config hashes.
+- `ExperimentRegistry` persists manifests in SQLite and supports `list_runs`,
+  `find_by_config` and `compare_runs` without any notebook state.
+- Seeds: `make_rng(seed, *names)` returns isolated NumPy generators (preferred);
+  `set_global_seed` seeds Python/NumPy and PyTorch when it is installed.
