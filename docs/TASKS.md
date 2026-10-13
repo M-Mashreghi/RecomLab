@@ -16,7 +16,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_schemas.py (25 tests): tiny fixture validates; explicit and implicit examples; 14 invalid cases fail with stable codes; UTC normalization; duplicate policy. Full suite 29 passed; ruff/mypy clean.
 - [x] **Task 1.3** — Impression, Exposure & Feedback Event Contract
   - Evidence: tests/unit/test_exposure.py (9 tests): explicit linkage verified incl. 3 invalid reasons; inference off by default; missing propensity counted not imputed; free text/PII rejected; schema version 1.0. Suite 38 passed; ruff/mypy clean.
-- [ ] **Task 1.4** — Configuration, Environment & Dependency Policy
+- [x] **Task 1.4** — Configuration, Environment & Dependency Policy
+  - Evidence: tests/unit/test_config.py (15 tests): defaults, file→env→override precedence, 9 invalid configurations rejected, unknown keys rejected, secret masked, .env.example placeholders-only, only config/settings.py reads env vars. Suite 53 passed; ruff/mypy clean.
 - [ ] **Task 1.5** — Dataset Registry, Data Cards & Licensing Metadata
 - [ ] **Task 1.6** — Experiment Registry, Seed Control & Reproducibility Manifest
 

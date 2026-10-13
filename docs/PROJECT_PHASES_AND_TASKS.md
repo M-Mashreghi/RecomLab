@@ -83,7 +83,7 @@ tests/unit/test_exposure.py (9 tests): explicit linkage verified incl. 3 invalid
 
 ### Task 1.4: Configuration, Environment & Dependency Policy
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Centralize configuration so datasets, evaluation protocols, models, and optional LLM providers can change without hardcoded paths or credentials.
@@ -95,10 +95,13 @@ Centralize configuration so datasets, evaluation protocols, models, and optional
 - Document dependency-approval rule for heavy ANN, ranking, and LLM libraries.
 
 **Definition of Done (DoD)**
-- [ ] Config tests cover defaults, overrides, and invalid values.
-- [ ] Secrets appear only as placeholders in `.env.example`.
-- [ ] No model logic reads environment variables directly.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Config tests cover defaults, overrides, and invalid values.
+- [x] Secrets appear only as placeholders in `.env.example`.
+- [x] No model logic reads environment variables directly.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_config.py (15 tests): defaults, file→env→override precedence, 9 invalid configurations rejected, unknown keys rejected, secret masked, .env.example placeholders-only, only config/settings.py reads env vars. Suite 53 passed; ruff/mypy clean.
 
 ### Task 1.5: Dataset Registry, Data Cards & Licensing Metadata
 
@@ -1046,7 +1049,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 
 | Phase | Tasks | Completed |
 |---|---:|---:|
-| 1 — Foundation, Data Contracts & Reproducibility | 6 | 3 |
+| 1 — Foundation, Data Contracts & Reproducibility | 6 | 4 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 0 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
@@ -1054,4 +1057,4 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **3** |
+| **Total** | **52** | **4** |

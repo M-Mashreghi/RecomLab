@@ -20,13 +20,17 @@ No Redis, Kafka, Kubernetes, external vector DB, or feature store is required fo
 
 ## Environment
 
+See `.env.example` for every supported `RECOMLAB_*` variable, for example:
+
 ```env
 RECOMLAB_ENV=development
 RECOMLAB_DB_URL=sqlite:///./data/recomlab.db
-OPENAI_API_KEY=
+RECOMLAB_LLM_PROVIDER=none
+RECOMLAB_LLM_API_KEY=
 ```
 
-The LLM key is optional and only required for the Phase 7 LLM path.
+The LLM provider, model, and key are optional and only required for the Phase 7 LLM path
+(`openai`/`anthropic`); `mock` is used in tests.
 
 ## CI Release Gates
 

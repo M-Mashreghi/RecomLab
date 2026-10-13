@@ -87,3 +87,24 @@ Explanations consume a **grounding evidence payload** derived from the recommend
 5. Baselines are mandatory.
 6. LLMs do not fabricate recommender evidence or metrics.
 7. Real human-participant data is separate from demo/synthetic data.
+
+## 13. Configuration
+
+`recomlab.config.load_settings()` returns a frozen, validated `Settings` object
+(environment, DB URL, paths, dataset, evaluation, optional LLM provider). Precedence:
+defaults → optional TOML file → `RECOMLAB_*` environment variables → explicit overrides.
+Invalid values and missing mandatory settings raise `ConfigError`. API keys are wrapped
+in `SecretStr` and never appear in `repr`. `config/settings.py` is the only module that
+reads environment variables (enforced by a test); all other code receives `Settings`.
+
+## 14. Dependency Policy
+
+- Mandatory runtime dependency: NumPy. Everything else is an optional extra.
+- Heavy ANN engines (FAISS, hnswlib, ...), learning-to-rank libraries (LightGBM, XGBoost),
+  deep-learning frameworks, and LLM SDKs require a task-level justification recorded in
+  the task's verification evidence, must sit behind a project interface/adapter, and must
+  never be required by mandatory CI tests.
+- Every such adapter needs a pure-Python/NumPy reference implementation (e.g. exact
+  brute-force retrieval) that the tests use.
+- New dependencies are added to an optional extra in `pyproject.toml`, not to core.
+
