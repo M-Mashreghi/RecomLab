@@ -37,3 +37,22 @@ The repository may implement randomization, study configuration, survey schemas,
 ## Synthetic Data
 
 Synthetic responses are for software validation only and must be labeled simulated in every output/report.
+
+## Grounding Evidence (`recomlab.explanations.evidence`, schema `evidence-1`)
+
+`build_evidence(user_id, item_id, history, items, sources, contributions, as_of, history_window)`
+produces an `EvidencePayload` for one recommended item:
+
+| Evidence id | Kind | Role | Source of truth |
+|---|---|---|---|
+| `item:<item>:title`, `item:<item>:categories` | `item_fact` | presentation | item catalog |
+| `src:<source>` (+ `seed_items`) | `retrieval` | ranking | fused candidate provenance |
+| `feat:<feature>` | `ranker_feature` | ranking | ranker contributions |
+| `hist:<event_id>` | `history` | ranking if a retrieval seed item, else presentation | stored interactions before `as_of` |
+
+- History is bounded to the `history_window` most recent events (default 5); seed items used
+  for ranking are always included because they are ranking evidence.
+- Missing facts (no title, no categories, no history, no retrieval source, no contributions)
+  are listed in `unavailable`; nothing is synthesized.
+- `validate_payload` checks that every history entry is a stored interaction of that user for
+  the stated item and that item facts equal the catalog.

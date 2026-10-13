@@ -899,7 +899,7 @@ tests/integration/test_promotion.py (5 tests): primary improvement rule with con
 
 ### Task 7.1: Recommendation Grounding Evidence Builder
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Translate recommender evidence into a structured, bounded payload that can support explanations without exposing raw hidden data or inventing preferences.
@@ -911,10 +911,13 @@ Translate recommender evidence into a structured, bounded payload that can suppo
 - Separate evidence used for ranking from evidence used only for presentation.
 
 **Definition of Done (DoD)**
-- [ ] Evidence can be traced to real stored interactions/metadata.
-- [ ] Unknown facts are never synthesized.
-- [ ] Payload schema is tested.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Evidence can be traced to real stored interactions/metadata.
+- [x] Unknown facts are never synthesized.
+- [x] Payload schema is tested.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_evidence.py (5 tests): payload schema with ranking vs presentation roles; every entry traces to stored interactions/catalog and seed items stay as ranking evidence; unknown facts listed as unavailable rather than synthesized; fabricated, other-user and wrong-fact evidence rejected; history window bounds the payload. Suite 244 passed; ruff/mypy clean.
 
 ### Task 7.2: Explanation Conditions: None, Template, Generic LLM & Contextualized LLM
 
@@ -1160,6 +1163,6 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
-| 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
+| 7 — LLM Explanations & Human-AI Research Extension | 7 | 1 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **39** |
+| **Total** | **52** | **40** |

@@ -106,7 +106,8 @@ Update this ledger only after verification.
 
 ## Phase 7 — LLM Explanations & Human-AI Research Extension
 
-- [ ] **Task 7.1** — Recommendation Grounding Evidence Builder
+- [x] **Task 7.1** — Recommendation Grounding Evidence Builder
+  - Evidence: tests/unit/test_evidence.py (5 tests): payload schema with ranking vs presentation roles; every entry traces to stored interactions/catalog and seed items stay as ranking evidence; unknown facts listed as unavailable rather than synthesized; fabricated, other-user and wrong-fact evidence rejected; history window bounds the payload. Suite 244 passed; ruff/mypy clean.
 - [ ] **Task 7.2** — Explanation Conditions: None, Template, Generic LLM & Contextualized LLM
 - [ ] **Task 7.3** — Structured LLM Explanation Generator
 - [ ] **Task 7.4** — Explanation Fidelity & Unsupported-Claim Validator
