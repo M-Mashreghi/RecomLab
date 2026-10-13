@@ -421,7 +421,7 @@ tests/unit/test_fusion.py (5 tests): RRF and weighted-score fusion match hand co
 
 ### Task 3.6: Candidate Recall, Coverage & Failure Diagnostics
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Measure whether the retrieval stage contains the relevant items before blaming the ranker.
@@ -433,10 +433,13 @@ Measure whether the retrieval stage contains the relevant items before blaming t
 - Persist retrieval diagnostics per experiment.
 
 **Definition of Done (DoD)**
-- [ ] Synthetic fixtures produce hand-checkable candidate recall.
-- [ ] Report separates missing-from-candidates from ranking misses.
-- [ ] Diagnostics are visible in experiment output.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Synthetic fixtures produce hand-checkable candidate recall.
+- [x] Report separates missing-from-candidates from ranking misses.
+- [x] Diagnostics are visible in experiment output.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_retrieval_diagnostics.py (5 tests): hand-checkable recall, hit rate, empty rate, count distribution, segment and source breakdowns; failure breakdown separates retrieval vs ranking misses; fused tiny-fixture diagnostics written to JSON and stored in a validated RunManifest. Suite 146 passed; ruff/mypy clean.
 
 ---
 
@@ -1093,10 +1096,10 @@ Finish the project with a reproducible demo path and documented failure recovery
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
-| 3 — Candidate Generation & Retrieval | 6 | 5 |
+| 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **18** |
+| **Total** | **52** | **19** |

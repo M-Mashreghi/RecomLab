@@ -52,7 +52,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_embedding_retrieval.py (6 tests): exact cosine/dot neighbors match hand-computed values with id tie-breaks; category and ALS embedding providers retrieve on the tiny fixture; stale index vs new ALS artifact raises IndexVersionMismatch; no ANN/vector-DB module imported. Suite 136 passed; ruff/mypy clean.
 - [x] **Task 3.5** — Candidate Fusion, Deduplication & Eligibility Filtering
   - Evidence: tests/unit/test_fusion.py (5 tests): RRF and weighted-score fusion match hand computation; provenance lists every contributing source; pre/post-filter counts and removal reasons recorded; output identical under reversed source order; fused real generators never contain duplicates or ineligible items under a budget. Suite 141 passed; ruff/mypy clean.
-- [ ] **Task 3.6** — Candidate Recall, Coverage & Failure Diagnostics
+- [x] **Task 3.6** — Candidate Recall, Coverage & Failure Diagnostics
+  - Evidence: tests/unit/test_retrieval_diagnostics.py (5 tests): hand-checkable recall, hit rate, empty rate, count distribution, segment and source breakdowns; failure breakdown separates retrieval vs ranking misses; fused tiny-fixture diagnostics written to JSON and stored in a validated RunManifest. Suite 146 passed; ruff/mypy clean.
 
 ## Phase 4 — Ranking, Re-ranking & Cold-Start Policy
 

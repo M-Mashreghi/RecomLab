@@ -138,3 +138,14 @@ Weighted ALS for implicit feedback (Hu, Koren & Volinsky, 2008), pure NumPy:
   for unknown users/items so callers apply an explicit fallback.
 - Evaluated with `run_offline_experiment` under exactly the same split, label policy, and
   full-catalog universe as the popularity baseline.
+
+## 15. Retrieval Diagnostics (`recomlab.evaluation.retrieval`)
+
+`retrieval_diagnostics(candidates_by_user, truth, segments, candidate_budget)` reports, for
+users with held-out positives: Recall@CandidateN, HitRate@CandidateN, empty-candidate rate,
+mean and min/median/max candidate count, per-segment recall/empty rate (segments from
+`activity_segments`: `cold` = no history, `sparse` = fewer than 3 events, `warm`), and
+per-source recall and contribution (from fusion provenance). `failure_breakdown` classifies
+every relevant held-out item as `hit`, `ranking_failure` (retrieved but outside top-K), or
+`retrieval_failure` (never retrieved). Diagnostics serialize to JSON (`write_json`) and are
+stored in `RunManifest.metrics["retrieval"]`.
