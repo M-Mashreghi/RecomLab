@@ -1145,7 +1145,7 @@ tests/integration/test_ci_config.py (4 tests): workflow YAML parses with pinned 
 
 ### Task 8.5: Security, Privacy & Dependency Audit
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Review the project for secret leakage, unsafe participant data handling, and vulnerable/unnecessary dependencies.
@@ -1157,10 +1157,13 @@ Review the project for secret leakage, unsafe participant data handling, and vul
 - Run dependency vulnerability audit and remove unjustified packages.
 
 **Definition of Done (DoD)**
-- [ ] No known committed secrets.
-- [ ] Privacy checklist completed.
-- [ ] Critical dependency findings block release or receive documented waiver.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] No known committed secrets.
+- [x] Privacy checklist completed.
+- [x] Critical dependency findings block release or receive documented waiver.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_security_audit.py (5 tests): scripts/scan_secrets.py finds 0 secrets in tracked files and detects planted keys; fixture ids pseudonymous with no PII columns; core dependency is numpy only with heavy libraries optional; privacy checklist in docs/SECURITY_PRIVACY.md fully checked. pip-audit 2.10.1: no known vulnerabilities. Secret scan and pip-audit added to CI. Suite 300 passed; ruff/mypy clean.
 
 ### Task 8.6: Operational Runbook, Release Checklist & Portfolio Demo
 
@@ -1194,5 +1197,5 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 7 |
-| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 3 |
-| **Total** | **52** | **49** |
+| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 4 |
+| **Total** | **52** | **50** |
