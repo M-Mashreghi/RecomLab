@@ -31,7 +31,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_labels.py (7 tests): rating 4/3.99 and watch 0.8/0.79 boundaries; graded relevance; raw events untouched; any policy change changes label_version; policy round-trips through RunManifest and is required for evaluation. Suite 78 passed; ruff/mypy clean.
 - [x] **Task 2.3** — Negative Sampling Engine for Training
   - Evidence: tests/unit/test_negative_sampling.py (7 tests): no negative is a training-horizon positive (uniform and popularity); post-horizon events have no influence; fixed seed reproduces samples regardless of input order; sparse users, cold users and exhausted small catalogs covered. Suite 85 passed; ruff/mypy clean.
-- [ ] **Task 2.4** — Leakage-Safe Train / Validation / Test Split Engine
+- [x] **Task 2.4** — Leakage-Safe Train / Validation / Test Split Engine
+  - Evidence: tests/unit/test_splits.py (10 tests, marked leakage): per-user and global temporal order; same dataset+config → same split_id; no test event in train/validation for all 3 protocols; repeat interactions dropped not moved; random split labeled diagnostic; injected leaks raise LeakageError; boundaries persisted. Suite 95 passed; ruff/mypy clean.
 - [ ] **Task 2.5** — Point-in-Time User, Item & Interaction Feature Builder
 - [ ] **Task 2.6** — Random & Popularity Recommendation Baselines
 - [ ] **Task 2.7** — Collaborative Filtering Baseline

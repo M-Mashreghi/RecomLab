@@ -219,7 +219,7 @@ tests/unit/test_negative_sampling.py (7 tests): no negative is a training-horizo
 
 ### Task 2.4: Leakage-Safe Train / Validation / Test Split Engine
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Create evaluation splits that preserve the intended causal/time ordering and prevent future interactions from influencing earlier predictions.
@@ -231,10 +231,13 @@ Create evaluation splits that preserve the intended causal/time ordering and pre
 - Guard against users with insufficient history and duplicate event leakage.
 
 **Definition of Done (DoD)**
-- [ ] Temporal order invariants are tested.
-- [ ] Same dataset + split config creates same split id.
-- [ ] No test event appears in train/validation.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Temporal order invariants are tested.
+- [x] Same dataset + split config creates same split id.
+- [x] No test event appears in train/validation.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_splits.py (10 tests, marked leakage): per-user and global temporal order; same dataset+config → same split_id; no test event in train/validation for all 3 protocols; repeat interactions dropped not moved; random split labeled diagnostic; injected leaks raise LeakageError; boundaries persisted. Suite 95 passed; ruff/mypy clean.
 
 ### Task 2.5: Point-in-Time User, Item & Interaction Feature Builder
 
@@ -1065,11 +1068,11 @@ Finish the project with a reproducible demo path and documented failure recovery
 | Phase | Tasks | Completed |
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
-| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 3 |
+| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 4 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **9** |
+| **Total** | **52** | **10** |

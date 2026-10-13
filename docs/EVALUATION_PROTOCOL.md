@@ -85,3 +85,24 @@ Relevance is derived from raw feedback by a versioned `LabelPolicy`
 - Results are wrapped in `TrainingNegatives(purpose="training_only")` with every sample
   marked `synthetic=True`. Evaluation code rejects this type: training negatives are never
   full-catalog evaluation truth and never the sampled-evaluation universe.
+
+## 12. Split Engine (`recomlab.datasets.splits`)
+
+| Protocol | Use | Rule |
+|---|---|---|
+| `leave_last_n` | primary | per user: last `n_test` events → test, previous `n_validation` → validation |
+| `global_time` | primary | `< validation_cutoff` → train, `< test_cutoff` → validation, rest → test |
+| `random` | **diagnostic only** | seeded; `Split.is_diagnostic` is true and labels carry `(DIAGNOSTIC)` |
+
+- Users with fewer than `min_train_events + n_validation + n_test` events stay entirely in
+  train and are listed in `excluded_users` (`insufficient_history`); under `global_time`,
+  held-out users without training history are flagged `no_training_history`.
+- Held-out events whose (user, item) pair already appeared earlier are dropped from the
+  held-out sets (`dropped_events`, reason `repeat_interaction`) and never moved into train.
+- `split_id` hashes the config and the event fingerprint; the same dataset + config always
+  yields the same id. `Split.save()` persists boundaries, excluded users, dropped events,
+  cold test items, and per-partition event ids.
+- `assert_no_leakage()` runs on every split: partitions are disjoint and, for temporal
+  protocols, training/validation events strictly precede test events (globally or per user).
+- When predicting the test partition, visible history is train + validation
+  (`Split.train_until("test")`); model selection uses validation only.
