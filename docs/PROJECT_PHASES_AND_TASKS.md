@@ -873,7 +873,7 @@ tests/integration/test_retraining.py (4 tests): end-to-end workflow on the demo 
 
 ### Task 6.6: Champion / Challenger Promotion Gate
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Make model promotion a testable decision based on predefined primary and guardrail metrics.
@@ -885,10 +885,13 @@ Make model promotion a testable decision based on predefined primary and guardra
 - Record promotion/rejection decision.
 
 **Definition of Done (DoD)**
-- [ ] A failing guardrail blocks promotion.
-- [ ] Decision is reproducible from stored report.
-- [ ] Rollback to previous champion is supported.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] A failing guardrail blocks promotion.
+- [x] Decision is reproducible from stored report.
+- [x] Rollback to previous champion is supported.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_promotion.py (5 tests): primary improvement rule with configurable minimum; failing coverage, slice and missing-metric guardrails each block promotion; stored decision replays identically from registry + artifacts; mismatched split and test runs refused; blocked decision keeps the champion, promotion activates challenger and rollback restores the previous champion with reason. Suite 239 passed; ruff/mypy clean.
 
 ---
 
@@ -1156,7 +1159,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
-| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 5 |
+| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **38** |
+| **Total** | **52** | **39** |

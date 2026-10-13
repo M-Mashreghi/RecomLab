@@ -315,3 +315,21 @@ leaderboard can link to it.
   unavailable exposure correction, missing per-user artifacts.
 - `write_report` writes Markdown + JSON; regenerating from the same registry and artifacts
   produces byte-identical files (tested). No notebook copy/paste is involved.
+
+## 27. Champion / Challenger Promotion Gate (`recomlab.registry.promotion`)
+
+- Inputs: champion and challenger **validation** runs on the **same split** and evaluation
+  protocol, with stored per-user metrics (test runs and mismatched splits are refused).
+- Primary rule: paired user-level comparison on `primary_metric`; requires
+  `delta ≥ min_improvement` and, when `require_significance`, a bootstrap interval above
+  zero (`conclusion == "better"`).
+- Guardrails (`RegressionGuardrail`): coverage, latency (`latency_ms.p50`, lower is better),
+  cold-start and other slice metrics (`slices.<dimension>.<bucket>.<metric>`), each with an
+  absolute or relative allowed regression versus the champion. Missing values fail closed;
+  any failed guardrail blocks promotion.
+- `PromotionDecision` records policy (with `policy_id`), run ids, challenger bundle id, the
+  full paired comparison, guardrail results, and reasons; `save()` writes JSON and
+  `replay_decision()` recomputes an identical decision from the registry and artifacts.
+- `apply_decision` activates the challenger bundle only when `promote` is true (with the
+  policy id and run in the activation reason). `ModelRegistry.rollback` restores the previous
+  champion and records the rollback reason.

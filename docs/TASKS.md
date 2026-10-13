@@ -101,7 +101,8 @@ Update this ledger only after verification.
   - Evidence: tests/integration/test_event_log.py (3 tests): re-logging a served slate and feedback is idempotent while conflicting ids are rejected; linked/unlinked feedback queryable per request and convertible to interactions; stored impressions are contract Impressions and propensities stay missing unless supplied. Suite 230 passed; ruff/mypy clean.
 - [x] **Task 6.5** — Scheduled Retraining & Data-Snapshot Workflow
   - Evidence: tests/integration/test_retraining.py (4 tests): end-to-end workflow on the demo fixture freezes a verified snapshot (base + logged events), logs a validation run and registers a challenger linking workflow, dataset version and run id without activation; snapshots deterministic; a failing spec logs a failed run and leaves the active bundle untouched; `recomlab retrain` CLI works. Suite 234 passed; ruff/mypy clean.
-- [ ] **Task 6.6** — Champion / Challenger Promotion Gate
+- [x] **Task 6.6** — Champion / Challenger Promotion Gate
+  - Evidence: tests/integration/test_promotion.py (5 tests): primary improvement rule with configurable minimum; failing coverage, slice and missing-metric guardrails each block promotion; stored decision replays identically from registry + artifacts; mismatched split and test runs refused; blocked decision keeps the champion, promotion activates challenger and rollback restores the previous champion with reason. Suite 239 passed; ruff/mypy clean.
 
 ## Phase 7 — LLM Explanations & Human-AI Research Extension
 
