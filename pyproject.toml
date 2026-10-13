@@ -38,6 +38,9 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+filterwarnings = [
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]
 markers = [
     "integration: multi-module tests on deterministic fixtures",
     "e2e: end-to-end fixture pipeline tests",

@@ -114,6 +114,7 @@ class Settings:
     env: str = "development"
     db_url: str = "sqlite:///./data/recomlab.db"
     log_level: str = "INFO"
+    api_admin_token: SecretStr = field(default_factory=lambda: SecretStr(""))
     paths: PathsConfig = field(default_factory=PathsConfig)
     dataset: DatasetConfig = field(default_factory=DatasetConfig)
     evaluation: EvaluationConfig = field(default_factory=EvaluationConfig)
@@ -125,6 +126,7 @@ _ENV_MAP: dict[str, tuple[str | None, str]] = {
     "ENV": (None, "env"),
     "DB_URL": (None, "db_url"),
     "LOG_LEVEL": (None, "log_level"),
+    "API_ADMIN_TOKEN": (None, "api_admin_token"),
     "ROOT": ("paths", "root"),
     "DATA_DIR": ("paths", "data_dir"),
     "ARTIFACTS_DIR": ("paths", "artifacts_dir"),
@@ -161,7 +163,7 @@ def _coerce(section: str | None, name: str, value: Any) -> Any:
             return int(value)
         if name == "timeout_seconds":
             return float(value)
-        if name == "llm_api_key":
+        if name in {"llm_api_key", "api_admin_token"}:
             return value if isinstance(value, SecretStr) else SecretStr(str(value))
         if name in {"version", "llm_model"}:
             return value or None

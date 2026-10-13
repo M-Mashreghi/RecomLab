@@ -253,3 +253,20 @@ records the ALS model version and latency; `rank_batch` serves offline evaluatio
   bundle id, component versions, per-item rank/score, fused source provenance,
   ranker contributions (explanation grounding), and fallback labels. Swaps are atomic
   (the new pipeline is built and validated before it replaces the old one).
+
+## 20. HTTP API (`recomlab.api`, optional extra `.[api]`)
+
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/health` | liveness + version |
+| GET | `/ready` | 200 with active bundle id, 503 `not_ready` otherwise |
+| POST | `/recommendations` | body `{user_id, k (1–100), trace_id?}`; returns ranked items, scores, source ranks, ranker contributions, fallback labels, bundle id, component versions |
+| GET | `/experiments/runs?experiment_id=` | run summaries |
+| GET | `/experiments/runs/{run_id}` | manifest without platform details |
+| GET | `/models/bundles`, `/models/active` | registry state and activation history |
+| POST | `/models/activate` | requires `X-Admin-Token` matching `RECOMLAB_API_ADMIN_TOKEN` (constant-time compare); disabled (403) when no token is configured; incompatible bundles → 409 |
+
+Errors use one structured shape: `{"error": {"code", "message", "details?"}}` (validation
+errors list `field` and `issue`). Controllers only call services/registries. Responses
+never include secrets, raw interaction histories, or candidate evidence (which can contain
+the user's own history). `uvicorn recomlab.api.main:app` builds the app from `Settings`.

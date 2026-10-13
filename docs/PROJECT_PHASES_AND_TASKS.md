@@ -785,7 +785,7 @@ tests/integration/test_recommendation_service.py (4 tests): heuristic→collabor
 
 ### Task 6.2: FastAPI Recommendation & Experiment API
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Expose stable endpoints for demos and automated workflows without embedding model logic in controllers.
@@ -797,10 +797,13 @@ Expose stable endpoints for demos and automated workflows without embedding mode
 - Add model registry/activation endpoint with safe local auth placeholder if mutation is exposed.
 
 **Definition of Done (DoD)**
-- [ ] API contract tests pass.
-- [ ] Validation errors use structured responses.
-- [ ] No secrets or raw private data are returned.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] API contract tests pass.
+- [x] Validation errors use structured responses.
+- [x] No secrets or raw private data are returned.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_api.py (11 tests): health/readiness; recommendation contract incl. no-active-model 503 and evidence stripping; 4 invalid payloads return structured validation errors; experiment list/detail/404; activation requires the admin token, unknown bundle keeps the active model, mutation disabled without a configured token; no secrets in responses; app builds from Settings. Suite 220 passed; ruff/mypy clean.
 
 ### Task 6.3: Streamlit Experiment Dashboard & Recommendation Explorer
 
@@ -1144,7 +1147,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
-| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 1 |
+| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 2 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **34** |
+| **Total** | **52** | **35** |
