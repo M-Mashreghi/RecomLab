@@ -1123,7 +1123,7 @@ tests/integration/test_demo_stack.py (3 tests): Dockerfile is multi-stage slim, 
 
 ### Task 8.4: GitHub Actions CI & Quality Gates
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Block regressions before merge and make repository quality visible.
@@ -1135,10 +1135,13 @@ Block regressions before merge and make repository quality visible.
 - Optionally build Docker image after tests.
 
 **Definition of Done (DoD)**
-- [ ] CI config is syntax-valid.
-- [ ] Intentional failing leakage test blocks pipeline.
-- [ ] No deploy secrets are available to untrusted PRs.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] CI config is syntax-valid.
+- [x] Intentional failing leakage test blocks pipeline.
+- [x] No deploy secrets are available to untrusted PRs.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_ci_config.py (4 tests): workflow YAML parses with pinned actions; lint/format/type, mandatory leakage+metrics gate, unit/integration/E2E steps present with no continue-on-error; read-only permissions, no secrets, no privileged PR trigger, Docker job push-only and never pushes; an injected failing leakage test makes the gate command exit non-zero. Local gate `pytest -m "leakage or metrics"` passes. Not yet executed on GitHub (nothing pushed). Suite 295 passed; ruff/mypy clean.
 
 ### Task 8.5: Security, Privacy & Dependency Audit
 
@@ -1191,5 +1194,5 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 7 |
-| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 2 |
-| **Total** | **52** | **48** |
+| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 3 |
+| **Total** | **52** | **49** |

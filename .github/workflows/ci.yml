@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least privilege: untrusted pull requests get a read-only token and no repository
+# secrets: the trigger is pull_request (not the privileged target variant), so fork
+# code never runs with credentials. No job references any secret.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install
+        run: python -m pip install --upgrade pip && pip install -e ".[dev,api,dashboard]"
+      - name: Lint
+        run: ruff check src tests scripts
+      - name: Format
+        run: ruff format --check src tests scripts
+      - name: Type check
+        run: mypy
+
+  tests:
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install
+        run: python -m pip install --upgrade pip && pip install -e ".[dev,api,dashboard]"
+      - name: Mandatory gate - leakage and metric correctness
+        run: pytest -m "leakage or metrics"
+      - name: Unit tests
+        run: pytest tests/unit
+      - name: Integration tests
+        run: pytest tests/integration
+      - name: End-to-end fixture pipeline
+        run: pytest tests/e2e
+
+  docker:
+    needs: tests
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build demo image (no push, no secrets)
+        run: docker build --tag recomlab:ci .
+      - name: Smoke-test container health
+        run: |
+          docker run -d --name recomlab -p 8000:8000 recomlab:ci
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:8000/health && exit 0
+            sleep 2
+          done
+          docker logs recomlab
+          exit 1

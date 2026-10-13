@@ -69,3 +69,18 @@ docker compose up --build          # api on :8000, dashboard on :8501
 - `.dockerignore` excludes `.env`, raw/processed data, artifacts, tests and docs, so no
   secrets or datasets are baked into the image. Provide secrets only at runtime via `.env`
   or environment variables.
+
+## CI (`.github/workflows/ci.yml`)
+
+| Job | Runs | Notes |
+|---|---|---|
+| `quality` | `ruff check`, `ruff format --check`, `mypy` | Python 3.12 |
+| `tests` (needs `quality`) | mandatory gate `pytest -m "leakage or metrics"`, then unit, integration, E2E | matrix 3.12 / 3.13 |
+| `docker` (needs `tests`, push only) | `docker build` + container `/health` smoke test | never pushes images |
+
+- Dependencies are cached by `actions/setup-python` (`cache: pip`, keyed on `pyproject.toml`).
+- No step uses `continue-on-error`; any failing leakage/metric test blocks the pipeline
+  (verified by a test that runs the gate command against an injected failing leakage test).
+- Security: `permissions: contents: read`, `pull_request` trigger only (no privileged
+  target trigger), no secrets referenced anywhere, Docker job skipped for pull requests.
+- All CI tests use local deterministic fixtures; no live external API is called.
