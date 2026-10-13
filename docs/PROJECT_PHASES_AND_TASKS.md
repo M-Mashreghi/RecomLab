@@ -583,7 +583,7 @@ tests/unit/test_reranking.py (5 tests): MMR increases ILD without adding items; 
 
 ### Task 5.1: Top-K Ranking Metrics Library
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Provide trustworthy metric implementations for model comparison.
@@ -595,10 +595,13 @@ Provide trustworthy metric implementations for model comparison.
 - Handle users with no evaluable positives explicitly.
 
 **Definition of Done (DoD)**
-- [ ] Metrics match hand-computed fixtures.
-- [ ] Edge cases are covered.
-- [ ] Metric configuration is stored in manifests.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Metrics match hand-computed fixtures.
+- [x] Edge cases are covered.
+- [x] Metric configuration is stored in manifests.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_metrics.py (5 tests, marked metrics): Precision/Recall/HitRate/MAP/MRR and binary + linear/exponential graded NDCG match hand computations; edge cases (no positives, k<=0, empty/short lists); aggregation excludes and reports users without positives; metric config round-trips in RunManifest. Suite 179 passed; ruff/mypy clean.
 
 ### Task 5.2: Beyond-Accuracy Metrics: Coverage, Diversity, Novelty, Calibration & Popularity Bias
 
@@ -1116,8 +1119,8 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
-| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
+| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 1 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **25** |
+| **Total** | **52** | **26** |

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import statistics
 import time
-from collections.abc import Callable, Mapping, Sequence
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -13,15 +13,8 @@ from recomlab.datasets.negative_sampling import TrainingNegatives
 from recomlab.datasets.splits import Split
 from recomlab.domain.eligibility import EligibilityFilter, EligibilityPolicy
 from recomlab.domain.schemas import Item
-from recomlab.evaluation.metrics import hit_rate_at_k, ndcg_at_k, recall_at_k
+from recomlab.evaluation.metrics import MetricConfig, aggregate
 from recomlab.models.base import Recommender
-
-MetricFn = Callable[[Sequence[str], Mapping[str, float], int], float]
-DEFAULT_METRICS: dict[str, MetricFn] = {
-    "recall": recall_at_k,
-    "ndcg": ndcg_at_k,
-    "hit_rate": hit_rate_at_k,
-}
 
 
 class EvaluationInputError(TypeError):
@@ -72,7 +65,7 @@ def evaluate_recommender(
     *,
     partition: str = "test",
     eligibility_policy: EligibilityPolicy | None = None,
-    metrics: Mapping[str, MetricFn] | None = None,
+    metric_config: MetricConfig | None = None,
 ) -> EvaluationResult:
     """Rank the full eligible catalog for every held-out user with positives.
 
@@ -80,7 +73,8 @@ def evaluate_recommender(
     """
     if isinstance(split, TrainingNegatives):  # pragma: no cover - defensive
         raise EvaluationInputError("training negatives are not evaluation truth")
-    metric_fns = dict(metrics or DEFAULT_METRICS)
+    config = metric_config or MetricConfig(ks=tuple(ks))
+    ks = config.ks
     history = split.train_until(partition)
     elig = EligibilityFilter(items, history, eligibility_policy)
     truth = holdout_truth(split, partition, label_policy)
@@ -89,7 +83,6 @@ def evaluate_recommender(
     )
     no_pos = [u for u in held_users if u not in truth]
     max_k = max(ks)
-    per_user: dict[str, dict[str, float]] = {}
     rankings: dict[str, list[str]] = {}
     latencies: list[float] = []
     for user in sorted(truth):
@@ -97,15 +90,7 @@ def evaluate_recommender(
         ranked = [s.item_id for s in model.recommend(user, max_k, elig)]
         latencies.append((time.perf_counter() - start) * 1000.0)
         rankings[user] = ranked
-        per_user[user] = {
-            f"{name}@{k}": fn(ranked, truth[user], k) for name, fn in metric_fns.items() for k in ks
-        }
-    names = sorted({m for row in per_user.values() for m in row})
-    agg = (
-        {m: statistics.fmean(row[m] for row in per_user.values()) for m in names}
-        if per_user
-        else {}
-    )
+    agg = aggregate(rankings, truth, config)
     coverage = {
         k: (
             len({i for r in rankings.values() for i in r[:k]}) / len(elig.catalog)
@@ -128,10 +113,10 @@ def evaluate_recommender(
         mode="full",
         universe=f"full eligible catalog ({len(elig.catalog)} items, consumed excluded)",
         ks=tuple(ks),
-        metrics=agg,
-        per_user=per_user,
+        metrics=agg.means,
+        per_user=agg.per_user,
         rankings=rankings,
-        n_users_evaluated=len(per_user),
+        n_users_evaluated=agg.n_users,
         users_without_positives=no_pos,
         catalog_coverage=coverage,
         latency_ms=lat,

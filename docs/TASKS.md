@@ -72,7 +72,8 @@ Update this ledger only after verification.
 
 ## Phase 5 — Evaluation, Statistical Testing & Model Selection
 
-- [ ] **Task 5.1** — Top-K Ranking Metrics Library
+- [x] **Task 5.1** — Top-K Ranking Metrics Library
+  - Evidence: tests/unit/test_metrics.py (5 tests, marked metrics): Precision/Recall/HitRate/MAP/MRR and binary + linear/exponential graded NDCG match hand computations; edge cases (no positives, k<=0, empty/short lists); aggregation excludes and reports users without positives; metric config round-trips in RunManifest. Suite 179 passed; ruff/mypy clean.
 - [ ] **Task 5.2** — Beyond-Accuracy Metrics: Coverage, Diversity, Novelty, Calibration & Popularity Bias
 - [ ] **Task 5.3** — Full-Catalog vs Sampled Evaluation Protocol
 - [ ] **Task 5.4** — Slice Analysis for Cold, Sparse, Popularity & Activity Segments

@@ -195,3 +195,20 @@ stored in `RunManifest.metrics["retrieval"]`.
   listed in `metadata.fallbacks`; output is deterministic.
 - `rerank_report(before, after, truth, categories, k)` reports NDCG@k, ILD@k, and distinct
   items@k before/after plus deltas, so relevance trade-offs are visible.
+
+## 19. Metric Library (`recomlab.evaluation.metrics`)
+
+| Metric | Definition (per user, top-K) | Relevance |
+|---|---|---|
+| Precision@K | hits / K (short lists are not rewarded) | binary |
+| Recall@K | hits / number of relevant items | binary |
+| HitRate@K | 1 if any hit | binary |
+| MAP@K | Σ precision@hit-position / min(|relevant|, K) | binary |
+| MRR@K | 1 / rank of first hit within K, else 0 | binary |
+| NDCG@K | DCG / ideal DCG, gain `rel` (`linear`) or `2^rel − 1` (`exponential`), `log2(rank+1)` discount | graded |
+
+Users without relevant items are undefined (`UndefinedMetricError`); `aggregate()` excludes
+and lists them (`users_without_positives`) instead of scoring zero. Users with relevant items
+but no ranking are scored as an empty list (a recommender failure) and listed in
+`users_without_ranking`. Means are unweighted over evaluable users. `MetricConfig.to_dict()`
+is stored in `RunManifest.metric_config`.

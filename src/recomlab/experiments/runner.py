@@ -9,6 +9,7 @@ from recomlab.datasets.dataset import CanonicalDataset
 from recomlab.datasets.labels import LabelPolicy
 from recomlab.datasets.splits import Split
 from recomlab.domain.eligibility import EligibilityPolicy
+from recomlab.evaluation.metrics import MetricConfig
 from recomlab.evaluation.offline import EvaluationResult, evaluate_recommender
 from recomlab.experiments.manifest import RunManifest, collect_software_state, git_commit
 from recomlab.experiments.registry import ExperimentRegistry
@@ -61,7 +62,7 @@ def run_offline_experiment(
             "partition": partition,
         },
         model={"name": model.name, "version": model.version, "params": model.params()},
-        metric_config={"ks": list(ks), "metrics": ["recall", "ndcg", "hit_rate"]},
+        metric_config=MetricConfig(ks=tuple(ks)).to_dict(),
         seeds=seeds or {},
         label_policy=label_policy.to_dict(),
         features=features or {},
