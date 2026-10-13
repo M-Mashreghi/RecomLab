@@ -225,3 +225,11 @@ Defaults: retrieval 0.4, popularity 0.2, recency 0.1, content 0.3. All statistic
 `PointInTimeFeatures` snapshot that must pass `assert_point_in_time`. Contributions
 `w_f · x_f` sum exactly to the raw score and are returned per item for explanation
 grounding. `params()` (weights + feature manifest) goes into the run manifest.
+
+### 18.2 Collaborative Ranker (`rankers.collaborative.CollaborativeRanker`)
+
+Scores fused candidates with the trained ALS model (only the candidate ids are passed to the
+model). Unknown users fall back to training popularity for every candidate
+(`metadata.fallback = "unknown_user"`); unknown items for known users are placed strictly
+below all known items and ordered by popularity (`unknown_items:<n>`). Output metadata
+records the ALS model version and latency; `rank_batch` serves offline evaluation.

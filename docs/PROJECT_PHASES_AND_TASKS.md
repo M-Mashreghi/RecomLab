@@ -491,7 +491,7 @@ tests/unit/test_heuristic_ranker.py (5 tests): hand-computed fixture scores and 
 
 ### Task 4.3: Collaborative Score Ranker
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Use collaborative model scores as a direct ranker for the common retrieval-and-rank baseline.
@@ -503,10 +503,13 @@ Use collaborative model scores as a direct ranker for the common retrieval-and-r
 - Record model version and inference latency.
 
 **Definition of Done (DoD)**
-- [ ] Known score ordering is tested.
-- [ ] Unknown entity behavior is deterministic.
-- [ ] No catalog-wide label access occurs during ranking.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Known score ordering is tested.
+- [x] Unknown entity behavior is deterministic.
+- [x] No catalog-wide label access occurs during ranking.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_collaborative_ranker.py (6 tests): ranking equals ALS score order; unknown user falls back to deterministic popularity regardless of input order; unknown items ranked below known ones; a spy confirms only candidate ids reach the model; batch equals single scoring with latency recorded. Suite 161 passed; ruff/mypy clean.
 
 ### Task 4.4: Learning-to-Rank Dataset Builder
 
@@ -1103,9 +1106,9 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
-| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 2 |
+| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 3 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **21** |
+| **Total** | **52** | **22** |

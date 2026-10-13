@@ -61,7 +61,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_ranker_contract.py (4 tests): ordering with id tie-breaks; scoring a non-candidate raises and outputs never exceed candidates or k; requests reject duplicates and carry no label fields; ranked lists round-trip through JSON without presentation text. Suite 150 passed; ruff/mypy clean.
 - [x] **Task 4.2** — Heuristic / Weighted Feature Ranker
   - Evidence: tests/unit/test_heuristic_ranker.py (5 tests): hand-computed fixture scores and order; single-feature weights reorder predictably; contributions sum to the raw score; future events do not change the ranking and a contaminated snapshot is refused; weights and feature manifest exposed for the run manifest. Suite 155 passed; ruff/mypy clean.
-- [ ] **Task 4.3** — Collaborative Score Ranker
+- [x] **Task 4.3** — Collaborative Score Ranker
+  - Evidence: tests/unit/test_collaborative_ranker.py (6 tests): ranking equals ALS score order; unknown user falls back to deterministic popularity regardless of input order; unknown items ranked below known ones; a spy confirms only candidate ids reach the model; batch equals single scoring with latency recorded. Suite 161 passed; ruff/mypy clean.
 - [ ] **Task 4.4** — Learning-to-Rank Dataset Builder
 - [ ] **Task 4.5** — Learning-to-Rank Baseline
 - [ ] **Task 4.6** — Diversification, Calibration & Cold-Start Re-ranking Policy
