@@ -987,7 +987,7 @@ tests/unit/test_fidelity.py (10 tests): template and hand-written grounded expla
 
 ### Task 7.5: Human-AI Study Protocol, Randomization & Ethics Boundary
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Create a reproducible experiment design suitable for a research demo while preventing the codebase from treating unapproved human-subject recruitment as a normal engineering step.
@@ -999,10 +999,13 @@ Create a reproducible experiment design suitable for a research demo while preve
 - Support synthetic/demo responses for software testing only and label them as simulated.
 
 **Definition of Done (DoD)**
-- [ ] Random assignment is deterministic under test seed and balanced within tolerance.
-- [ ] Study config is versioned.
-- [ ] Synthetic results cannot be confused with real participant data.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Random assignment is deterministic under test seed and balanced within tolerance.
+- [x] Study config is versioned.
+- [x] Synthetic results cannot be confused with real participant data.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_study.py (6 tests): block randomization deterministic under the test seed and balanced within one block; config versioned and validated; real mode blocked without approved ethics, consent and retention, and simulation refused in real mode; simulated records cannot enter a real store or masquerade as real ids; exclusions auditable; power helper (d=0.5 → 63/group). Suite 273 passed; ruff/mypy clean.
 
 ### Task 7.6: Trust, Acceptance, Usefulness & Satisfaction Analysis
 
@@ -1172,6 +1175,6 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
-| 7 — LLM Explanations & Human-AI Research Extension | 7 | 4 |
+| 7 — LLM Explanations & Human-AI Research Extension | 7 | 5 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **43** |
+| **Total** | **52** | **44** |

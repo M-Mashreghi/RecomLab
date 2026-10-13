@@ -101,3 +101,22 @@ ranking.
   flags cited features with no effect (which also rejects the explanation).
 - `FidelityLog` stores results as `record_type = "fidelity"` JSONL, separate from any
   perception outcome; mixing record types is an error.
+
+## Study Protocol & Randomization (`recomlab.research.study`)
+
+- `StudyConfig` (versioned by `config_version`, a content hash) holds research questions,
+  hypotheses (outcome, treatment vs control condition, direction), explanation conditions,
+  primary/secondary outcomes, exclusion rules (attention check, minimum completion time),
+  block size, seed, `data_mode`, and an `EthicsRecord` (approval status/reference, consent
+  version, retention days).
+- **Ethics boundary**: `data_mode="real"` is rejected unless an approved ethics/IRB decision
+  with a reference, a consent version and a retention period are recorded. Even then the
+  code only validates configuration; recruiting participants is outside the engineering
+  workflow.
+- `assign_conditions`: permuted-block randomization in enrollment order, deterministic for
+  the seed; every complete block is perfectly balanced.
+- `sample_size_per_group(d, alpha, power, n_comparisons)`: two-sided two-sample normal
+  approximation with Bonferroni adjustment (d = 0.5 → 63 per group).
+- `simulate_responses` produces **simulated** records only (`simulated=True`, `SIM-` ids);
+  `StudyDataStore` refuses to mix simulated and real records or records from another config
+  version, and reports exclusions with reasons.

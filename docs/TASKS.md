@@ -114,7 +114,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_llm_explainer.py (10 tests): valid mocked output accepted with prompt/model version logged; malformed output retried; 4 invalid/unsupported outputs fall back to the template after bounded retries; abstain respected; transient vs permanent provider errors; a failing provider leaves served recommendations unchanged. Suite 258 passed; ruff/mypy clean; no live API calls.
 - [x] **Task 7.4** — Explanation Fidelity & Unsupported-Claim Validator
   - Evidence: tests/unit/test_fidelity.py (10 tests): template and hand-written grounded explanations accepted; synthetic hallucinations (unknown item, category, popularity, fabricated citation, history claim for a cold user) rejected; threshold behavior; feature ablation on the heuristic ranker reports score/rank effects and flags no-effect features; fidelity log refuses perception records. Suite 267 passed; ruff/mypy clean.
-- [ ] **Task 7.5** — Human-AI Study Protocol, Randomization & Ethics Boundary
+- [x] **Task 7.5** — Human-AI Study Protocol, Randomization & Ethics Boundary
+  - Evidence: tests/unit/test_study.py (6 tests): block randomization deterministic under the test seed and balanced within one block; config versioned and validated; real mode blocked without approved ethics, consent and retention, and simulation refused in real mode; simulated records cannot enter a real store or masquerade as real ids; exclusions auditable; power helper (d=0.5 → 63/group). Suite 273 passed; ruff/mypy clean.
 - [ ] **Task 7.6** — Trust, Acceptance, Usefulness & Satisfaction Analysis
 - [ ] **Task 7.7** — Explanation Bias / Persuasiveness Stress Test & Research Report
 
