@@ -447,7 +447,7 @@ tests/unit/test_retrieval_diagnostics.py (5 tests): hand-checkable recall, hit r
 
 ### Task 4.1: Ranker Interface & Scoring Contract
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Standardize ranking so heuristic, collaborative, and learned rankers can be compared on the exact same candidate sets.
@@ -459,10 +459,13 @@ Standardize ranking so heuristic, collaborative, and learned rankers can be comp
 - Keep ranker output independent from presentation/explanation text.
 
 **Definition of Done (DoD)**
-- [ ] Contract tests cover ordering/ties.
-- [ ] Rankers cannot exceed candidate set.
-- [ ] Score/rank metadata is serializable.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Contract tests cover ordering/ties.
+- [x] Rankers cannot exceed candidate set.
+- [x] Score/rank metadata is serializable.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_ranker_contract.py (4 tests): ordering with id tie-breaks; scoring a non-candidate raises and outputs never exceed candidates or k; requests reject duplicates and carry no label fields; ranked lists round-trip through JSON without presentation text. Suite 150 passed; ruff/mypy clean.
 
 ### Task 4.2: Heuristic / Weighted Feature Ranker
 
@@ -1097,9 +1100,9 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
-| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
+| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 1 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **19** |
+| **Total** | **52** | **20** |

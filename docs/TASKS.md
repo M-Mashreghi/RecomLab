@@ -57,7 +57,8 @@ Update this ledger only after verification.
 
 ## Phase 4 — Ranking, Re-ranking & Cold-Start Policy
 
-- [ ] **Task 4.1** — Ranker Interface & Scoring Contract
+- [x] **Task 4.1** — Ranker Interface & Scoring Contract
+  - Evidence: tests/unit/test_ranker_contract.py (4 tests): ordering with id tie-breaks; scoring a non-candidate raises and outputs never exceed candidates or k; requests reject duplicates and carry no label fields; ranked lists round-trip through JSON without presentation text. Suite 150 passed; ruff/mypy clean.
 - [ ] **Task 4.2** — Heuristic / Weighted Feature Ranker
 - [ ] **Task 4.3** — Collaborative Score Ranker
 - [ ] **Task 4.4** — Learning-to-Rank Dataset Builder

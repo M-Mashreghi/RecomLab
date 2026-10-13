@@ -202,3 +202,16 @@ from the training partition only; validation/test events never contribute.
   after deduplication and can only remove items. `counts` records
   `pre_dedup`, `post_dedup`, `post_filter`, `final`; `removed` records
   `not_eligible_catalog` and `consumed`.
+
+## 18. Ranking Contract (`recomlab.rankers`)
+
+- `RankRequest(user_id, candidates, k, request_id)` holds one user's deduplicated candidate
+  set (`RankCandidate`: item id, fused retrieval score, source provenance). It contains no
+  labels; `RankRequest.from_fused` builds it from fusion output.
+- `Ranker._score` returns `{item: (raw_score, contributions)}`. `Ranker.rank` rejects any
+  scored item outside the candidate set (`RankerContractError`), applies `_finalize`
+  (calibration hook, identity by default), orders by `(-final_score, item_id)`, truncates to
+  `k`, and records `n_candidates`, `n_unscored`, and `latency_ms`.
+- `RankedList` / `RankedItem` (raw score, final score, rank, per-feature contributions,
+  model name/version) are JSON-serializable and contain no presentation or explanation text.
+- `RetrievalScoreRanker` ranks by fused retrieval score and serves as the identity baseline.
