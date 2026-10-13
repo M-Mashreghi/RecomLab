@@ -165,3 +165,14 @@ from the training partition only; validation/test events never contribute.
 - Evidence per candidate: up to 3 seed items with their similarity.
 - Users without history return an empty set with `metadata.fallback_required = True` and
   `reason = "cold_user_no_history"`; the caller must apply an explicit fallback source.
+
+### 17.2 Collaborative Generator (`candidates.collaborative.CollaborativeCandidates`)
+
+- Top-N items by ALS score `x_u · y_i` from an `ALSArtifact` trained on the visible history
+  (`fit`) or injected (`from_artifact`); `source_version` is the artifact content version.
+- `exclude_consumed=True` (default) removes items the user interacted with in that history.
+- Unknown users return an empty set with `fallback_required = True` (`reason = "unknown_user"`).
+- `generate_batch` scores all requested users with one matrix product; tests assert it
+  matches per-user `generate` exactly in items and scores.
+- Candidate recall is measured independently of ranking with
+  `evaluation.retrieval.candidate_recall` / `candidate_hit`.

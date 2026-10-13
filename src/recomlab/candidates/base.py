@@ -97,6 +97,17 @@ class CandidateGenerator(ABC):
             raise NotFittedError(self.name)
         start = time.perf_counter()
         scores, evidence, meta = self._score(request)
+        return self._assemble(request, scores, evidence, meta, start)
+
+    def _assemble(
+        self,
+        request: CandidateRequest,
+        scores: Mapping[str, float],
+        evidence: Mapping[str, Mapping[str, Any]],
+        meta: Mapping[str, Any],
+        start: float,
+    ) -> CandidateSet:
+        """Apply exclusions, deterministic ordering and the budget."""
         eligible = {i: s for i, s in scores.items() if i not in request.exclude_items}
         ranked = sorted(eligible.items(), key=lambda kv: (-kv[1], kv[0]))
         kept = ranked[: request.budget]

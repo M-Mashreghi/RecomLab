@@ -355,7 +355,7 @@ tests/unit/test_item_item.py (6 tests): hand-checked cosine neighbors; recency-w
 
 ### Task 3.3: Collaborative Retrieval Candidate Generator
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Use collaborative latent signals for candidate recall while keeping retrieval independently measurable.
@@ -367,10 +367,13 @@ Use collaborative latent signals for candidate recall while keeping retrieval in
 - Support batch retrieval for evaluation.
 
 **Definition of Done (DoD)**
-- [ ] Candidate recall can be evaluated independently.
-- [ ] Consumed-item filtering is tested.
-- [ ] Batch and single-user outputs agree.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Candidate recall can be evaluated independently.
+- [x] Consumed-item filtering is tested.
+- [x] Batch and single-user outputs agree.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_collaborative_candidates.py (5 tests): consumed-item filtering on/off; score order and model version exposed; batch and single retrieval agree (items and scores) incl. unknown-user fallback; artifact injection matches fit; candidate recall evaluated independently of ranking. Suite 130 passed; ruff/mypy clean.
 
 ### Task 3.4: Embedding Retrieval & ANN Adapter
 
@@ -1084,10 +1087,10 @@ Finish the project with a reproducible demo path and documented failure recovery
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
-| 3 — Candidate Generation & Retrieval | 6 | 2 |
+| 3 — Candidate Generation & Retrieval | 6 | 3 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **15** |
+| **Total** | **52** | **16** |
