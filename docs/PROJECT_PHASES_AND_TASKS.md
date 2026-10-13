@@ -39,7 +39,7 @@ pytest tests/unit/test_smoke.py (4 passed: import, in-process CLI, `python -m re
 
 ### Task 1.2: Canonical User, Item & Interaction Schemas
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Define explicit contracts for the data the recommender consumes so model code does not silently depend on ad-hoc notebook columns.
@@ -51,10 +51,13 @@ Define explicit contracts for the data the recommender consumes so model code do
 - Document timestamp timezone and duplicate-event policy.
 
 **Definition of Done (DoD)**
-- [ ] Schema fixtures validate and invalid fixtures fail predictably.
-- [ ] Explicit and implicit examples are covered by tests.
-- [ ] Data contract is documented in `docs/DATA_CONTRACT.md`.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Schema fixtures validate and invalid fixtures fail predictably.
+- [x] Explicit and implicit examples are covered by tests.
+- [x] Data contract is documented in `docs/DATA_CONTRACT.md`.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_schemas.py (25 tests): tiny fixture validates; explicit and implicit examples; 14 invalid cases fail with stable codes; UTC normalization; duplicate policy. Full suite 29 passed; ruff/mypy clean.
 
 ### Task 1.3: Impression, Exposure & Feedback Event Contract
 
@@ -1040,7 +1043,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 
 | Phase | Tasks | Completed |
 |---|---:|---:|
-| 1 — Foundation, Data Contracts & Reproducibility | 6 | 1 |
+| 1 — Foundation, Data Contracts & Reproducibility | 6 | 2 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 0 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
@@ -1048,4 +1051,4 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **1** |
+| **Total** | **52** | **2** |

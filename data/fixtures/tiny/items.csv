@@ -1,0 +1,13 @@
+item_id,title,categories,available
+i01,Synthetic Film 01,action|scifi,true
+i02,Synthetic Film 02,action,true
+i03,Synthetic Film 03,action|thriller,true
+i04,Synthetic Film 04,scifi,true
+i05,Synthetic Film 05,action|scifi,true
+i06,Synthetic Film 06,drama,true
+i07,Synthetic Film 07,drama|romance,true
+i08,Synthetic Film 08,romance,true
+i09,Synthetic Film 09,drama,true
+i10,Synthetic Film 10,drama|romance,true
+i11,Synthetic Film 11,drama,true
+i12,Synthetic Film 12,action,false
