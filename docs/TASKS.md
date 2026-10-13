@@ -25,7 +25,8 @@ Update this ledger only after verification.
 
 ## Phase 2 — Dataset Protocol, Labels, Features & Baselines
 
-- [ ] **Task 2.1** — Interaction Validation & Cleaning Pipeline
+- [x] **Task 2.1** — Interaction Validation & Cleaning Pipeline
+  - Evidence: tests/unit/test_cleaning.py (6 tests): 11 known-bad rows yield 9 expected reason codes; report reconciles; no removal without reason; repeated and reversed-order runs give identical checksum. Suite 71 passed; ruff/mypy clean.
 - [ ] **Task 2.2** — Explicit-to-Implicit Label Policy & Relevance Semantics
 - [ ] **Task 2.3** — Negative Sampling Engine for Training
 - [ ] **Task 2.4** — Leakage-Safe Train / Validation / Test Split Engine

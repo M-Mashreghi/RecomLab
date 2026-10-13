@@ -152,3 +152,21 @@ Every dataset snapshot records source, version, checksum, schema version, retrie
   `id@version` with a different checksum fails (`DatasetChecksumMismatch`) so data changes
   require a new version. `verify_snapshot()` detects modified files. `resolve(id)` without a
   version returns the highest version in natural order; experiment runs pin versions.
+
+## Cleaning Pipeline (`recomlab.ingestion.cleaning`)
+
+`clean_interactions(raw_rows, users, items, CleaningPolicy)` applies, in order:
+
+| Step | Reason code(s) |
+|---|---|
+| `schema` | `schema:<validation code>` (e.g. `schema:naive_timestamp`) |
+| `duplicates` | `duplicate_exact` (later identical copies), `duplicate_conflict` (every record of an `event_id` with conflicting content) |
+| `known_users` | `unknown_user` |
+| `known_items` | `unknown_item` |
+| `time_window` | `out_of_time_window` (`min_time` inclusive, `max_time` exclusive) |
+
+The `CleaningReport` lists before/removed/after counts per step and every rejection with
+its row index and reason. `report.reconciles()` asserts
+`n_input == n_output + removed` and that removals equal recorded rejections. Output is
+sorted canonically, independent of input order, and identified by a content checksum.
+`CleaningPolicy.policy_id` is stored in dataset manifests (`cleaning_policy`).

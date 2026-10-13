@@ -153,7 +153,7 @@ tests/unit/test_experiments.py (6 tests): same config + fixture reproduces ident
 
 ### Task 2.1: Interaction Validation & Cleaning Pipeline
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Turn raw interaction data into an auditable canonical dataset while reporting—not hiding—data quality decisions.
@@ -165,10 +165,13 @@ Turn raw interaction data into an auditable canonical dataset while reporting—
 - Keep cleaning deterministic.
 
 **Definition of Done (DoD)**
-- [ ] Known bad fixtures yield expected reason codes.
-- [ ] Cleaning report totals reconcile.
-- [ ] Repeated runs produce identical processed output.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Known bad fixtures yield expected reason codes.
+- [x] Cleaning report totals reconcile.
+- [x] Repeated runs produce identical processed output.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_cleaning.py (6 tests): 11 known-bad rows yield 9 expected reason codes; report reconciles; no removal without reason; repeated and reversed-order runs give identical checksum. Suite 71 passed; ruff/mypy clean.
 
 ### Task 2.2: Explicit-to-Implicit Label Policy & Relevance Semantics
 
@@ -1056,11 +1059,11 @@ Finish the project with a reproducible demo path and documented failure recovery
 | Phase | Tasks | Completed |
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
-| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 0 |
+| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 1 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **6** |
+| **Total** | **52** | **7** |
