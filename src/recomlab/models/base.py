@@ -22,8 +22,11 @@ class NotFittedError(RuntimeError):
 
 
 class Recommender(Protocol):
-    name: str
-    version: str
+    @property
+    def name(self) -> str: ...
+
+    @property
+    def version(self) -> str: ...
 
     def fit(
         self, train: Sequence[Interaction], items: Sequence[Item], as_of: datetime | None = None

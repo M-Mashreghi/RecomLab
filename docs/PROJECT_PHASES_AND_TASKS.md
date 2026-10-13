@@ -851,7 +851,7 @@ tests/integration/test_event_log.py (3 tests): re-logging a served slate and fee
 
 ### Task 6.5: Scheduled Retraining & Data-Snapshot Workflow
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Automate the reproducible path from newly logged events to a candidate model without auto-promoting unverified models.
@@ -863,10 +863,13 @@ Automate the reproducible path from newly logged events to a candidate model wit
 - Do not promote automatically unless release gates pass.
 
 **Definition of Done (DoD)**
-- [ ] Workflow can run end-to-end on demo fixture.
-- [ ] Failure leaves previous active model untouched.
-- [ ] Dataset and model versions are linked.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Workflow can run end-to-end on demo fixture.
+- [x] Failure leaves previous active model untouched.
+- [x] Dataset and model versions are linked.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_retraining.py (4 tests): end-to-end workflow on the demo fixture freezes a verified snapshot (base + logged events), logs a validation run and registers a challenger linking workflow, dataset version and run id without activation; snapshots deterministic; a failing spec logs a failed run and leaves the active bundle untouched; `recomlab retrain` CLI works. Suite 234 passed; ruff/mypy clean.
 
 ### Task 6.6: Champion / Challenger Promotion Gate
 
@@ -1153,7 +1156,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
-| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 4 |
+| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 5 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **37** |
+| **Total** | **52** | **38** |

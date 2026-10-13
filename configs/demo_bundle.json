@@ -1,0 +1,10 @@
+{
+  "pipeline": {
+    "generators": ["popularity", "item_item", "collaborative"],
+    "ranker": {"type": "heuristic"},
+    "candidate_budget": 20,
+    "artifacts": {"als": "als"},
+    "cold_start": {"cold_item_slots": 0}
+  },
+  "als": {"factors": 8, "iterations": 15, "seed": 0}
+}

@@ -23,3 +23,27 @@ Do not mix simulated and real participant records. Do not start real recruitment
 
 ## 8. Rollback
 Model registry must retain the previous champion. If a challenger causes operational or guardrail regression, reactivate the prior compatible bundle and record the rollback reason.
+
+## 9. Scheduled Retraining (`recomlab retrain`)
+
+```bash
+recomlab retrain --spec configs/demo_bundle.json [--events data/events.db]
+```
+
+One workflow id links every stage (`recomlab.experiments.retraining.run_retraining`):
+
+1. **Snapshot**: base dataset + logged feedback (as interactions) are cleaned and frozen to
+   `data/processed/<dataset>/snap-<checksum>/` with manifest + data card, and registered.
+2. **Validate/split**: leakage-safe split of the frozen snapshot.
+3. **Train + evaluate**: the bundle spec is trained on the training partition and evaluated
+   on validation with the standard protocol; the run (with per-user artifacts) is logged and
+   its notes carry the workflow id.
+4. **Artifacts**: final artifacts are trained on the full snapshot and registered as a
+   **challenger** bundle whose metadata links workflow id, dataset version/checksum, and the
+   validation run id.
+5. **No auto-promotion**: the workflow never changes the active bundle; promotion goes
+   through the champion/challenger gate. On any failure a `failed` run manifest is logged
+   and the previous active bundle stays untouched.
+
+Schedule it with the host's scheduler (cron, Windows Task Scheduler, CI schedule); no queue
+infrastructure is required.

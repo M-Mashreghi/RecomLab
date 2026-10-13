@@ -7,10 +7,11 @@ serving and offline results agree on the same context.
 
 from __future__ import annotations
 
+import tempfile
 from collections import Counter
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -21,7 +22,8 @@ from recomlab.candidates.item_item import ItemItemCandidates
 from recomlab.domain.eligibility import EligibilityFilter, EligibilityPolicy
 from recomlab.domain.schemas import Interaction, Item
 from recomlab.features.builder import PointInTimeFeatures
-from recomlab.models.als import ALSArtifact, ALSRecommender
+from recomlab.models.als import ALSArtifact, ALSParams, ALSRecommender, ImplicitALS
+from recomlab.models.base import ScoredItem
 from recomlab.rankers.base import RankedList, Ranker, RankRequest, RetrievalScoreRanker
 from recomlab.rankers.collaborative import CollaborativeRanker
 from recomlab.rankers.heuristic import HeuristicRanker, HeuristicWeights
@@ -131,3 +133,60 @@ class RecommendationPipeline:
         ranked = self.ranker.rank(RankRequest.from_fused(fused, k, request_id))
         final = self.cold_start.apply(ranked, k, self.eligibility, self.features)
         return PipelineOutput(final, fused)
+
+
+class PipelineRecommender:
+    """Adapter so a bundle spec can be evaluated with the offline protocol.
+
+    ``fit`` trains the ALS artifact (when the spec needs one) on the given
+    history only, then builds the same pipeline that serving uses.
+    """
+
+    name = "pipeline"
+
+    def __init__(self, spec: Mapping[str, Any], als_params: Mapping[str, Any] | None = None):
+        validate_spec(spec)
+        self.spec = dict(spec)
+        self.als_params = dict(als_params or {})
+        self.pipeline: RecommendationPipeline | None = None
+        self.artifacts_dir: Path | None = None
+
+    @property
+    def version(self) -> str:
+        if self.pipeline is None:
+            return "unfitted"
+        parts = sorted(self.pipeline.component_versions.items())
+        return "pipeline[" + ";".join(f"{k}={v}" for k, v in parts) + "]"
+
+    def fit(
+        self,
+        train: Sequence[Interaction],
+        items: Sequence[Item],
+        as_of: datetime | None = None,
+        artifacts_dir: Path | None = None,
+    ) -> PipelineRecommender:
+        if as_of is None:
+            if not train:
+                raise ValueError("cannot infer as_of from empty training history")
+            as_of = max(e.event_time for e in train) + timedelta(seconds=1)
+        directory = artifacts_dir or Path(tempfile.mkdtemp(prefix="recomlab-pipeline-"))
+        if "als" in self.spec.get("artifacts", {}):
+            ImplicitALS(ALSParams(**self.als_params)).fit(train, items).save(
+                directory / self.spec["artifacts"]["als"]
+            )
+        self.artifacts_dir = directory
+        self.pipeline = RecommendationPipeline(self.spec, train, items, as_of, directory)
+        return self
+
+    def recommend(self, user_id: str, k: int, eligibility: EligibilityFilter) -> list[ScoredItem]:
+        if self.pipeline is None:
+            raise RuntimeError("pipeline not fitted")
+        out = self.pipeline.recommend(user_id, k)
+        return [
+            ScoredItem(i.item_id, i.final_score)
+            for i in out.ranked.items
+            if eligibility.is_eligible(user_id, i.item_id)
+        ]
+
+    def params(self) -> dict[str, Any]:
+        return {"spec": self.spec, "als": self.als_params}

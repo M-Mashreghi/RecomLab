@@ -42,6 +42,7 @@ def run_offline_experiment(
     protocol: EvaluationProtocol | None = None,
     artifacts_dir: Path | None = None,
     extra_metrics: dict[str, Any] | None = None,
+    notes: str = "",
 ) -> tuple[RunManifest, EvaluationResult]:
     """Fit on history visible for ``partition``, evaluate, and log a manifest.
 
@@ -94,6 +95,7 @@ def run_offline_experiment(
         artifacts=artifacts,
         software=collect_software_state(),
         git_commit=git_commit(),
+        notes=notes,
         **kwargs,
     )
     if artifacts_dir is not None:
