@@ -35,7 +35,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_splits.py (10 tests, marked leakage): per-user and global temporal order; same dataset+config → same split_id; no test event in train/validation for all 3 protocols; repeat interactions dropped not moved; random split labeled diagnostic; injected leaks raise LeakageError; boundaries persisted. Suite 95 passed; ruff/mypy clean.
 - [x] **Task 2.5** — Point-in-Time User, Item & Interaction Feature Builder
   - Evidence: tests/unit/test_features.py (7 tests): hand-computed point-in-time counts, profiles and recency decay; injected future events do not change features and strict mode raises; assert_point_in_time fails when a future event is used; split train-only aggregates match; feature manifest round-trips in RunManifest. Suite 102 passed; ruff/mypy clean.
-- [ ] **Task 2.6** — Random & Popularity Recommendation Baselines
+- [x] **Task 2.6** — Random & Popularity Recommendation Baselines
+  - Evidence: tests/unit/test_baselines.py (6 tests): deterministic popularity top-K with id tie-breaks; popularity counts equal training-only counts; seeded random independent of call order; eligibility filters; both baselines logged to the SQLite registry with coverage, latency and metrics; rerun reproduces metrics. Suite 108 passed; ruff/mypy clean.
 - [ ] **Task 2.7** — Collaborative Filtering Baseline
 
 ## Phase 3 — Candidate Generation & Retrieval

@@ -106,3 +106,17 @@ Relevance is derived from raw feedback by a versioned `LabelPolicy`
   protocols, training/validation events strictly precede test events (globally or per user).
 - When predicting the test partition, visible history is train + validation
   (`Split.train_until("test")`); model selection uses validation only.
+
+## 13. Baselines & Offline Runner
+
+- `RandomRecommender(seed)` ranks eligible items with a per-user seeded stream (independent
+  of call order). `PopularityRecommender` counts training events only
+  (`split.train_until(partition)`); ties are broken by ascending item id.
+- `EligibilityFilter` (`recomlab.domain.eligibility`) removes unavailable items, explicitly
+  excluded items, and (by default) items the user already consumed in the visible history.
+- `evaluate_recommender` ranks the **full eligible catalog** for every held-out user with at
+  least one positive label (users without positives are counted, not scored) and reports
+  Recall/NDCG/HitRate@K, catalog coverage@K, and recommendation latency (mean/p50/max ms).
+- `run_offline_experiment` fits on the visible history, evaluates, and logs a `RunManifest`
+  with dataset, split, label policy, model params, evaluation universe, metrics, latency,
+  and software state. Latency is excluded from determinism checks.

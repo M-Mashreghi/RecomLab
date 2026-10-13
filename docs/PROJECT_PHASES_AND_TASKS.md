@@ -263,7 +263,7 @@ tests/unit/test_features.py (7 tests): hand-computed point-in-time counts, profi
 
 ### Task 2.6: Random & Popularity Recommendation Baselines
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Establish honest lower-bound baselines before adding personalized models.
@@ -275,10 +275,13 @@ Establish honest lower-bound baselines before adding personalized models.
 - Record latency and catalog coverage along with ranking metrics.
 
 **Definition of Done (DoD)**
-- [ ] Baselines produce deterministic top-K on fixtures.
-- [ ] Popularity counts exclude validation/test data.
-- [ ] Baseline results are saved to experiment registry.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Baselines produce deterministic top-K on fixtures.
+- [x] Popularity counts exclude validation/test data.
+- [x] Baseline results are saved to experiment registry.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_baselines.py (6 tests): deterministic popularity top-K with id tie-breaks; popularity counts equal training-only counts; seeded random independent of call order; eligibility filters; both baselines logged to the SQLite registry with coverage, latency and metrics; rerun reproduces metrics. Suite 108 passed; ruff/mypy clean.
 
 ### Task 2.7: Collaborative Filtering Baseline
 
@@ -1071,11 +1074,11 @@ Finish the project with a reproducible demo path and documented failure recovery
 | Phase | Tasks | Completed |
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
-| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 5 |
+| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 6 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **11** |
+| **Total** | **52** | **12** |
