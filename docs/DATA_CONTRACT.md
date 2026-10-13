@@ -170,3 +170,18 @@ its row index and reason. `report.reconciles()` asserts
 `n_input == n_output + removed` and that removals equal recorded rejections. Output is
 sorted canonically, independent of input order, and identified by a content checksum.
 `CleaningPolicy.policy_id` is stored in dataset manifests (`cleaning_policy`).
+
+## Impression & Feedback Log (`recomlab.services.event_log.EventLog`)
+
+- SQLite tables `impressions` and `feedback` with exactly the exposure-contract columns;
+  rows are read back as validated `Impression` / `FeedbackEvent` records.
+- `log_response(response, shown_at, propensities=None)` logs a served slate: impression id
+  `<trace_id>:<position>`, `request_id = trace_id`, `model_id = bundle_id`. Propensities are
+  stored only when the caller supplies them (one per item); otherwise they stay null.
+- Idempotency: re-sending an identical impression/feedback id is counted as a duplicate and
+  ignored; the same id with different content raises `ConflictingEventError`.
+- `linked_feedback()` / `feedback_for_request(request_id)` expose the linkage defined above;
+  `as_interactions()` converts positive feedback types into canonical interactions
+  (`event_id = fb:<feedback_id>`) for data snapshots.
+- Demo mode is local (SQLite file) and privacy-minimal: ids, positions, timestamps, numeric
+  values only; free text is rejected by the feedback contract.

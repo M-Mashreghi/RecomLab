@@ -829,7 +829,7 @@ tests/integration/test_dashboard.py (7 tests): all four Streamlit pages load wit
 
 ### Task 6.4: Impression & Feedback Logging Workflow
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Close the loop by logging what was recommended and what response occurred, enabling future evaluation and retraining.
@@ -841,10 +841,13 @@ Close the loop by logging what was recommended and what response occurred, enabl
 - Keep demo mode local and privacy-minimal.
 
 **Definition of Done (DoD)**
-- [ ] Duplicate event handling is tested.
-- [ ] Feedback linkage is queryable.
-- [ ] Exposure data conforms to Task 1.3 contract.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Duplicate event handling is tested.
+- [x] Feedback linkage is queryable.
+- [x] Exposure data conforms to Task 1.3 contract.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_event_log.py (3 tests): re-logging a served slate and feedback is idempotent while conflicting ids are rejected; linked/unlinked feedback queryable per request and convertible to interactions; stored impressions are contract Impressions and propensities stay missing unless supplied. Suite 230 passed; ruff/mypy clean.
 
 ### Task 6.5: Scheduled Retraining & Data-Snapshot Workflow
 
@@ -1150,7 +1153,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
-| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 3 |
+| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 4 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **36** |
+| **Total** | **52** | **37** |

@@ -97,7 +97,8 @@ Update this ledger only after verification.
   - Evidence: tests/integration/test_api.py (11 tests): health/readiness; recommendation contract incl. no-active-model 503 and evidence stripping; 4 invalid payloads return structured validation errors; experiment list/detail/404; activation requires the admin token, unknown bundle keeps the active model, mutation disabled without a configured token; no secrets in responses; app builds from Settings. Suite 220 passed; ruff/mypy clean.
 - [x] **Task 6.3** — Streamlit Experiment Dashboard & Recommendation Explorer
   - Evidence: tests/integration/test_dashboard.py (7 tests): all four Streamlit pages load without exceptions via streamlit AppTest on fixture data; view models built from the experiment registry and service only (source check forbids fit/training/metric calls); no user attributes in rendered data. Suite 227 passed; ruff/mypy clean.
-- [ ] **Task 6.4** — Impression & Feedback Logging Workflow
+- [x] **Task 6.4** — Impression & Feedback Logging Workflow
+  - Evidence: tests/integration/test_event_log.py (3 tests): re-logging a served slate and feedback is idempotent while conflicting ids are rejected; linked/unlinked feedback queryable per request and convertible to interactions; stored impressions are contract Impressions and propensities stay missing unless supplied. Suite 230 passed; ruff/mypy clean.
 - [ ] **Task 6.5** — Scheduled Retraining & Data-Snapshot Workflow
 - [ ] **Task 6.6** — Champion / Challenger Promotion Gate
 
