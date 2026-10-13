@@ -17,7 +17,7 @@ A task may be marked complete only when:
 
 ### Task 1.1: Python Project Scaffold & Quality Tooling
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Create a small, testable Python package with consistent tooling so every later recommender experiment runs from the same reproducible foundation.
@@ -29,10 +29,13 @@ Create a small, testable Python package with consistent tooling so every later r
 - Keep mandatory CI dependencies minimal; heavy recommender libraries require task-level justification.
 
 **Definition of Done (DoD)**
-- [ ] Fresh environment can install the package and import `recomlab`.
-- [ ] Unit smoke test and CLI smoke test pass.
-- [ ] No secrets or raw datasets are committed.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Fresh environment can install the package and import `recomlab`.
+- [x] Unit smoke test and CLI smoke test pass.
+- [x] No secrets or raw datasets are committed.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+pytest tests/unit/test_smoke.py (4 passed: import, in-process CLI, `python -m recomlab smoke`, logging idempotence); ruff and mypy clean; editable install verified in a fresh Python 3.14 venv.
 
 ### Task 1.2: Canonical User, Item & Interaction Schemas
 
@@ -1037,7 +1040,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 
 | Phase | Tasks | Completed |
 |---|---:|---:|
-| 1 — Foundation, Data Contracts & Reproducibility | 6 | 0 |
+| 1 — Foundation, Data Contracts & Reproducibility | 6 | 1 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 0 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
@@ -1045,4 +1048,4 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **0** |
+| **Total** | **52** | **1** |

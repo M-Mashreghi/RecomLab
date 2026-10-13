@@ -10,7 +10,8 @@ Update this ledger only after verification.
 
 ## Phase 1 — Foundation, Data Contracts & Reproducibility
 
-- [ ] **Task 1.1** — Python Project Scaffold & Quality Tooling
+- [x] **Task 1.1** — Python Project Scaffold & Quality Tooling
+  - Evidence: pytest tests/unit/test_smoke.py (4 passed: import, in-process CLI, `python -m recomlab smoke`, logging idempotence); ruff and mypy clean; editable install verified in a fresh Python 3.14 venv.
 - [ ] **Task 1.2** — Canonical User, Item & Interaction Schemas
 - [ ] **Task 1.3** — Impression, Exposure & Feedback Event Contract
 - [ ] **Task 1.4** — Configuration, Environment & Dependency Policy

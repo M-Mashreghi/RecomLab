@@ -88,6 +88,20 @@ Heavy dependencies are optional adapters, not architectural requirements.
 - Statistical uncertainty is reported for model comparisons.
 - Human-participant recruitment is outside the software workflow unless appropriate institutional approval exists.
 
+## Quickstart
+
+```bash
+python -m venv .venv
+.venv\Scriptsctivate        # POSIX: source .venv/bin/activate
+pip install -e ".[dev]"
+recomlab smoke                 # or: python -m recomlab smoke
+pytest
+ruff check src tests && mypy
+```
+
+Mandatory dependencies are kept minimal (NumPy only). API, dashboard, and other
+heavy libraries are optional extras (`.[api]`, `.[dashboard]`).
+
 ## Project Plan
 
 The implementation is split into **8 phases and 52 atomic tasks**. See `docs/PROJECT_PHASES_AND_TASKS.md`.
