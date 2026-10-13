@@ -1101,7 +1101,7 @@ tests/integration/test_monitoring.py (3 tests): /health, /ready and the new /mon
 
 ### Task 8.3: Dockerization & Reproducible Demo Stack
 
-**Status:** `[x]` Completed
+**Status:** `[-]` In Progress (code complete; Docker build not yet verified)
 
 **Business / Research Value**  
 Make the portfolio demo easy to run without introducing unnecessary distributed infrastructure.
@@ -1113,8 +1113,8 @@ Make the portfolio demo easy to run without introducing unnecessary distributed 
 - Run as non-root where practical and include healthcheck.
 
 **Definition of Done (DoD)**
-- [x] Docker build succeeds.
-- [x] Demo stack serves health endpoint and dashboard.
+- [ ] Docker build succeeds. *(pending: Docker is not installed on the development machine; run `docker compose up --build`)*
+- [x] Demo stack serves health endpoint and dashboard. *(verified without Docker via `recomlab bootstrap-demo` + API/dashboard tests)*
 - [x] Secrets are not baked into image.
 - [x] Relevant tests pass and documentation is synchronized.
 
@@ -1191,5 +1191,5 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 7 |
-| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 3 |
-| **Total** | **52** | **49** |
+| 8 — Hardening, Monitoring, CI/CD & Release | 6 | 2 |
+| **Total** | **52** | **48** |

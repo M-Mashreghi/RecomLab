@@ -127,7 +127,7 @@ Update this ledger only after verification.
   - Evidence: tests/e2e/test_pipeline_e2e.py (5 tests, marked e2e): full fixture pipeline run twice with identical metrics, rankings and reports; no held-out leakage into serving history; warm, cold, empty-candidate and model fallback paths; mocked-provider explanation passes fidelity; artifacts bounded. No live API. Suite 285 passed; ruff/mypy clean.
 - [x] **Task 8.2** — Observability, Drift & Train-Serving Skew Checks
   - Evidence: tests/integration/test_monitoring.py (3 tests): /health, /ready and the new /monitoring endpoint report serving metrics; JSON logs carry request/run/model ids and scrub API keys, history and emails; synthetic drift fixture triggers catalog, volume, event-mix, PSI, schema and feature-mean warnings, and serving metrics trigger empty-candidate and latency warnings, while identical profiles trigger none. Suite 288 passed; ruff/mypy clean.
-- [x] **Task 8.3** — Dockerization & Reproducible Demo Stack
+- [-] **Task 8.3** — Dockerization & Reproducible Demo Stack
   - Evidence: tests/integration/test_demo_stack.py (3 tests): Dockerfile is multi-stage slim, non-root, has a /health HEALTHCHECK and bakes no secrets (.dockerignore excludes .env/data/artifacts); compose parses with api+dashboard, mounted volumes and healthchecks; `recomlab bootstrap-demo` deploys a bundle after which the API serves /health, /ready and recommendations and the dashboard loads, and re-running is idempotent. NOT VERIFIED: `docker build` / `docker compose up` were not run because Docker is not installed on this machine. Suite 291 passed; ruff/mypy clean.
 - [ ] **Task 8.4** — GitHub Actions CI & Quality Gates
 - [ ] **Task 8.5** — Security, Privacy & Dependency Audit
