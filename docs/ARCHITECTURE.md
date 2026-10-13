@@ -233,3 +233,23 @@ model). Unknown users fall back to training popularity for every candidate
 (`metadata.fallback = "unknown_user"`); unknown items for known users are placed strictly
 below all known items and ordered by popularity (`unknown_items:<n>`). Output metadata
 records the ALS model version and latency; `rank_batch` serves offline evaluation.
+
+## 19. Serving: Pipeline, Model Registry & Recommendation Service
+
+- `services.pipeline.RecommendationPipeline(spec, history, items, as_of, artifacts_dir)`
+  assembles retrieval generators (`popularity`, `item_item`, `collaborative`) → fusion +
+  eligibility → ranker (`heuristic`, `collaborative`, `retrieval_score`) → cold-start
+  policy from a declarative bundle spec. The same object serves online requests and
+  offline checks.
+- `registry.model_registry.ModelRegistry` stores immutable bundles
+  (`bundles/<bundle_id>/bundle.json` + copied artifacts with sha256 checksums; the id is a
+  content hash of spec, metadata and artifacts). `activate()` validates first — artifact
+  checksums, ALS artifact version, catalog size, and a probe request through the full
+  pipeline — and only then updates `active.json`; any failure raises
+  `IncompatibleBundleError` and leaves the active bundle unchanged. `rollback()` reactivates
+  the previous bundle and records the reason; the activation history is append-only.
+- `services.recommendation.RecommendationService` serves the active bundle:
+  `RecommendationRequest(user_id, k, trace_id)` → `RecommendationResponse` with trace id,
+  bundle id, component versions, per-item rank/score, fused source provenance,
+  ranker contributions (explanation grounding), and fallback labels. Swaps are atomic
+  (the new pipeline is built and validated before it replaces the old one).

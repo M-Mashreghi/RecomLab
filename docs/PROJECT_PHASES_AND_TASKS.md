@@ -763,7 +763,7 @@ tests/integration/test_evaluation_report.py (3 tests): report rebuilt from a reo
 
 ### Task 6.1: Recommendation Service & Model Registry
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Create one application-layer service for production/demo recommendations and an auditable registry of active model artifacts.
@@ -775,10 +775,13 @@ Create one application-layer service for production/demo recommendations and an 
 - Return provenance needed for debugging and explanation grounding.
 
 **Definition of Done (DoD)**
-- [ ] Active model swap is tested.
-- [ ] Incompatible artifacts fail closed.
-- [ ] Service output matches offline ranker on fixture context.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Active model swap is tested.
+- [x] Incompatible artifacts fail closed.
+- [x] Service output matches offline ranker on fixture context.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/integration/test_recommendation_service.py (4 tests): heuristic→collaborative bundle swap, rollback and restart-from-registry; tampered artifact, catalog mismatch and invalid spec fail closed with the active bundle untouched; service output equals the manually assembled offline pipeline for warm and cold users; responses carry serializable provenance. Suite 209 passed; ruff/mypy clean.
 
 ### Task 6.2: FastAPI Recommendation & Experiment API
 
@@ -1141,7 +1144,7 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
-| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
+| 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 1 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **33** |
+| **Total** | **52** | **34** |

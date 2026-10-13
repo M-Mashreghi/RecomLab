@@ -91,7 +91,8 @@ Update this ledger only after verification.
 
 ## Phase 6 — API, Dashboard & Automated Recommendation Workflow
 
-- [ ] **Task 6.1** — Recommendation Service & Model Registry
+- [x] **Task 6.1** — Recommendation Service & Model Registry
+  - Evidence: tests/integration/test_recommendation_service.py (4 tests): heuristic→collaborative bundle swap, rollback and restart-from-registry; tampered artifact, catalog mismatch and invalid spec fail closed with the active bundle untouched; service output equals the manually assembled offline pipeline for warm and cold users; responses carry serializable provenance. Suite 209 passed; ruff/mypy clean.
 - [ ] **Task 6.2** — FastAPI Recommendation & Experiment API
 - [ ] **Task 6.3** — Streamlit Experiment Dashboard & Recommendation Explorer
 - [ ] **Task 6.4** — Impression & Feedback Logging Workflow
