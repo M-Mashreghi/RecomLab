@@ -605,7 +605,7 @@ tests/unit/test_metrics.py (5 tests, marked metrics): Precision/Recall/HitRate/M
 
 ### Task 5.2: Beyond-Accuracy Metrics: Coverage, Diversity, Novelty, Calibration & Popularity Bias
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Measure whether a recommender is useful beyond raw relevance and whether gains simply amplify popular items.
@@ -617,10 +617,13 @@ Measure whether a recommender is useful beyond raw relevance and whether gains s
 - Implement profile-to-list calibration when category metadata exists.
 
 **Definition of Done (DoD)**
-- [ ] Metrics pass deterministic fixtures.
-- [ ] Undefined metrics are reported as unavailable—not zero.
-- [ ] Metric assumptions are documented.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Metrics pass deterministic fixtures.
+- [x] Undefined metrics are reported as unavailable—not zero.
+- [x] Metric assumptions are documented.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_beyond_accuracy.py (3 tests, marked metrics): coverage, ILD, novelty, Gini, head share and calibration KL match deterministic hand-computed fixture values; helper edge cases; undefined metrics reported as None with reasons rather than zero. Suite 182 passed; ruff/mypy clean.
 
 ### Task 5.3: Full-Catalog vs Sampled Evaluation Protocol
 
@@ -1119,8 +1122,8 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
-| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 1 |
+| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 2 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **26** |
+| **Total** | **52** | **27** |

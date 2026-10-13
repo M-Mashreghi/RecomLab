@@ -212,3 +212,21 @@ and lists them (`users_without_positives`) instead of scoring zero. Users with r
 but no ranking are scored as an empty list (a recommender failure) and listed in
 `users_without_ranking`. Means are unweighted over evaluable users. `MetricConfig.to_dict()`
 is stored in `RunManifest.metric_config`.
+
+## 20. Beyond-Accuracy Metrics (`recomlab.evaluation.beyond_accuracy`)
+
+`beyond_accuracy(rankings, k, catalog, train_item_users, n_train_users, categories, profiles)`:
+
+| Metric | Definition / assumption |
+|---|---|
+| `catalog_coverage@k` | distinct recommended items ∩ eligible catalog / catalog size |
+| `user_coverage@k` | share of users with a non-empty list |
+| `ild@k` | mean pairwise `1 − Jaccard(category sets)` per list (item representation = categories) |
+| `novelty@k` | mean `−log2((train_users_i + 1) / (n_train_users + 1))` over recommended slots |
+| `gini@k` | Gini of recommendation counts over the eligible catalog |
+| `head_share@k` | share of slots taken by the top 20% items by training popularity |
+| `calibration_kl@k` | mean `KL(p_user ‖ q_list)` over categories, smoothing `alpha = 0.01` |
+
+Popularity statistics use training interactions only. Metrics that cannot be computed
+(no category metadata, no recommendations, no profiles, lists shorter than 2) are reported
+as `None` with a reason in `unavailable`, never as zero.

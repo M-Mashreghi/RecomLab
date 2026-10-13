@@ -74,7 +74,8 @@ Update this ledger only after verification.
 
 - [x] **Task 5.1** — Top-K Ranking Metrics Library
   - Evidence: tests/unit/test_metrics.py (5 tests, marked metrics): Precision/Recall/HitRate/MAP/MRR and binary + linear/exponential graded NDCG match hand computations; edge cases (no positives, k<=0, empty/short lists); aggregation excludes and reports users without positives; metric config round-trips in RunManifest. Suite 179 passed; ruff/mypy clean.
-- [ ] **Task 5.2** — Beyond-Accuracy Metrics: Coverage, Diversity, Novelty, Calibration & Popularity Bias
+- [x] **Task 5.2** — Beyond-Accuracy Metrics: Coverage, Diversity, Novelty, Calibration & Popularity Bias
+  - Evidence: tests/unit/test_beyond_accuracy.py (3 tests, marked metrics): coverage, ILD, novelty, Gini, head share and calibration KL match deterministic hand-computed fixture values; helper edge cases; undefined metrics reported as None with reasons rather than zero. Suite 182 passed; ruff/mypy clean.
 - [ ] **Task 5.3** — Full-Catalog vs Sampled Evaluation Protocol
 - [ ] **Task 5.4** — Slice Analysis for Cold, Sparse, Popularity & Activity Segments
 - [ ] **Task 5.5** — Bootstrap Confidence Intervals & Paired Significance Testing
