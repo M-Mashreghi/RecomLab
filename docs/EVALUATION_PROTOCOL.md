@@ -179,3 +179,19 @@ stored in `RunManifest.metrics["retrieval"]`.
   feature construction (`candidate_feature_rows`); per-feature contributions sum to the
   score. A CI test compares LTR, heuristic, and collaborative rankers on identical
   validation candidates (CPU config: 50–100 epochs, tiny fixture).
+
+## 18. Re-ranking & Cold-Start Policy (`recomlab.reranking`)
+
+- `MMRDiversifier(categories, lam)`: greedy `lam · rel_norm − (1 − lam) · max category-Jaccard
+  similarity to already selected items`; `lam = 1` keeps the ranker order.
+- `CalibrationReranker(categories, lam, alpha)`: greedy calibrated list (Steck, 2018), maximizing
+  `(1 − lam) Σ rel − lam · KL(p_user ‖ q_list)` with the point-in-time category profile;
+  skipped (and recorded) when the user has no profile.
+- Both only reorder/select items already in the ranked (eligible candidate) list.
+- `ColdStartPolicy(cold_item_slots)`: the only step that may add items, and only eligible
+  ones. Short/empty lists are filled by training popularity (`fallback = "popularity"`),
+  then by content affinity (`"content"`); optional tail slots go to items without training
+  interactions ranked by content affinity (`"cold_item_content"`). Every added item is
+  listed in `metadata.fallbacks`; output is deterministic.
+- `rerank_report(before, after, truth, categories, k)` reports NDCG@k, ILD@k, and distinct
+  items@k before/after plus deltas, so relevance trade-offs are visible.

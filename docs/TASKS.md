@@ -67,7 +67,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_ltr_data.py (5 tests): group sizes reconcile with candidate rows and unique items per group; history-after-as_of and target-before-as_of raise LeakageError; training rows contain no validation/test target pairs and forbidden ids are refused; schema/feature manifest recorded. Suite 166 passed; ruff/mypy clean.
 - [x] **Task 4.5** — Learning-to-Rank Baseline
   - Evidence: tests/unit/test_ltr.py (3 tests): deterministic train/eval smoke on the tiny fixture; grid search selects by validation NDCG and test-tagged data is refused for tuning and training; LTR, heuristic and collaborative rankers compared on identical validation candidates, serving scores equal dataset scores. Suite 169 passed; ruff/mypy clean.
-- [ ] **Task 4.6** — Diversification, Calibration & Cold-Start Re-ranking Policy
+- [x] **Task 4.6** — Diversification, Calibration & Cold-Start Re-ranking Policy
+  - Evidence: tests/unit/test_reranking.py (5 tests): MMR increases ILD without adding items; calibration follows the profile and records skips; MMR/calibration on real fused candidates never leave the eligible candidate set; cold-user and cold-item fallbacks are non-empty, eligible, deterministic and labeled; before/after relevance and beyond-accuracy report with deltas. Suite 174 passed; ruff/mypy clean.
 
 ## Phase 5 — Evaluation, Statistical Testing & Model Selection
 

@@ -557,7 +557,7 @@ tests/unit/test_ltr.py (3 tests): deterministic train/eval smoke on the tiny fix
 
 ### Task 4.6: Diversification, Calibration & Cold-Start Re-ranking Policy
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Improve final recommendation quality beyond relevance while providing explicit fallbacks for new/sparse users.
@@ -569,10 +569,13 @@ Improve final recommendation quality beyond relevance while providing explicit f
 - Measure relevance trade-off rather than hiding it.
 
 **Definition of Done (DoD)**
-- [ ] Re-ranking never adds items outside eligible candidates.
-- [ ] Cold-start fixtures return non-empty deterministic results.
-- [ ] Before/after relevance and beyond-accuracy metrics are reported.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Re-ranking never adds items outside eligible candidates.
+- [x] Cold-start fixtures return non-empty deterministic results.
+- [x] Before/after relevance and beyond-accuracy metrics are reported.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_reranking.py (5 tests): MMR increases ILD without adding items; calibration follows the profile and records skips; MMR/calibration on real fused candidates never leave the eligible candidate set; cold-user and cold-item fallbacks are non-empty, eligible, deterministic and labeled; before/after relevance and beyond-accuracy report with deltas. Suite 174 passed; ruff/mypy clean.
 
 ---
 
@@ -1112,9 +1115,9 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
-| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 5 |
+| 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **24** |
+| **Total** | **52** | **25** |
