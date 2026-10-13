@@ -311,7 +311,7 @@ tests/unit/test_als.py (5 tests): ALS recovers the held-back cluster item where 
 
 ### Task 3.1: Candidate Generator Interface & Retrieval Contract
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Separate recall-oriented retrieval from precision-oriented ranking so bottlenecks can be diagnosed correctly.
@@ -323,10 +323,13 @@ Separate recall-oriented retrieval from precision-oriented ranking so bottleneck
 - Support multiple generators for later fusion.
 
 **Definition of Done (DoD)**
-- [ ] Interface contract tests pass.
-- [ ] Candidate outputs contain unique item ids per source or documented duplicates before fusion.
-- [ ] Candidate budget is enforced.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Interface contract tests pass.
+- [x] Candidate outputs contain unique item ids per source or documented duplicates before fusion.
+- [x] Candidate budget is enforced.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_candidate_contract.py (6 tests): budget enforced for several budgets and invalid budgets rejected; unique items with deterministic ties; validator catches duplicates/over-budget/mixed sources; generate() takes only the request and fit() rejects future history; multiple generators supported. Suite 119 passed; ruff/mypy clean.
 
 ### Task 3.2: Item-Item Similarity Candidate Generator
 
@@ -1078,10 +1081,10 @@ Finish the project with a reproducible demo path and documented failure recovery
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
-| 3 — Candidate Generation & Retrieval | 6 | 0 |
+| 3 — Candidate Generation & Retrieval | 6 | 1 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **13** |
+| **Total** | **52** | **14** |

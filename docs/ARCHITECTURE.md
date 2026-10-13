@@ -140,3 +140,18 @@ Undefined values (e.g. no history) are `None`, not zero. `strict=True` raises
 verifies the built object. The `FeatureManifest` (version, `as_of`, events used, latest event
 time used, params) is stored in `RunManifest.features`. Training-time aggregates are built
 from the training partition only; validation/test events never contribute.
+
+## 17. Retrieval Contract (`recomlab.candidates`)
+
+- `CandidateRequest(user_id, budget, exclude_items, request_id)`: the budget is a mandatory
+  positive integer. Requests carry no labels and no held-out data.
+- `CandidateGenerator.fit(history, items, as_of)` fails closed when history contains events
+  at/after `as_of`; `generate(request)` returns a `CandidateSet` from a single source with
+  unique items, ranks `1..n`, source score, per-candidate evidence, source version, and
+  metadata (`n_scored`, `n_after_exclusions`, `budget`, `truncated`, `latency_ms`).
+- Ordering is deterministic: descending score, ties by ascending item id.
+- `validate_candidate_set` enforces budget, uniqueness, rank sequence, single source, and
+  exclusions. Duplicates across sources are expected and resolved only by fusion (§ 3.5).
+- `generate_all` runs several generators for later fusion; generator names must be unique.
+- `PopularityCandidates` (training-history counts) is the reference generator and the
+  explicit cold-user fallback source.

@@ -42,7 +42,8 @@ Update this ledger only after verification.
 
 ## Phase 3 — Candidate Generation & Retrieval
 
-- [ ] **Task 3.1** — Candidate Generator Interface & Retrieval Contract
+- [x] **Task 3.1** — Candidate Generator Interface & Retrieval Contract
+  - Evidence: tests/unit/test_candidate_contract.py (6 tests): budget enforced for several budgets and invalid budgets rejected; unique items with deterministic ties; validator catches duplicates/over-budget/mixed sources; generate() takes only the request and fit() rejects future history; multiple generators supported. Suite 119 passed; ruff/mypy clean.
 - [ ] **Task 3.2** — Item-Item Similarity Candidate Generator
 - [ ] **Task 3.3** — Collaborative Retrieval Candidate Generator
 - [ ] **Task 3.4** — Embedding Retrieval & ANN Adapter
