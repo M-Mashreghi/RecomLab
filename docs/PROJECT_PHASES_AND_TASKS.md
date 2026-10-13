@@ -241,7 +241,7 @@ tests/unit/test_splits.py (10 tests, marked leakage): per-user and global tempor
 
 ### Task 2.5: Point-in-Time User, Item & Interaction Feature Builder
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Create reusable features without computing popularity or behavioral summaries from future information.
@@ -253,10 +253,13 @@ Create reusable features without computing popularity or behavioral summaries fr
 - Prevent validation/test-only events from contributing to training-time aggregates.
 
 **Definition of Done (DoD)**
-- [ ] Hand-built fixtures verify point-in-time counts.
-- [ ] Feature leakage tests fail when future data are injected.
-- [ ] Feature manifest is stored with runs.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Hand-built fixtures verify point-in-time counts.
+- [x] Feature leakage tests fail when future data are injected.
+- [x] Feature manifest is stored with runs.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_features.py (7 tests): hand-computed point-in-time counts, profiles and recency decay; injected future events do not change features and strict mode raises; assert_point_in_time fails when a future event is used; split train-only aggregates match; feature manifest round-trips in RunManifest. Suite 102 passed; ruff/mypy clean.
 
 ### Task 2.6: Random & Popularity Recommendation Baselines
 
@@ -1068,11 +1071,11 @@ Finish the project with a reproducible demo path and documented failure recovery
 | Phase | Tasks | Completed |
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
-| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 4 |
+| 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 5 |
 | 3 — Candidate Generation & Retrieval | 6 | 0 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **10** |
+| **Total** | **52** | **11** |

@@ -124,3 +124,19 @@ reads environment variables (enforced by a test); all other code receives `Setti
   `find_by_config` and `compare_runs` without any notebook state.
 - Seeds: `make_rng(seed, *names)` returns isolated NumPy generators (preferred);
   `set_global_seed` seeds Python/NumPy and PyTorch when it is installed.
+
+## 16. Point-in-Time Features (`recomlab.features`, version `pit-1.0`)
+
+`PointInTimeFeatures(events, items, as_of)` uses only events strictly before `as_of`.
+
+| Group | Features |
+|---|---|
+| user | `history_length`, `distinct_items`, `days_since_last_event`, `days_active`, `mean_rating`, category profile |
+| item | `popularity`, `unique_users`, `recent_popularity` (exponential decay, half-life param), `days_since_last_event`, `mean_rating`, categories |
+| user-item | `category_affinity`, `seen_before` |
+
+Undefined values (e.g. no history) are `None`, not zero. `strict=True` raises
+`FutureDataError` if the input contains events at/after `as_of`; `assert_point_in_time`
+verifies the built object. The `FeatureManifest` (version, `as_of`, events used, latest event
+time used, params) is stored in `RunManifest.features`. Training-time aggregates are built
+from the training partition only; validation/test events never contribute.

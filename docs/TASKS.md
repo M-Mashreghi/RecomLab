@@ -33,7 +33,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_negative_sampling.py (7 tests): no negative is a training-horizon positive (uniform and popularity); post-horizon events have no influence; fixed seed reproduces samples regardless of input order; sparse users, cold users and exhausted small catalogs covered. Suite 85 passed; ruff/mypy clean.
 - [x] **Task 2.4** — Leakage-Safe Train / Validation / Test Split Engine
   - Evidence: tests/unit/test_splits.py (10 tests, marked leakage): per-user and global temporal order; same dataset+config → same split_id; no test event in train/validation for all 3 protocols; repeat interactions dropped not moved; random split labeled diagnostic; injected leaks raise LeakageError; boundaries persisted. Suite 95 passed; ruff/mypy clean.
-- [ ] **Task 2.5** — Point-in-Time User, Item & Interaction Feature Builder
+- [x] **Task 2.5** — Point-in-Time User, Item & Interaction Feature Builder
+  - Evidence: tests/unit/test_features.py (7 tests): hand-computed point-in-time counts, profiles and recency decay; injected future events do not change features and strict mode raises; assert_point_in_time fails when a future event is used; split train-only aggregates match; feature manifest round-trips in RunManifest. Suite 102 passed; ruff/mypy clean.
 - [ ] **Task 2.6** — Random & Popularity Recommendation Baselines
 - [ ] **Task 2.7** — Collaborative Filtering Baseline
 
