@@ -189,3 +189,16 @@ from the training partition only; validation/test events never contribute.
 - `EmbeddingCandidates` refuses an index whose embedding version differs from the provider
   (`IndexVersionMismatch`), excludes consumed items, and flags users without an embedding
   (`fallback_required`). Availability/eligibility is applied later during fusion.
+
+### 17.4 Fusion & Eligibility (`candidates.fusion`)
+
+- `FusionConfig(method="rrf" | "weighted_score", weights, rrf_k, budget)`; unspecified source
+  weights default to 1.0. RRF adds `w / (rrf_k + rank)`; weighted score adds `w * minmax(score)`
+  per source (constant-score source → 1.0).
+- Items are deduplicated by id; `FusedCandidate.sources` keeps each contributing source's
+  score, rank, contribution and evidence. Sources are processed in sorted order and output
+  is sorted by `(-score, item_id)`, so fusion is deterministic and input-order independent.
+- `EligibilityFilter` (availability, excluded catalog entries, consumed-item policy) runs
+  after deduplication and can only remove items. `counts` records
+  `pre_dedup`, `post_dedup`, `post_filter`, `final`; `removed` records
+  `not_eligible_catalog` and `consumed`.

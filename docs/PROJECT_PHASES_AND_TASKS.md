@@ -399,7 +399,7 @@ tests/unit/test_embedding_retrieval.py (6 tests): exact cosine/dot neighbors mat
 
 ### Task 3.5: Candidate Fusion, Deduplication & Eligibility Filtering
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Combine multiple retrieval sources into a single valid candidate set while preserving source provenance.
@@ -411,10 +411,13 @@ Combine multiple retrieval sources into a single valid candidate set while prese
 - Record pre/post-filter counts.
 
 **Definition of Done (DoD)**
-- [ ] Fusion output is deterministic.
-- [ ] Eligibility filters cannot reintroduce duplicates.
-- [ ] Provenance identifies every contributing generator.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Fusion output is deterministic.
+- [x] Eligibility filters cannot reintroduce duplicates.
+- [x] Provenance identifies every contributing generator.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_fusion.py (5 tests): RRF and weighted-score fusion match hand computation; provenance lists every contributing source; pre/post-filter counts and removal reasons recorded; output identical under reversed source order; fused real generators never contain duplicates or ineligible items under a budget. Suite 141 passed; ruff/mypy clean.
 
 ### Task 3.6: Candidate Recall, Coverage & Failure Diagnostics
 
@@ -1090,10 +1093,10 @@ Finish the project with a reproducible demo path and documented failure recovery
 |---|---:|---:|
 | 1 — Foundation, Data Contracts & Reproducibility | 6 | 6 |
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
-| 3 — Candidate Generation & Retrieval | 6 | 4 |
+| 3 — Candidate Generation & Retrieval | 6 | 5 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 0 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 0 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **17** |
+| **Total** | **52** | **18** |
