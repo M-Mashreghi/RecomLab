@@ -84,7 +84,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_statistics.py (5 tests, marked metrics): CI brackets the mean and the same seed reproduces it; synthetic clearly-better/worse/noise comparisons classified better/worse/uncertain; paired intervals reproducible with stored seed and resamples; Wilcoxon statistic and p-value hand-checked incl. ties; mismatched populations rejected. Suite 194 passed; ruff/mypy clean.
 - [x] **Task 5.6** — Exposure-Aware / Off-Policy Evaluation (Optional When Logged Propensities Exist)
   - Evidence: tests/unit/test_off_policy.py (3 tests, marked metrics): IPS, SNIPS and ESS match a hand-computed fixture using only linked rewards; extreme weights and clipping are flagged; logs with a missing propensity or no impressions are refused. Suite 197 passed; ruff/mypy clean.
-- [ ] **Task 5.7** — Multi-Metric Model Selection & Champion Leaderboard
+- [x] **Task 5.7** — Multi-Metric Model Selection & Champion Leaderboard
+  - Evidence: tests/unit/test_leaderboard.py (5 tests): test runs refused for selection; decision records policy id, rationale, metrics and guardrails, test report attached only afterwards; decision identical when rebuilt from registry manifests or reordered; failing/missing guardrails block a champion; Pareto front hand-checked and mixed full/sampled runs refused. Suite 202 passed; ruff/mypy clean.
 - [ ] **Task 5.8** — Evaluation Report & Reproducibility Manifest
 
 ## Phase 6 — API, Dashboard & Automated Recommendation Workflow

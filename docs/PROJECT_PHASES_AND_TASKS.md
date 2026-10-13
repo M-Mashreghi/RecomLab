@@ -715,7 +715,7 @@ tests/unit/test_off_policy.py (3 tests, marked metrics): IPS, SNIPS and ESS matc
 
 ### Task 5.7: Multi-Metric Model Selection & Champion Leaderboard
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Select models using explicit trade-offs rather than a single cherry-picked NDCG value.
@@ -727,10 +727,13 @@ Select models using explicit trade-offs rather than a single cherry-picked NDCG 
 - Separate validation selection from final test reporting.
 
 **Definition of Done (DoD)**
-- [ ] Test set cannot choose hyperparameters.
-- [ ] Champion decision records rationale and metrics.
-- [ ] Leaderboard is reproducible from manifests.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Test set cannot choose hyperparameters.
+- [x] Champion decision records rationale and metrics.
+- [x] Leaderboard is reproducible from manifests.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_leaderboard.py (5 tests): test runs refused for selection; decision records policy id, rationale, metrics and guardrails, test report attached only afterwards; decision identical when rebuilt from registry manifests or reordered; failing/missing guardrails block a champion; Pareto front hand-checked and mixed full/sampled runs refused. Suite 202 passed; ruff/mypy clean.
 
 ### Task 5.8: Evaluation Report & Reproducibility Manifest
 
@@ -1134,8 +1137,8 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
-| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 6 |
+| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 7 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **31** |
+| **Total** | **52** | **32** |

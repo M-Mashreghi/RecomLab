@@ -284,3 +284,19 @@ leaderboard can link to it.
 - Diagnostics: mean/max weight, number clipped, effective sample size `(Σw)² / Σw²` and its ratio
   to N. Warnings are raised for weights above `max_weight_warning`, ESS ratio below
   `min_ess_ratio`, and any clipping (biased estimate).
+
+## 25. Leaderboard & Champion Selection (`recomlab.evaluation.leaderboard`)
+
+- `SelectionPolicy(primary_metric, higher_is_better, guardrails, pareto_metrics)` is defined
+  before any test evaluation; its content hash `policy_id` is stored with every decision.
+  Guardrails (`metric >= / <= threshold`, dotted names reach nested metrics such as
+  `latency_ms.p50`) fail closed when the metric is missing.
+- `build_leaderboard` refuses mixed protocols, computes guardrail results and Pareto
+  optimality over `pareto_metrics`, links each row to its `slice_report`, and orders rows by
+  guardrail pass, primary metric, then run id (deterministic).
+- `select_champion` accepts **validation** runs only (`SelectionError` otherwise), picks the
+  best guardrail-passing run, and records rationale, policy, rows, champion run id, and a
+  model-config key (name + params, stable across refits). Notes flag non-Pareto champions and
+  trade-offs where no single model dominates.
+- `attach_test_report` adds the champion configuration's single test-partition run as a
+  one-time final report; test runs never influence selection.
