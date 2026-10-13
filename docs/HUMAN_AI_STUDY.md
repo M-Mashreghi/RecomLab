@@ -87,3 +87,17 @@ ranking.
 - Every explanation records `prompt_version` and `model`; generation and fallbacks are logged
   with the prompt/model version. The explanation path runs after ranking and never alters it
   (integration-tested with a failing provider).
+
+## Fidelity Validation (`recomlab.explanations.fidelity`)
+
+- `extract_claims` finds deterministic claims in explanation text: cited evidence ids
+  (`citation`), catalog titles (`item`), catalog categories (`category`), "you
+  watched/rated/liked/bought…" statements (`history`), and popularity/trending statements
+  (`popularity`). Each is supported only if it traces to the condition's evidence payload.
+- `validate_explanation(..., threshold)` reports the unsupported-claim rate and rejects
+  explanations above the threshold (default 0: any unsupported claim rejects).
+- `feature_ablation` is the perturbation check for additive rankers (heuristic, LTR): it
+  removes each cited feature's contribution, reports score delta and rank before/after, and
+  flags cited features with no effect (which also rejects the explanation).
+- `FidelityLog` stores results as `record_type = "fidelity"` JSONL, separate from any
+  perception outcome; mixing record types is an error.

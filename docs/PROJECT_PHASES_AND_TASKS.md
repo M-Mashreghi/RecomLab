@@ -965,7 +965,7 @@ tests/unit/test_llm_explainer.py (10 tests): valid mocked output accepted with p
 
 ### Task 7.4: Explanation Fidelity & Unsupported-Claim Validator
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Distinguish fluent persuasion from faithful explanation by checking every generated claim against actual recommender evidence.
@@ -977,10 +977,13 @@ Distinguish fluent persuasion from faithful explanation by checking every genera
 - Reject explanations above a configured unsupported-claim threshold.
 
 **Definition of Done (DoD)**
-- [ ] Synthetic hallucinations are detected.
-- [ ] Valid grounded explanations pass.
-- [ ] Fidelity result is stored separately from user-perception outcomes.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Synthetic hallucinations are detected.
+- [x] Valid grounded explanations pass.
+- [x] Fidelity result is stored separately from user-perception outcomes.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_fidelity.py (10 tests): template and hand-written grounded explanations accepted; synthetic hallucinations (unknown item, category, popularity, fabricated citation, history claim for a cold user) rejected; threshold behavior; feature ablation on the heuristic ranker reports score/rank effects and flags no-effect features; fidelity log refuses perception records. Suite 267 passed; ruff/mypy clean.
 
 ### Task 7.5: Human-AI Study Protocol, Randomization & Ethics Boundary
 
@@ -1169,6 +1172,6 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
 | 5 — Evaluation, Statistical Testing & Model Selection | 8 | 8 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 6 |
-| 7 — LLM Explanations & Human-AI Research Extension | 7 | 3 |
+| 7 — LLM Explanations & Human-AI Research Extension | 7 | 4 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **42** |
+| **Total** | **52** | **43** |
