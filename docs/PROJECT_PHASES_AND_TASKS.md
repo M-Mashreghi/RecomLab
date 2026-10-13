@@ -649,7 +649,7 @@ tests/unit/test_eval_protocol.py (4 tests, marked metrics): full-catalog evaluat
 
 ### Task 5.4: Slice Analysis for Cold, Sparse, Popularity & Activity Segments
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Reveal where a model helps or hurts instead of hiding subgroup failures inside global means.
@@ -661,10 +661,13 @@ Reveal where a model helps or hurts instead of hiding subgroup failures inside g
 - Allow dataset-specific slices through configuration.
 
 **Definition of Done (DoD)**
-- [ ] Slice memberships are deterministic.
-- [ ] Slice counts reconcile with evaluation population.
-- [ ] Leaderboard links to slice report.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Slice memberships are deterministic.
+- [x] Slice counts reconcile with evaluation population.
+- [x] Leaderboard links to slice report.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_slices.py (3 tests, marked metrics): user and item bucket memberships deterministic under reordering; slice counts reconcile with the evaluation population and item-bucket relevant counts with held-out truth; slice report id stored in the run manifest artifacts. Suite 189 passed; ruff/mypy clean.
 
 ### Task 5.5: Bootstrap Confidence Intervals & Paired Significance Testing
 
@@ -1125,8 +1128,8 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
-| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 3 |
+| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 4 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **28** |
+| **Total** | **52** | **29** |

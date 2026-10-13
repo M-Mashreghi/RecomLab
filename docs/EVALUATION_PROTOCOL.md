@@ -244,3 +244,18 @@ as `None` with a reason in `unavailable`, never as zero.
 - `assert_comparable` raises `MixedEvaluationModeError` whenever runs with different
   protocol keys (full vs sampled, or different sampling policies) are compared; the
   leaderboard (§ 5.7) uses it.
+
+## 22. Slice Analysis (`recomlab.evaluation.slices`)
+
+Buckets are deterministic functions of the visible training history (`SliceConfig`):
+
+- users: `coldness` (`cold` / `warm`), `activity` (`none`, `sparse` < 3 events, `medium`,
+  `dense` ≥ 10 events), and optional `attr:<name>` slices from configured user attributes;
+- items: `head` (top 20% by training count), `tail` (bottom 50%), `mid`, and `cold`
+  (never interacted with).
+
+`slice_report` aggregates per-user metrics per user bucket (with `n_users`) and recall@K per
+item bucket over held-out relevant items. `SliceReport.reconciles()` checks that each
+dimension's bucket counts sum to the evaluation population. Reports are written to JSON
+with a content `report_id`, which is stored in `RunManifest.artifacts["slice_report"]` so the
+leaderboard can link to it.

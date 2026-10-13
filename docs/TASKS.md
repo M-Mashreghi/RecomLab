@@ -78,7 +78,8 @@ Update this ledger only after verification.
   - Evidence: tests/unit/test_beyond_accuracy.py (3 tests, marked metrics): coverage, ILD, novelty, Gini, head share and calibration KL match deterministic hand-computed fixture values; helper edge cases; undefined metrics reported as None with reasons rather than zero. Suite 182 passed; ruff/mypy clean.
 - [x] **Task 5.3** — Full-Catalog vs Sampled Evaluation Protocol
   - Evidence: tests/unit/test_eval_protocol.py (4 tests, marked metrics): full-catalog evaluation deterministic; sampled mode labeled with warning, seed, sampler, n_negatives and universe size, reproducible; full vs sampled and different sampling policies raise MixedEvaluationModeError; training negatives refused as universe. Suite 186 passed; ruff/mypy clean.
-- [ ] **Task 5.4** — Slice Analysis for Cold, Sparse, Popularity & Activity Segments
+- [x] **Task 5.4** — Slice Analysis for Cold, Sparse, Popularity & Activity Segments
+  - Evidence: tests/unit/test_slices.py (3 tests, marked metrics): user and item bucket memberships deterministic under reordering; slice counts reconcile with the evaluation population and item-bucket relevant counts with held-out truth; slice report id stored in the run manifest artifacts. Suite 189 passed; ruff/mypy clean.
 - [ ] **Task 5.5** — Bootstrap Confidence Intervals & Paired Significance Testing
 - [ ] **Task 5.6** — Exposure-Aware / Off-Policy Evaluation (Optional When Logged Propensities Exist)
 - [ ] **Task 5.7** — Multi-Metric Model Selection & Champion Leaderboard
