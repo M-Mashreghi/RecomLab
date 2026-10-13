@@ -11,6 +11,7 @@ from recomlab.datasets.splits import Split
 from recomlab.domain.eligibility import EligibilityPolicy
 from recomlab.evaluation.metrics import MetricConfig
 from recomlab.evaluation.offline import EvaluationResult, evaluate_recommender
+from recomlab.evaluation.protocol import EvaluationProtocol
 from recomlab.experiments.manifest import RunManifest, collect_software_state, git_commit
 from recomlab.experiments.registry import ExperimentRegistry
 from recomlab.models.base import Recommender
@@ -36,6 +37,7 @@ def run_offline_experiment(
     registry: ExperimentRegistry | None = None,
     created_at: str | None = None,
     features: dict[str, Any] | None = None,
+    protocol: EvaluationProtocol | None = None,
 ) -> tuple[RunManifest, EvaluationResult]:
     """Fit on history visible for ``partition``, evaluate, and log a manifest."""
     history = split.train_until(partition)
@@ -49,6 +51,7 @@ def run_offline_experiment(
         ks,
         partition=partition,
         eligibility_policy=eligibility_policy,
+        protocol=protocol,
     )
     kwargs: dict[str, Any] = {}
     if created_at is not None:
@@ -69,6 +72,9 @@ def run_offline_experiment(
         evaluation={
             "mode": result.mode,
             "universe": result.universe,
+            "protocol": result.protocol,
+            "mean_universe_size": result.mean_universe_size,
+            "warnings": result.warnings,
             "partition": partition,
             "eligibility": (eligibility_policy or EligibilityPolicy()).to_dict(),
             "diagnostic_split": split.is_diagnostic,

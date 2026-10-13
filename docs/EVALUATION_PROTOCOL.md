@@ -230,3 +230,17 @@ is stored in `RunManifest.metric_config`.
 Popularity statistics use training interactions only. Metrics that cannot be computed
 (no category metadata, no recommendations, no profiles, lists shorter than 2) are reported
 as `None` with a reason in `unavailable`, never as zero.
+
+## 21. Full-Catalog vs Sampled Protocol (`recomlab.evaluation.protocol`)
+
+- `EvaluationProtocol(mode="full")` is the reference: every eligible catalog item is ranked.
+- `EvaluationProtocol(mode="sampled", n_negatives, seed)` is a **diagnostic**: each user's
+  universe is their held-out positives plus `n_negatives` uniform negatives drawn (seeded per
+  user) from eligible non-positive items; the model's full ranking is restricted to it.
+  Training negatives are refused as an evaluation universe.
+- Every result records `mode`, `universe`, `mean_universe_size`, and the protocol
+  (`policy_key`, sampler, seed, `n_negatives`) in `RunManifest.evaluation`; sampled results
+  carry the `SAMPLED_WARNING` text in `warnings`, which reports must print.
+- `assert_comparable` raises `MixedEvaluationModeError` whenever runs with different
+  protocol keys (full vs sampled, or different sampling policies) are compared; the
+  leaderboard (§ 5.7) uses it.

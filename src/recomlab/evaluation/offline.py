@@ -14,6 +14,7 @@ from recomlab.datasets.splits import Split
 from recomlab.domain.eligibility import EligibilityFilter, EligibilityPolicy
 from recomlab.domain.schemas import Item
 from recomlab.evaluation.metrics import MetricConfig, aggregate
+from recomlab.evaluation.protocol import SAMPLED_WARNING, EvaluationProtocol, sample_universe
 from recomlab.models.base import Recommender
 
 
@@ -34,12 +35,16 @@ class EvaluationResult:
     users_without_positives: list[str]
     catalog_coverage: dict[int, float]
     latency_ms: dict[str, float] = field(default_factory=dict)
+    protocol: dict[str, Any] = field(default_factory=dict)
+    mean_universe_size: float = 0.0
+    warnings: list[str] = field(default_factory=list)
 
     def summary(self) -> dict[str, Any]:
         return {
             "partition": self.partition,
             "mode": self.mode,
             "universe": self.universe,
+            "mean_universe_size": self.mean_universe_size,
             "n_users_evaluated": self.n_users_evaluated,
             "n_users_without_positives": len(self.users_without_positives),
             **self.metrics,
@@ -66,11 +71,16 @@ def evaluate_recommender(
     partition: str = "test",
     eligibility_policy: EligibilityPolicy | None = None,
     metric_config: MetricConfig | None = None,
+    protocol: EvaluationProtocol | None = None,
 ) -> EvaluationResult:
-    """Rank the full eligible catalog for every held-out user with positives.
+    """Rank the evaluation universe for every held-out user with positives.
 
-    The model must already be fitted on ``split.train_until(partition)``.
+    ``full`` (default, reference): the whole eligible catalog. ``sampled``
+    (diagnostic): positives plus seeded uniform negatives per user; the model's
+    full ranking is restricted to that universe. The model must already be
+    fitted on ``split.train_until(partition)``.
     """
+    protocol = protocol or EvaluationProtocol()
     if isinstance(split, TrainingNegatives):  # pragma: no cover - defensive
         raise EvaluationInputError("training negatives are not evaluation truth")
     config = metric_config or MetricConfig(ks=tuple(ks))
@@ -85,9 +95,18 @@ def evaluate_recommender(
     max_k = max(ks)
     rankings: dict[str, list[str]] = {}
     latencies: list[float] = []
+    universe_sizes: list[int] = []
     for user in sorted(truth):
         start = time.perf_counter()
-        ranked = [s.item_id for s in model.recommend(user, max_k, elig)]
+        if protocol.is_sampled:
+            eligible = elig.eligible_items(user)
+            universe = set(sample_universe(user, truth[user], eligible, protocol))
+            full = [s.item_id for s in model.recommend(user, len(eligible), elig)]
+            ranked = [i for i in full if i in universe][:max_k]
+            universe_sizes.append(len(universe))
+        else:
+            ranked = [s.item_id for s in model.recommend(user, max_k, elig)]
+            universe_sizes.append(len(elig.eligible_items(user)))
         latencies.append((time.perf_counter() - start) * 1000.0)
         rankings[user] = ranked
     agg = aggregate(rankings, truth, config)
@@ -110,8 +129,15 @@ def evaluate_recommender(
     )
     return EvaluationResult(
         partition=partition,
-        mode="full",
-        universe=f"full eligible catalog ({len(elig.catalog)} items, consumed excluded)",
+        mode=protocol.mode,
+        universe=(
+            f"sampled: positives + {protocol.n_negatives} uniform negatives (seed {protocol.seed})"
+            if protocol.is_sampled
+            else f"full eligible catalog ({len(elig.catalog)} items, consumed excluded)"
+        ),
+        protocol=protocol.to_dict(),
+        mean_universe_size=statistics.fmean(universe_sizes) if universe_sizes else 0.0,
+        warnings=[SAMPLED_WARNING] if protocol.is_sampled else [],
         ks=tuple(ks),
         metrics=agg.means,
         per_user=agg.per_user,

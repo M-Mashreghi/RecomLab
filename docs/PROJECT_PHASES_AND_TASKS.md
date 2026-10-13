@@ -627,7 +627,7 @@ tests/unit/test_beyond_accuracy.py (3 tests, marked metrics): coverage, ILD, nov
 
 ### Task 5.3: Full-Catalog vs Sampled Evaluation Protocol
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **Business / Research Value**  
 Prevent misleading gains caused by ranking one positive against a small arbitrary negative sample.
@@ -639,10 +639,13 @@ Prevent misleading gains caused by ranking one positive against a small arbitrar
 - Warn in reports when sampled metrics are used.
 
 **Definition of Done (DoD)**
-- [ ] Full-catalog fixture is deterministic.
-- [ ] Sampled and full-catalog results cannot be silently mixed on the leaderboard.
-- [ ] Sampling seed/policy are recorded.
-- [ ] Relevant tests pass and documentation is synchronized.
+- [x] Full-catalog fixture is deterministic.
+- [x] Sampled and full-catalog results cannot be silently mixed on the leaderboard.
+- [x] Sampling seed/policy are recorded.
+- [x] Relevant tests pass and documentation is synchronized.
+
+**Verification Evidence**  
+tests/unit/test_eval_protocol.py (4 tests, marked metrics): full-catalog evaluation deterministic; sampled mode labeled with warning, seed, sampler, n_negatives and universe size, reproducible; full vs sampled and different sampling policies raise MixedEvaluationModeError; training negatives refused as universe. Suite 186 passed; ruff/mypy clean.
 
 ### Task 5.4: Slice Analysis for Cold, Sparse, Popularity & Activity Segments
 
@@ -1122,8 +1125,8 @@ Finish the project with a reproducible demo path and documented failure recovery
 | 2 — Dataset Protocol, Labels, Features & Baselines | 7 | 7 |
 | 3 — Candidate Generation & Retrieval | 6 | 6 |
 | 4 — Ranking, Re-ranking & Cold-Start Policy | 6 | 6 |
-| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 2 |
+| 5 — Evaluation, Statistical Testing & Model Selection | 8 | 3 |
 | 6 — API, Dashboard & Automated Recommendation Workflow | 6 | 0 |
 | 7 — LLM Explanations & Human-AI Research Extension | 7 | 0 |
 | 8 — Hardening, Monitoring, CI/CD & Release | 6 | 0 |
-| **Total** | **52** | **27** |
+| **Total** | **52** | **28** |
